@@ -1,0 +1,17 @@
+<div class="col-sm-8">
+    <form class="form-horizontal form-validation" name="loginform" ng-submit="userlogin()">
+        <div class="form-group">
+            <label for="username" class="control-label col-sm-2">用户名</label>
+            <div class="col-sm-3">
+                <input type="text" autocomplete="off" class="form-control" id="username" ng-model="user.username" required ng-pattern="/^[0-9a-zA-Z\u4e00-\u9fa5]{4,9}$/" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password" class="control-label col-sm-2">密码</label>
+            <div class="col-sm-3">
+                <input type="text" autocomplete="off" onfocus="this.type='password';" class="form-control" id="password" ng-model="user.psw" ng-change="user.password = $.md5(user.psw)" ng-pattern="/^[0-9a-zA-Z]{6,16}$/" required>
+            </div>
+        </div>
+        <input type="submit" ng-disabled="loginform.$invalid" class="form-control" value="登录">
+    </form>
+</div>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html ng-app="CmsApp" ng-controller="LayoutCtrl" lang="zh-CN" manifest="yf.appcache">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+<meta name="renderer" content="webkit">
+<meta name="apple-mobile-web-app-capable" content="yes" />    
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="format-detection" content="telephone=yes"/>
+<meta name="msapplication-tap-highlight" content="no" />
+<title>CMS页面</title>
+
+
+  
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+  <!-- build:css styles/vendor.css -->
+  <!-- bower:css -->
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css styles/main.css -->
+  <!-- include: "type": "css", "files": "css/*.css" -->
+  <!-- include: "type": "css", "files": "modules/**/*.css" -->
+  <!-- endbuild -->
+</head>
+<body>
+  
+<!--
+app-header-fixed 头固定
+app-aside-fixed 左侧导航固定
+app-aside-folded 导航是否合起来
+app-aside-dock 导航横版
+container:容器
+-->
+<div class="app" ng-class="{'app-header-fixed':app.settings.headerFixed, 'app-aside-fixed':app.settings.asideFixed, 'app-aside-folded':app.settings.asideFolded, 'app-aside-dock':app.settings.asideDock, 'container':app.settings.container}" ui-view>
+</div>
+
+<!--
+各种提示信息：成功、失败、警告等
+-->
+<toaster-container toaster-options="{'close-button': true,'time-out': 2000}"></toaster-container>
+
+<!-- build:js scripts/vendor.js -->
+<!-- bower:js -->
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js scripts/scripts.js -->
+<!-- JS -->
+<!-- include: "type": "js", "files": "js/app.*.js" -->
+<!-- include: "type": "js", "files": "js/pro.config.js" -->
+<!-- MODULES -->
+<!-- include: "type": "js", "files": "modules/**/*.js" -->
+<!-- endbuild -->
+
+</body>
+</html>

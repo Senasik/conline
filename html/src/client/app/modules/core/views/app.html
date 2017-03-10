@@ -1,0 +1,24 @@
+<header class="container-fluid" >
+    <div class="navbar-header">
+        <button class="navbar-toggle collapsed" type="button" id="collapsebutton" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand hidden-sm" ui-sref="app.home">Conline</a>
+    </div>
+    <div class="navbar-collapse collapse" id="collapsebody" role="navigation" >
+        <ul class="nav navbar-nav">
+            <li><a ui-sref=".course">课程</a></li>
+            <li><a ui-sref="app.homework">练习</a></li>
+            <li><a >资源下载</a></li>
+            <li><a >关于</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a ui-sref=".user.login">登录</a></li>
+            <li><a ui-sref=".user.signup">注册</a></li>
+        </ul>
+    </div>
+</header>
+<div ui-view></div>

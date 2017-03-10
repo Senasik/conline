@@ -1,0 +1,110 @@
+<!doctype html>
+<html ng-app="CApp" lang="zh-CN" >
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+<meta name="renderer" content="webkit">
+<meta name="apple-mobile-web-app-capable" content="yes" />    
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="format-detection" content="telephone=yes"/>
+<meta name="msapplication-tap-highlight" content="no" />
+<title>Conline</title>
+
+
+  
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+  <!-- build:css styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.css" />
+  <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
+  <link rel="stylesheet" href="bower_components/simple-line-icons/css/simple-line-icons.css" />
+  <link rel="stylesheet" href="bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.css" />
+  <link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.css" />
+  <link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.min.css" />
+  <link rel="stylesheet" href="bower_components/smalot-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" />
+  <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css styles/main.css -->
+  <link rel="stylesheet" href="css/animate.css" />
+  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet/less" type="text/css" href="css/style.less" />
+  
+  <!-- endbuild -->
+</head>
+<body>
+  
+<!--
+app-header-fixed 头固定
+app-aside-fixed 左侧导航固定
+app-aside-folded 导航是否合起来
+app-aside-dock 导航横版
+container:容器
+-->
+<div class="app"  ui-view>
+</div>
+
+<!--
+各种提示信息：成功、失败、警告等
+-->
+<toaster-container toaster-options="{'close-button': true,'time-out': 2000}"></toaster-container>
+
+<!-- build:js scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-touch/angular-touch.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/AngularJS-Toaster/toaster.js"></script>
+<script src="bower_components/ngstorage/ngStorage.js"></script>
+<script src="bower_components/bootstrap-treeview/public/js/bootstrap-treeview.js"></script>
+<script src="bower_components/angular-breadcrumb/release/angular-breadcrumb.js"></script>
+<script src="bower_components/angular-ui-grid/ui-grid.js"></script>
+<script src="bower_components/angular-ui-grid/ui-grid.min.js"></script>
+<script src="bower_components/smalot-bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="bower_components/smalot-bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
+<script src="bower_components/oclazyload/dist/ocLazyLoad.js"></script>
+<script src="bower_components/angular-ui-select/dist/select.js"></script>
+<script src="bower_components/less/dist/less.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js scripts/scripts.js -->
+<!-- JS -->
+<script src="js/app.module.js"></script>
+<script src="js/app.utilities.js"></script>
+<script src="js/dev.config.js"></script>
+<script src="js/md5.js"></script>
+<script src="js/dev.config.js"></script>
+<!-- MODULES -->
+<script src="modules/core/app.core.js"></script>
+<script src="modules/core/config/core.config.js"></script>
+<script src="modules/core/config/core.router.js"></script>
+<script src="modules/core/controllers/app.default.ctrl.js"></script>
+<script src="modules/core/controllers/main.ctrl.js"></script>
+<script src="modules/core/controllers/router.ctrl.js"></script>
+<script src="modules/core/services/HttpInterceptor.js"></script>
+<script src="modules/core/services/appauth.service.js"></script>
+<script src="modules/core/services/commonApi.service.js"></script>
+<script src="modules/course/app.course.js"></script>
+<script src="modules/course/config/course.route.js"></script>
+<script src="modules/home/app.home.js"></script>
+<script src="modules/home/config/home.route.js"></script>
+<script src="modules/user/app.user.js"></script>
+<script src="modules/user/config/user.route.js"></script>
+<script src="modules/user/controllers/login.ctrl.js"></script>
+<script src="modules/user/controllers/signup.ctrl.js"></script>
+<script src="modules/user/controllers/userdefault.ctrl.js"></script>
+<script src="modules/user/services/usermap.service.js"></script>
+<!-- endbuild -->
+
+</body>
+</html>
