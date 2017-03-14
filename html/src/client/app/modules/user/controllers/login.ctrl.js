@@ -9,7 +9,7 @@
 
             //用户登录
             $scope.userlogin = function() {
-                AppAuth.login(UserMap.convertUserModel($scope.user));
+                AppAuth.login(UserMap.convertUserModel($scope.loginuser));
             };
 
 

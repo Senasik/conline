@@ -2,7 +2,7 @@
     'use strict';
     angular
         .module('com.module.core')
-        .config(['$localStorageProvider', '$httpProvider', '$sceDelegateProvider', '$cookiesProvider', function($localStorageProvider, $httpProvider, $sceDelegateProvider, $cookiesProvider) {
+        .config(['$localStorageProvider', '$httpProvider', '$sceDelegateProvider', '$cookiesProvider', '$stateProvider', function($localStorageProvider, $httpProvider, $sceDelegateProvider, $cookiesProvider, $stateProvider) {
             /*设置ngstorage的前缀*/
             $localStorageProvider.setKeyPrefix('Conline-');
 
@@ -17,6 +17,9 @@
             $cookiesProvider.defaults.path = '/';
             $cookiesProvider.defaults.domain = 'conline.com';
             $cookiesProvider.defaults.expires = new Date('3000/01/01');
+
+            //$stateProvider默认设置
+            $stateProvider
 
 
 

@@ -1,21 +1,17 @@
 # coding=utf-8
-from random import Random
-import logging
-from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
-from django.http import JsonResponse
-
+from webapi.tools import pack
+# 工具函数导入
+from webapi.tools import random_str, pack, tokenActive
 # model导入
-from models import User
-
-# 日志文件
-debuglog = logging.getLogger('myhtml')
+from webapi.models import User
+# 日志导入
+from webapi.tools import Debuglog
 
 # Create your views here.
 
 
 # 用户登录
-
 @csrf_exempt
 def login(request):
     try:
@@ -34,8 +30,6 @@ def login(request):
         # 返回model
         model = {
             'userid': user.userid,
-            'username': user.username,
-            'type': user.type,
             'token': user.token
         }
         return pack(data=model)
@@ -45,7 +39,6 @@ def login(request):
 
 
 # 用户注册
-
 @csrf_exempt
 def signup(request):
     try:
@@ -56,63 +49,48 @@ def signup(request):
             raise Exception('repeat')
         # 注册用户
         userid = random_str()
-        user = User(userid=userid, username=body['username'], password=body['password'], type=body['type'])
+        token = random_str()
+        user = User(userid=userid, token=token, username=body['username'], password=body['password'], type=body['type'])
         user.save()
-        return pack()
+        return pack(data={'token': token})
     except Exception as e:
-        return pack(msg=repr(e)+'错误')
+        return pack(msg=e)
 
 
-# 验证token是否失效，返回值-2 表示登录失效，-3 表示未登录
-
-def tokenActive(cookie):
+# 获取用户信息
+@csrf_exempt
+def userinfo(request):
     try:
-        # 验证token
-        cookie.keys().index('token')
-        user = list(User.objects.all().filter(token=cookie.get('token')))
-        if len(user) == 0:
-            return -2
-        return user[0]
-    except ValueError as e:
-        # 确定是否是无token的异常
-        if str(e) != "'token' is not in list":
-            raise Exception(e)
-        return -3
+        body = eval(request.body)
+        user = tokenActive(request.COOKIES)
+        if user == -2:
+            return pack(code=-2)
+        elif user == -3 or body['userid'] != '':
+            # 如果token有效且用户的userid为空，那么表示取得是自己的信息
+            # token为空则肯定是根据userid查询别人的信息
+            user = list(User.objects.all().filter(userid=body.userid))
+            # 如果没查到数据，返回空
+            if len(user) == 0:
+                return pack(data={})
+            else:
+                user = user[0]
+        model = {
+            'userid': user.userid,
+            'username': user.username,
+            'type': user.type,
+        }
+        return pack(data=model)
+
+    except Exception as e:
+        return pack(msg=e)
 
 
-# api包装,第一个参数是数据，第二个参数是异常信息
-
-def pack(data={}, msg='success', code=1, *args):
-    '''
-     第一个参数是数据，第二个参数是异常处理
-    '''
-    model = {
-        'code': code,
-        'msg': msg,
-        'data': data
-    }
-    if msg != 'success' and code == 1:
-        model['code'] = -1
-    result = JsonResponse(model)
-    result['Access-Control-Allow-Origin'] = 'http://c.conline.com:8080'
-    result['Access-Control-Allow-Credentials'] = 'true'
-    return result
 
 
-# 生成随机字符串
-
-def random_str(randomlength=30):
-    str = ''
-    chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789'
-    length = len(chars) - 1
-    random = Random()
-    for i in range(randomlength):
-        str+=chars[random.randint(0, length)]
-    return str
 
 
-# code表
-# 1: success
-# -1: 一般性错误
-# -2: 登录失效
-# -3: 未登录
+
+
+
+
+

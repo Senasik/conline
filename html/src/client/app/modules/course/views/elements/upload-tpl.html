@@ -1,0 +1,41 @@
+<form class="form-horizontal form-validation" name="creatsectionform">
+    <div class="form-group">
+        <label for="coursename" class="control-label col-sm-2">课程名</label>
+        <div class="col-sm-5">
+            <select id="coursename" class="form-control" ng-change="creatsection.courseid = creatsection.course.courseid" ng-model="creatsection.course" ng-init="creatsection.course=courselist[0];creatsection.courseid = creatsection.course.courseid" ng-options="item.title for item in courselist"></select>
+        </div>
+        <div class="col-sm-2"><a ng-click="creatcourse()">添加课程</a></div>
+    </div>
+    <div class="form-group">
+        <label for="sectionname" class="control-label col-sm-2">章节名</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" name="sectionname" ng-model="creatsection.title" placeholder="请输入章节名" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="sectiontype" class="control-label col-sm-2">类型</label>
+        <div class="col-sm-5" style="padding-top: 7px">
+            <label class="i-checks">
+                <input type="radio" ng-init="creatsection.type = 0" ng-checked="true" ng-model="creatsection.type" value="0">
+                <i></i> 文章
+            </label>
+            <label class="i-checks">
+                <input type="radio" ng-model="creatsection.type" value="1">
+                <i></i> 视频
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-6 ui-upload" id="sectionfile{{num}}" style="position: relative;width: 210px">
+            <label  ng-click="upload()">{{filename}}</label>
+            
+            <a ng-hide="item.isUploading || item.isUploaded" ng-click="start()">开始上传</a>
+            <div class="loading-mask" ng-show="item.isUploading">
+                <uib-progressbar class="progress-striped active" ng-show="item.isUploading" ng-init="progress = 0;" animate="true" value="progress" type="{{progresstype}}"><b>{{progress}}%</b></uib-progressbar>
+                <span ng-if="item.isUploading" ng-click="cancel()">取消上传</span>
+            </div>
+            <div ng-if="item.isSuccess">文件上传成功</div>
+            <div ng-if="item.isError">文件上传失败</div>
+        </div>
+    </div>
+</form>

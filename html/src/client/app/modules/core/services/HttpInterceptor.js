@@ -15,15 +15,14 @@
                     return $q.reject(err);
                 },
                 response: function(res) {
-                    if (res.data && res.data.code === -2) {
+                    if (res.data && (res.data.code === -2 || res.data.code === -3)) {
                         $cookies.remove('token')
                         toaster.pop({
                             type: "warning",
                             title: '提示',
-                            body: '登录票据失效,请重新登录!',
+                            body: '登录票据失效或未登录,请重新登录!',
                             timeout: 1000,
                             onHideCallback: function() {
-                                $sessionStorage.path = $location.path()
                                 $location.path('/user/login');
                             }
                         });
