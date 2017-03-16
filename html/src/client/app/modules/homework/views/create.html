@@ -1,0 +1,39 @@
+<form class="form-horizontal form-validation" name="creathomeworkform">
+	<div class="form-group">
+		<label class="col-sm-2" for="creathomeworkname">题目</label>
+		<div class="col-sm-5">
+			<input type="text" id="creathomeworkname" ng-model="creathomework.title" class="form-control" required>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-sm-2">类型</label>
+        <div class="col-sm-5" style="padding-top: 7px">
+            <label class="i-checks">
+                <input type="radio" ng-init="creathomework.type = 0" ng-checked="true" ng-model="creatsection.type" value="0">
+                <i></i> 单选
+            </label>
+            <label class="i-checks">
+                <input type="radio" ng-model="creathomework.type" value="1">
+                <i></i> 填空
+            </label>
+            <label class="i-checks">
+                <input type="radio" ng-model="creathomework.type" value="2">
+                <i></i> 编程
+            </label>
+        </div>
+	</div>
+	<div class="form-group" ng-if="creathomework.type != 0">
+		<label for="creathomeworkanswer" class="col-sm-2">答案</label>
+		<div class="col-sm-5">
+			<input type="text" id="creathomeworkanswer" class="form-control" ng-model="creathomework.answer" required>
+		</div>
+	</div>
+	<div class="form-group" ng-if="creathomework.type == 0">
+		<label for="creathomeworkoption" class="col-sm-2">选项</label>
+		<div class="col-sm-2" ng-repeat="item in creathomework.option">
+			<input type="text" id="creathomeworkoption" class="form-control" ng-model="item" required>
+		</div>
+		<div class="col-sm-2"><button ng-click="creathomework.option.pop()">添加选项</button></div>
+		<div class="col-sm-2"><button ng-click="creathomework.option.push({})">删除选项</button></div>
+	</div>
+</form>

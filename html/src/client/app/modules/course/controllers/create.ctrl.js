@@ -2,17 +2,12 @@
     'use strict';
     angular
         .module('com.module.course')
-        .controller('CreateCtrl', function($scope, $cookies, $uibModal, toaster, CourseApi, CourseMap, courselist) {
+        .controller('CourseCreateCtrl', function($scope, $cookies, $uibModal, toaster, CourseApi, CourseMap, courselist) {
 
             $scope.uploadlist = [];
 
-            $scope.courselist = [{
-                title: 'course1',
-                courseid: 'courseid1'
-            }, {
-                title: 'course2',
-                courseid: 'courseid2'
-            }]
+            //初始化课程下拉框
+            $scope.courselist = courselist;
 
 
             //上传文件要传的cookie

@@ -1,0 +1,33 @@
+html:
+
+	offset  width height top left
+
+	html离线存储	<html manifest = "cache.manifest">
+	web work 后台载入文件不执行
+·	sentiion 必加header
+
+css:
+	overflow 想要隐藏子元素自己必须是相对或绝对
+	-webkit-box 盒布局 子元素  -webkit-box-flex 自适应
+
+	**display:inline-block间隔移除 margin 负数， font-size 0
+	垂直居中： line-height  ：before
+	background-attachment 背景图片是否随着滚动
+	background-position 百分比（容器的宽度-图片的宽度）x50%
+js:
+	concat()
+	Object.create继承  Object.definepro...添加属性
+	each 参数为key或序号 返回原数组  map参数为值返回新数组.find 所有后代  outerWidth  innerWidth outerWidth(true)
+	for in 序号或key  for of 数组的值
+
+	xhr 相关
+
+python: 
+	manage.py inspectdb生成模型代码 
+	manage.py makemigrations 生成迁移文件 后面要加 app name
+	manage.py migrate 进行迁移
+	model添加表后，删除sql中django_migrations中app column 杉树migration文件夹，删除pyc
+
+
+
+

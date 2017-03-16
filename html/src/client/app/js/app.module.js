@@ -24,6 +24,8 @@
 			'com.module.core',
 			'com.module.user',
 			'com.module.course',
+			'com.module.section',
+			'com.module.homework',
 			'com.module.home',
 
 

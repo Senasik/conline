@@ -2,7 +2,7 @@
   'use strict';
 
   /*
-  公共api模块
+  课程api模块
   */
 
   angular
