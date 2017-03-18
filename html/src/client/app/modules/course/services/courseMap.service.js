@@ -54,7 +54,7 @@
                     //课程名称
                     if(node.title) {model.title = node.title;}
                     //类型
-                    if(node.type) {model.type = node.type;}
+                    if(node.type || node.type == 0) {model.type = node.type;}
                     //创建者
                     if(node.creator) {model.creator = node.creator;}
 

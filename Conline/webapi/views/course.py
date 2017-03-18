@@ -42,11 +42,14 @@ def creatCourse(request):
 @csrf_exempt
 def getCourseList(request):
     try:
-        body = request.body
-        user = tokenActive(request.COOKIES)
-        if not isinstance(user, User):
-            return pack(code=user)
-        courseList = list(Course.objects.all().filter(creator=user.userid))
+        if request.body != '':
+            userid = eval(request.body)['userid']
+        else:
+            user = tokenActive(request.COOKIES)
+            if not isinstance(user, User):
+                return pack(code=user)
+            userid = user.userid
+        courseList = list(Course.objects.all().filter(creator=userid))
         model = []
         for course in courseList:
             model.append({

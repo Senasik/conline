@@ -18,9 +18,13 @@ from webapi.tools import Debuglog
 @csrf_exempt
 def getSectionList(request):
     try:
-        body = eval(request.body)
         model = []
-        sectionlist = list(Section.objects.all().filter(father=body['courseid']))
+        user = tokenActive(request.COOKIES)
+        if isinstance(user, User) and request.body == '':
+            sectionlist = list(Section.objects.all().filter(creator=user.userid))
+        else:
+            body = eval(request.body)
+            sectionlist = list(Section.objects.all().filter(father=body['courseid']))
         if len(sectionlist) > 0:
             for section in sectionlist:
                 model.append({

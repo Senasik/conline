@@ -19,6 +19,7 @@
 			'angularFileUpload',
 			'oc.lazyLoad',
 			'ui.select',
+			'ui.codemirror',
 
 
 			'com.module.core',

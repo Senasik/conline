@@ -19,7 +19,7 @@
           return resultdetails;
         },
         
-        //获取章节列表{courseid}
+        //获取章节列表{courseid}没有参数那么就是查询已登录用户所有的section
         getsectionlist: function(data){
           var url = 'getsectionlist';
           return self._http(url, data)

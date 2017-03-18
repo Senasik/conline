@@ -11,16 +11,17 @@
     <div class="navbar-collapse collapse" id="collapsebody" role="navigation" >
         <ul class="nav navbar-nav">
             <li><a ui-sref=".course.list">课程</a></li>
-            <li><a ui-sref=".homework">练习</a></li>
+            <li><a ui-sref=".homework.list">练习</a></li>
             <li><a >资源下载</a></li>
             <li><a >关于</a></li>
         </ul>
-        <ul ng-hide="hasUser" class="nav navbar-nav navbar-right">
+        <ul ng-if="!hasUser" class="nav navbar-nav navbar-right">
             <li><a ui-sref=".user.login">登录</a></li>
             <li><a ui-sref=".user.signup">注册</a></li>
         </ul>
-        <ul ng-show="hasUser" class="nav navbar-nav navbar-right">
-            <li><a ui-sref=".user.info">{{user.username}}</a></li>
+        <ul ng-if="hasUser" class="nav navbar-nav navbar-right">
+            <li><a ng-if="user.type==0" ui-sref=".user.info.student({userid:user.userid})">{{user.username}}</a></li>
+            <li><a ng-if="user.type==1" ui-sref=".user.info.teacher({userid:user.userid})">{{user.username}}</a></li>
             <li><a ng-click="AppAuth.logout()">注销</a></li>
         </ul>
     </div>

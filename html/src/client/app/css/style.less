@@ -1,17 +1,57 @@
-header{
-	@headermargin: 3px;
-	background: black;
-	box-shadow: 0 1px @headermargin;
-	margin-bottom: @headermargin;
-	a{
-		color: white;
-		&:hover{
-			color: #aaa;
-		};
-	};
-	
-};
-
-.sectiondetail p{
-	white-space: pre-line;
+header {
+    @headermargin: 3px;
+    background: black;
+    box-shadow: 0 1px @headermargin;
+    margin-bottom: @headermargin;
+    a {
+        color: white;
+        &:hover {
+            color: #aaa;
+        }
+    }
 }
+
+
+/*
+section 样式start
+*/
+
+.sectiondetail p {
+    white-space: pre-line;
+}
+
+
+/*
+section 样式end
+*/
+
+
+/*
+homework样式 start
+*/
+
+
+/*题目审核结果提示样式*/
+
+#homeworkdetail {
+    .error {
+        border: 1px solid red;
+    }
+    .success {
+        border: 1px solid green;
+    }
+}
+
+
+/*单选题选择样式*/
+
+.selectedoption {
+    a {
+        color: blue;
+    }
+}
+
+
+/*
+homework样式 end
+*/

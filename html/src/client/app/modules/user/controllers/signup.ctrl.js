@@ -2,13 +2,13 @@
     'use strict';
     angular
         .module('com.module.user')
-        .controller('SignupController', ['$scope', '$state', '$cookies', 'toaster', 'CommonApi', 'UserMap', function($scope, $state, $cookies, toaster, CommonApi, UserMap) {
+        .controller('SignupController', ['$scope', '$state', '$cookies', 'toaster', 'UserApi', 'UserMap', function($scope, $state, $cookies, toaster, UserApi, UserMap) {
             //md5加密需要jquery
             $scope.$ = window.$;
 
             //注册用户
             $scope.usersignup = function() {
-                CommonApi.signup(UserMap.convertUserModel($scope.signupuser)).then(function(response) {
+                UserApi.signup(UserMap.convertUserModel($scope.signupuser)).then(function(response) {
                     var data = response.data;
                     if(data.code && data.code === 1){
                         if(data.data.token){

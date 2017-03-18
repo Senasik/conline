@@ -4,7 +4,7 @@ from webapi.tools import pack
 # 工具函数导入
 from webapi.tools import random_str, pack, tokenActive
 # model导入
-from webapi.models import User
+from webapi.models import User, Course
 # 日志导入
 from webapi.tools import Debuglog
 
@@ -16,7 +16,9 @@ from webapi.tools import Debuglog
 def login(request):
     try:
         # 获取求情信息
-        body = eval(request.body)
+        body = {}
+        if request.body != '':
+            body = eval(request.body)
         # 验证token
         user = tokenActive(request.COOKIES)
         if not isinstance(user, User):
@@ -30,7 +32,9 @@ def login(request):
         # 返回model
         model = {
             'userid': user.userid,
-            'token': user.token
+            'token': user.token,
+            'username': user.username,
+            'type': user.type
         }
         return pack(data=model)
 
@@ -46,7 +50,7 @@ def signup(request):
         body = eval(request.body)
         # 是否已注册
         if len(User.objects.all().filter(username=body['username'])):
-            raise Exception('repeat')
+            raise Exception('用户名重复')
         # 注册用户
         userid = random_str()
         token = random_str()
@@ -85,7 +89,48 @@ def userinfo(request):
         return pack(msg=e)
 
 
+# 获取用户详细信息
+@csrf_exempt
+def getuserdetail(request):
+    try:
+        body = {}
+        if request.body != '':
+            body = eval(request.body)
+        user = tokenActive(request.COOKIES)
+        if user == -2:
+            return pack(code=-2)
+        elif user == -3 or 'userid' in body:
+            # 如果token有效且用户的userid为空，那么表示取得是自己的信息
+            # token为空则肯定是根据userid查询别人的信息
+            user = list(User.objects.all().filter(userid=body.userid))
+            # 如果没查到数据，返回空
+            if len(user) == 0:
+                return pack(data={})
+            else:
+                user = user[0]
 
+        # 根据用户的类型返回不一样的数据
+        # if user.type == 0:
+        #     pass
+        # elif user.type == 1:
+        #     # 老师返回所创建的课程id
+        #     courses = list(Course.objects.all().filter(creator=user.userid))
+        #     user.courses = []
+        #     if len(courses) > 0:
+        #         for course in courses:
+        #             user.courses.append({
+        #                 'courseid': course.courseid,
+        #                 'title': course.title
+        #             })
+        model = {
+            'userid': user.userid,
+            'username': user.username,
+            'type': user.type
+        }
+        return pack(data=model)
+
+    except Exception as e:
+        return pack(msg=e)
 
 
 

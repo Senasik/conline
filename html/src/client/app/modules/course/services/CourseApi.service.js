@@ -29,19 +29,9 @@
         creatcourse: function(data){
           var url = 'creatcourse';
           return self._http(url, data)
-        },
-
-        //获取章节列表{courseid}
-        getsectionlist: function(data){
-          var url = 'getsectionlist';
-          return self._http(url, data)
-        },
-
-        //获取章节详情{sectionid}
-        getsection: function(data){
-          var url = 'getsection';
-          return self._http(url, data)
         }
+
+       
       };
       return self;
     });

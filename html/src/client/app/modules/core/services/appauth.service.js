@@ -3,11 +3,11 @@
 
     angular
         .module('com.module.core')
-        .factory('AppAuth', function($cookies, $http, $state, $sessionStorage, $localStorage, $location, toaster, CommonApi) {
+        .factory('AppAuth', function($cookies, $http, $state, $sessionStorage, $localStorage, $location, toaster, UserApi) {
             var self = {
                 login: function(data) {
 
-                    CommonApi.login(data).then(function(response) {
+                    UserApi.login(data).then(function(response) {
                         var data = response.data;
                         if (data.code === 1) {
                             //存储相关信息

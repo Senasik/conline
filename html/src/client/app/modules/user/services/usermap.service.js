@@ -6,6 +6,20 @@
         .factory('UserMap', function() {
             var self = {
 
+                //用户详情
+                userDetailModel: function(data){
+                    var userModel = {
+                        userid: '',
+                        type: 0,
+                        username: '加载中...'
+                    }
+                     if (data.code && data.code == 1 && data.data) {
+                        userModel = self._convertNodeToUIDetailModel(data.data, userModel);
+                    }
+                    return userModel;
+                },
+
+
                 //ui转后端
                 convertUserModel: function(data) {
                     var userModel = {};
@@ -31,7 +45,7 @@
                     //用户名称
                     if(node.username) {model.username = node.username;}
                     //用户类型: 0 学生，1 老师
-                    if(node.type) {model.type = node.type;}
+                    if(node.type || node.type == 0) {model.type = node.type;}
 
                     return model;
                 }

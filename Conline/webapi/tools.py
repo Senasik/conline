@@ -30,18 +30,14 @@ def pack(data={}, msg='success', code=1):
 # 验证token是否失效，返回值-2 表示登录失效，-3 表示未登录
 
 def tokenActive(cookie):
-    try:
         # 验证token
-        cookie.keys().index('token')
-        user = list(User.objects.all().filter(token=cookie.get('token')))
-        if len(user) == 0:
-            return -2
-        return user[0]
-    except ValueError as e:
-        # 确定是否是无token的异常
-        if str(e) != "'token' is not in list":
-            raise Exception(e)
-        return -3
+        if 'token' in cookie:
+            user = list(User.objects.all().filter(token=cookie.get('token')))
+            if len(user) == 0:
+                return -2
+            return user[0]
+        else:
+            return -3
 
 
 # 根据code获得相应的msg

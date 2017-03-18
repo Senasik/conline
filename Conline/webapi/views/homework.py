@@ -14,7 +14,7 @@ from webapi.tools import Debuglog
 
 # 创建题目
 @csrf_exempt
-def cteatHomework(request):
+def creatHomework(request):
     try:
         body = eval(request.body)
         user = tokenActive(request.COOKIES)
@@ -22,26 +22,24 @@ def cteatHomework(request):
             pack(code=user)
         id = random_str()
         now = int(1000 * time.time())
-        user = Homework(homeworkid=id, title=body['title'], creator=user.userid, type=body['type'], answer=body['answer'], option=body['option'], creattime=now)
+        user = Homework(homeworkid=id, title=body['title'], creator=user.userid, type=body['type'], answer=body['answer'], creattime=now, father=body['father'])
+        if body['type'] == 0:
+            user.option = body['option']
         user.save()
-        return  pack(data={'homeworkid': id})
+        return pack(data={'homeworkid': id})
     except Exception as e:
         return pack(msg=e)
 
 
-# 获取题目,id为数组型
+# 获取题目
 @csrf_exempt
 def getHomework(request):
     try:
         body = eval(request.body)
-        # 记录所有homework的数组
-        homeworks = []
-        for homeworkid in body['homeworkids']:
-            homework = list(Homework.objects.all().filter(homeworkid=homeworkid))
-            if len(homework) == 0:
-                raise Exception('题目id错误')
-            homeworks.append(homeworkModel(homework[0]))
-        return pack(data=homeworks)
+        homework = list(Homework.objects.all().filter(homeworkid=body['homeworkid']))
+        if len(homework) == 0:
+            raise Exception('题目id错误')
+        return pack(data=homeworkModel(homework))
     except Exception as e:
         return pack(msg=e)
 
@@ -51,15 +49,30 @@ def getHomework(request):
 def getHomeworkByUser(request):
     try:
         body = eval(request.body)
-        homework = list(Homework.objects.all().filter(creator=body['userid']))
-        if len(homework) == 0:
+        homeworklist = list(Homework.objects.all().filter(creator=body['userid']))
+        if len(homeworklist) == 0:
             return pack(data=[], msg='未获取到数据')
-        homework = homework[0]
-
-        return pack(data=homeworkModel(homework))
+        for homework in homeworklist:
+            homework = homeworkModel(homework)
+        return pack(data=homeworklist)
     except Exception as e:
         return pack(msg=e)
 
+
+# 获取章节题目列表
+@csrf_exempt
+def getHomeworkBySection(request):
+    try:
+        model = []
+        body = eval(request.body)
+        homeworklist = list(Homework.objects.all().filter(father=body['sectionid']))
+        if len(homeworklist) == 0:
+            return pack(data=[], msg='未获取到数据')
+        for homework in homeworklist:
+            model.append(homeworkModel(homework))
+        return pack(data=model)
+    except Exception as e:
+        return pack(msg=e)
 
 
 @csrf_exempt
@@ -73,10 +86,10 @@ def moban(request):
 
 def homeworkModel(homework):
     return {
-        'homeworkid': homework['homeworkid'],
-        'title': homework['homeworkid'],
-        'creator': homework['homeworkid'],
-        'type': homework['homeworkid'],
-        'answer': homework['homeworkid'],
-        'option': homework['homeworkid']
+        'homeworkid': homework.homeworkid,
+        'title': homework.title,
+        'creator': homework.creator,
+        'type': homework.type,
+        'answer': homework.answer,
+        'option': homework.option
     }

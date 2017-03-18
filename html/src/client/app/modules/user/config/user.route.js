@@ -24,9 +24,30 @@
                     controller: 'SignupController'
                 })
                 .state('app.user.info', {
-                    url: '/info/:type/:userid',
-                    templateUrl: 'modules/user/views/userinfo.html',
-                    controller: 'UserInfoController'
+                    abstrate: true,
+                    url: '/info',
+                    templateUrl: '',
+                    controller: 'InfoController',
+                    resolve: {
+                        thisuser: function(UserApi, UserMap){
+                            return UserApi.login().then(function(res) {
+                                var data = res.data;
+                                return UserMap.userDetailModel(data);
+                            }, function() {
+                                return null;
+                            })
+                        }
+                    }
+                })
+                .state('app.user.info.teacher', {
+                    url: '/teacher/:userid',
+                    templateUrl: 'modules/user/views/teacherinfo.html',
+                    controller: 'TeacherInfoController'
+                })
+                .state('app.user.inso.student', {
+                    url: '/student/:userid',
+                    templateUrl: 'modules/user/views/stuinfo.html',
+                    controller: 'StuInfoController'
                 });
 
         });

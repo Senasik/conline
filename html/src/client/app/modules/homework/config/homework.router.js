@@ -16,20 +16,30 @@
                     template: '',
                     controller: 'HomeworkDefaultCtrl'
                 })
-                .state('app.homework.default', {
+                .state('app.homework.create', {
                     url: '/create',
-                    template: 'modules/homework/views/create.html',
-                    controller: 'HomeworkCreateCtrl'
+                    templateUrl: 'modules/homework/views/create.html',
+                    controller: 'HomeworkCreateCtrl',
+                    resolve: {
+                        sectionlist: function(SectionApi, SectionMap){
+                            return SectionApi.getsectionlist().then(function(res){
+                                var data = res.data;
+                                return SectionMap.sectionListModel(data)
+                            }, function(){
+                                return null;
+                            })
+                        }
+                    }
                 })
                 .state('app.homework.detail', {
-                    url: '/detail/:homeworkid',
+                    url: '/:sectionid',
                     templateUrl: 'modules/homework/views/detail.html',
                     controller: 'HomeworkDetailCtrl',
                     resolve: {
-                        homeworkModel: function($stateParams, HomeworkApi, HomeworkMap) {
-                            return homeworkApi.gethomeworkdetail({ homeworkid: $stateParams.homeworkid }).then(function(res) {
+                        homeworklsit: function($stateParams, HomeworkApi, HomeworkMap) {
+                            return HomeworkApi.gethomeworkbysection({ sectionid: $stateParams.sectionid }).then(function(res) {
                                 var data = res.data;
-                                return homeworkMap.homeworkDetailModel(data);
+                                return HomeworkMap.homeworkListModel(data);
                             }, function() {
                                 return null;
                             })

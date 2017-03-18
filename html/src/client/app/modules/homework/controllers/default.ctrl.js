@@ -1,7 +1,7 @@
 (function() {
     'use strict';
     angular
-        .module('com.module.section')
-        .controller('SectionDefaultCtrl', function($scope, $state, $cookies, $uibModal, toaster, CourseApi) {
+        .module('com.module.homework')
+        .controller('HomeworkDefaultCtrl', function($scope, $state, $cookies, $uibModal, toaster, CourseApi) {
         });
 })();
