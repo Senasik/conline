@@ -29,6 +29,24 @@
         creatcourse: function(data){
           var url = 'creatcourse';
           return self._http(url, data)
+        },
+
+        //删除课程 courseid
+        deletecourse: function(data){
+          var url = 'deletecourse';
+          return self._http(url, data)
+        },
+
+        //编辑课程 courseid，coursename
+        editcourse: function(data){
+          var url = 'editcourse';
+          return self._http(url, data)
+        },
+
+        //获取推荐课程
+        getrecommendsources: function(){
+          var url = 'getrecommendsources';
+          return self._http(url)
         }
 
        

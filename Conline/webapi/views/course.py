@@ -7,7 +7,7 @@ from webapi.tools import random_str, pack, tokenActive
 import time
 
 # model导入
-from webapi.models import Course, User, Section
+from webapi.models import Course, User, Section, RecommendCourse
 
 # 日志导入
 from webapi.tools import Debuglog
@@ -61,5 +61,60 @@ def getCourseList(request):
         return pack(msg=e)
 
 
+# 编辑课程
+@csrf_exempt
+def deleteCourse(request):
+    try:
+        body = eval(request.body)
+        user = tokenActive(request.COOKIES)
+        if not isinstance(user, User):
+            return pack(code=user)
+        if user.type == 0:
+            raise Exception('学生无法删除')
+        course = Course.objects.all().filter(creator=user.userid).filter(courseid=body['courseid'])
+        course.delete()
+
+        return pack()
+    except Exception as e:
+        return pack(msg=e)
 
 
+# 编辑课程
+@csrf_exempt
+def editCourse(request):
+    try:
+        body = eval(request.body)
+        user = tokenActive(request.COOKIES)
+        if not isinstance(user, User):
+            return pack(code=user)
+        if user.type == 0:
+            raise Exception('学生无法编辑')
+        course = list(Course.objects.all().filter(creator=user.userid).filter(courseid=body['courseid']))[0]
+        course.title = body['title']
+        course.save()
+        return pack()
+    except Exception as e:
+        return pack(msg=e)
+
+
+# 获取推荐课程
+@csrf_exempt
+def getrecommendsources(request):
+    try:
+        model = []
+        recommendcourses = list(RecommendCourse.objects.all())
+        for course in recommendcourses:
+            course = list(Course.objects.filter(courseid=course.courseid))[0]
+            creator = list(User.objects.filter(userid=course.creator))[0]
+            model.append({
+                'courseid': course.courseid,
+                'title': course.title,
+                'creator': {
+                    'userid': creator.userid,
+                    'username': creator.username
+                }
+            })
+        return pack(data=model)
+
+    except Exception as e:
+        return pack(msg=e)

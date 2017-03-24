@@ -133,8 +133,23 @@ def getuserdetail(request):
         return pack(msg=e)
 
 
+# 修改密码
+@csrf_exempt
+def alertpwd(request):
+    try:
+        body = eval(request.body)
+        user = tokenActive(request.COOKIES)
+        if not isinstance(user, User):
+            return pack(code=user)
+        if user.password == body['oldpwd']:
+            user.password = body['newpwd']
+            user.save()
+            return pack()
+        else:
+            raise Exception('旧密码错误')
 
-
+    except Exception as e:
+        return pack(msg=e)
 
 
 

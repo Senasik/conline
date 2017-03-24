@@ -1,0 +1,19 @@
+<div class="row">
+    <div class="cpanel cnotic" ng-class="{'col-sm-2': noticcb.isdetail,'col-sm-8': !noticcb.isdetail}">
+            <div class="cpanel-title">
+                <h4>公告</h4>
+            </div>
+            <div class="cpanel-ul">
+                <div ng-repeat="notic in noticlist" class="cpanel-li">
+                    <a ui-sref="app.notic.detail({noticid: notic.noticid})">
+                        <h6>{{notic.title}}</h6>
+                    </a>
+                    <h6 class="right" ng-if="!noticcb.isdetail">{{notic.creattime | date: 'yyyy/MM/dd hh:mm:ss'}}</h6>
+                </div>
+            </div>
+            <a ng-click="getmore()" ng-if="!isover"><h5>查看更多...</h5></a>
+            <h5 ng-if="isover && !noticcb.isdetail">已显示所有公告</h5>
+        </div>
+    <div ui-view class="col-sm-7"></div>
+</div>
+        

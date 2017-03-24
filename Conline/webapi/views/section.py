@@ -60,6 +60,7 @@ def getSectionDetail(request):
     except Exception as e:
         return pack(msg=e)
 
+
 # 创建章节内容
 @csrf_exempt
 def creatSection(request):
@@ -100,6 +101,42 @@ def creatSection(request):
             section.content = filecontent.decode(encodetype)
         section.save()
 
+        return pack()
+    except Exception as e:
+        return pack(msg=e)
+
+
+# 删除章节
+@csrf_exempt
+def deletesection(request):
+    try:
+        body = eval(request.body)
+        user = tokenActive(request.COOKIES)
+        if not isinstance(user, User):
+            return pack(code=user)
+        if user.type == 0:
+            raise Exception('学生无法删除')
+        section = Section.objects.all().filter(creator=user.userid).filter(sectionid=body['sectionid'])
+        section.delete()
+        return pack()
+
+    except Exception as e:
+        return pack(msg=e)
+
+
+# 编辑章节
+@csrf_exempt
+def editSection(request):
+    try:
+        body = eval(request.body)
+        user = tokenActive(request.COOKIES)
+        if not isinstance(user, User):
+            return pack(code=user)
+        if user.type == 0:
+            raise Exception('学生无法编辑')
+        section = list(Section.objects.all().filter(creator=user.userid).filter(sectionid=body['sectionid']))[0]
+        section.title = body['title']
+        section.save()
         return pack()
     except Exception as e:
         return pack(msg=e)

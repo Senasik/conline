@@ -33,6 +33,12 @@
         getuserdetail: function(data){
           var url = 'getuserdetail';
           return self._http(url, data)
+        },
+
+        //修改密码 newpwd,oldpwd
+        alertpwd: function(data){
+          var url = 'alertpwd';
+          return self._http(url, data)
         }
       };
       return self;

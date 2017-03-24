@@ -27,7 +27,9 @@
                         userid: data.userid,
                         username: data.username,
                         type: data.type,
-                        password: data.password
+                        password: data.password?$.md5(data.password):undefined,
+                        newpwd: data.newpwd?$.md5(data.newpwd):undefined,
+                        oldpwd: data.oldpwd?$.md5(data.oldpwd):undefined
 
                     };
                     return userModel;

@@ -37,7 +37,8 @@
                     var courseModel = {};
                     courseModel = {
                         title: data.title,
-                        type: data.type
+                        type: data.type,
+                        courseid: data.courseid
                     };
                     return courseModel;
                 },

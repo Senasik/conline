@@ -26,7 +26,7 @@
                 .state('app.user.info', {
                     abstrate: true,
                     url: '/info',
-                    templateUrl: '',
+                    template: '<div ui-view></div>',
                     controller: 'InfoController',
                     resolve: {
                         thisuser: function(UserApi, UserMap){

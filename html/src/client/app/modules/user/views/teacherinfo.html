@@ -1,15 +1,22 @@
 <div class="container-fluid">
     <div>
-        <h2>{{user.username}}</h2>
+        <h2  style="display: inline-block;">{{user.username}}</h2>
+        <a ng-click="alertpwd()" ng-if="isme"><h5 style="display: inline-block;">修改密码</h5></a>
+       	
     </div>
     <div>
         <h3 ng-click="getCourselist();"><a>所有课程</a></h3>
         <ul uib-collapse="courseCollapsed" style="padding-top: 15px">
             <li ng-repeat="course in courselist" ng-init="course.sectionCollapsed = true">
-                <a ng-click="getSectionlist(course);"><h4>{{course.title}}</h4></a>
+                <a ng-click="getSectionlist(course);"><h4 style="display: inline-block;">{{course.title}}</h4></a>
+                <a ng-click="editCourse(course)" ng-if="isme">&nbsp;编辑名称</a>
+                <a ng-click="deleteCourse(course)" ng-if="isme">--</a>
+                
                 <ul uib-collapse="course.sectionCollapsed" style="padding-top: 15px">
                 	<li ng-repeat="section in course.sectionlist" >
-                		<a ui-sref="app.section.detail({courseid: course.courseid, sectionid:section.sectionid})"><h5>{{section.title}}</h5></a>
+                		<a ui-sref="app.section.detail({courseid: course.courseid, sectionid:section.sectionid})"><h5 style="display: inline-block;">{{section.title}}</h5></a>
+                        <a ng-click="editSection(section)" ng-if="isme">&nbsp;编辑名称</a>
+                         <a ng-click="deleteSection(section, course)" ng-if="isme">--</a>
                 	</li>
                 </ul>
             </li>

@@ -14,7 +14,6 @@
 				$ctrl.$onInit = function() {
 					$ctrl.content = $ctrl.resolve.content;
 					$ctrl.context = $ctrl.resolve.context;
-					$ctrl.bodyUrl = $ctrl.resolve.bodyUrl;
 				};
 
 				$ctrl.ok = function() {

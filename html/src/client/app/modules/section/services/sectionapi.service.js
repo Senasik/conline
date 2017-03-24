@@ -29,6 +29,16 @@
         getsectiondetail: function(data){
           var url = 'getsectiondetail';
           return self._http(url, data)
+        },
+        //删除章节详情{sectionid}
+        deletesection: function(data){
+          var url = 'deletesection';
+          return self._http(url, data)
+        },
+        //编辑章节详情{sectionid,title}
+        editsection: function(data){
+          var url = 'editsection';
+          return self._http(url, data)
         }
       };
       return self;

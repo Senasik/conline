@@ -1,3 +1,30 @@
+@maincolor: #6cebff;
+@transition_duration: .5s;
+
+.main-shadow {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.09);
+
+}
+
+body{
+
+-moz-user-select:none;/*火狐*/
+
+-webkit-user-select:none;/*webkit浏览器*/
+
+-ms-user-select:none;/*IE10*/
+
+-khtml-user-select:none;/*早期浏览器*/
+
+user-select:none;
+
+}
+
+
+body{
+	font-family: "Microsoft Yahei";
+}
+
 header {
     @headermargin: 3px;
     background: black;
@@ -8,6 +35,69 @@ header {
         &:hover {
             color: #aaa;
         }
+    }
+}
+
+.cpanel {
+	@height: 45px;
+	h1,h2,h3, h4,h5,h6 {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0;
+        height: @height;
+        line-height: @height;
+    }
+	h6:hover{
+    	color: @maincolor !important;
+    }
+
+    .cpanel-title {
+	    border-bottom: 2px solid @maincolor;
+	    background-color: #fff;
+	    padding: 0 15px;
+	    .main-shadow;
+	    position: relative;
+	   
+	}
+
+	.cpanel-ul {
+		@height: 30px;
+		background-color: #fff;
+		margin-top: 4px;
+		.main-shadow;
+		.cpanel-li {
+			border-bottom: 1px solid @maincolor;
+			padding: 5px 15px;
+            transition: all @transition_duration;
+            &:hover{
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.09);
+                background-color: #f7f7f7;
+            }
+			h6 {
+				height: @height;
+        		line-height: @height;
+
+			}
+		}
+	}
+	.right {
+		float: right;
+	}
+}
+
+
+/*公告样式*/
+
+.cnotic{
+    transition: all 1s;
+}
+
+
+
+@media screen and(max-width: 760px) {
+    .nopadding {
+        padding: 0 !important;
+        margin: 0 !important;
     }
 }
 

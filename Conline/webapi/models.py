@@ -22,6 +22,12 @@ class Course(models.Model):
     title = models.CharField(max_length=45)
     creattime = models.CharField(max_length=45)
     creator = models.CharField(max_length=45)
+    tag = models.CharField(blank=True, null=True, max_length=100)
+
+
+# 推荐课程表
+class RecommendCourse(models.Model):
+    courseid = models.CharField(primary_key=True, max_length=45)
 
 
 # 章节表，依赖于课程表
@@ -49,3 +55,11 @@ class Homework(models.Model):
     answer = models.TextField()
     option = models.TextField(blank=True, null=True)
     creattime = models.CharField(max_length=45)
+
+
+# 公告表
+class Notic(models.Model):
+    noticid = models.CharField(primary_key=True, max_length=45)
+    title = models.CharField(max_length=45)
+    creattime = models.CharField(max_length=45)
+    content = models.TextField()

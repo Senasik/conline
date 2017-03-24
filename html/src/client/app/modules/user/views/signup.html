@@ -9,7 +9,7 @@
         <div class="form-group">
             <label for="password" class="control-label col-sm-2">密码</label>
             <div class="col-sm-3">
-                <input type="text" autocomplete="off" onfocus="this.type='password';" class="form-control" id="password" ng-model="signupuser.psw" ng-change="signupuser.psw && signupuser.psw.length >0?signupuser.password = $.md5(signupuser.psw):true;" ng-pattern="/^[0-9a-zA-Z]{6,16}$/" required>
+                <input type="text" autocomplete="off" onfocus="this.type='password';" class="form-control" id="password" ng-model="signupuser.password"  ng-pattern="/^[0-9a-zA-Z]{6,16}$/" required>
             </div>
         </div>
         <div class="form-group">

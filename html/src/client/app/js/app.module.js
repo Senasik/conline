@@ -28,6 +28,8 @@
 			'com.module.section',
 			'com.module.homework',
 			'com.module.home',
+			'com.module.notic',
+			'com.module.resource'
 
 
 

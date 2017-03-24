@@ -42,7 +42,9 @@
                     var sectionModel = {};
                     sectionModel = {
                         title: data.title,
-                        type: data.type
+                        type: data.type,
+                        sectionid: data.sectionid
+
                     };
                     return sectionModel;
                 },
