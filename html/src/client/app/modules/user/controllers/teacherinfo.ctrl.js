@@ -3,25 +3,10 @@
     angular
         .module('com.module.user')
         .controller('TeacherInfoController', ['$scope', '$state', '$uibModal', 'toaster', 'CourseApi', 'SectionApi', 'userModel', 'thisuser', 'CourseMap', 'SectionMap', 'UserApi', 'UserMap', function($scope, $state, $uibModal, toaster, CourseApi, SectionApi, userModel, thisuser, CourseMap, SectionMap, UserApi, UserMap) {
-            $scope.user = thisuser;
-            if (!thisuser) {
-                toaster.pop({
-                    type: "warning",
-                    title: '提示',
-                    body: '未获取到数据，即将转至主页',
-                    timeout: 1000,
-                    onHideCallback: function() {
-                        $state.go('app.home');
-                    }
-                });
-                return;
-            }
-            //是否是自己
-            $scope.isme = thisuser.userid == userModel.userid ? true : false;
+            
             //课程Collapse控制变量
             $scope.courseCollapsed = true;
-            //md5加密需要jquery
-            $scope.$ = window.$;
+            
 
 
             //获取所有课程
@@ -48,38 +33,7 @@
 
                 });
             };
-            //修改密码
-            $scope.alertpwd = function() {
-                try {
-                    $uibModal.open({
-                        component: 'confirmComponent',
-                        resolve: {
-                            content: {
-                                title: '修改密码',
-                                bodyUrl: 'modules/user/views/elements/alertpwd.html'
-                            }
-
-                        }
-                    }).result.then(function(context) {
-                        UserApi.alertpwd(UserMap.convertUserModel(context)).then(function(res) {
-                            var data = res.data;
-                            if (data && data.code && data.code >= 0) {
-                                toaster.pop('success', '提示', '修改成功,下次登录请使用新密码');
-                                return;
-                            }
-                            toaster.pop('error', '提示', '修改失败:' + data.msg);
-                        }, function() {
-                            toaster.pop('error', '提示', '修改失败');
-
-                        })
-
-                    }, function() {
-
-                    });
-                } catch (e) {
-
-                }
-            };
+            
             //删除course
             $scope.deleteCourse = function(course) {
                 $uibModal.open({

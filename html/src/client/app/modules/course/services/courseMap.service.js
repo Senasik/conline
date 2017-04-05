@@ -13,10 +13,9 @@
                         angular.forEach(data.data, function(value, index){
                             courseModel.push(self._convertNodeToUIDetailModel(value));
                         })
-                        return courseModel;
                     }
 
-                    return null;
+                    return courseModel;
                 },
 
                 //课程详细信息
@@ -24,6 +23,7 @@
                     var courseModel = {
                         title: '加载中...',
                         courseid: '',
+                        cover: '',
                         creator: ''
                     };
                      if (data.code && data.code == 1 && data.data){
@@ -38,7 +38,8 @@
                     courseModel = {
                         title: data.title,
                         type: data.type,
-                        courseid: data.courseid
+                        courseid: data.courseid,
+                        cover: data.cover
                     };
                     return courseModel;
                 },
@@ -58,6 +59,9 @@
                     if(node.type || node.type == 0) {model.type = node.type;}
                     //创建者
                     if(node.creator) {model.creator = node.creator;}
+                    //封面图
+                    if(node.cover) {model.cover = node.cover;}
+                    else{model.cover = 'images/bg.jpg'}
 
                     return model;
                 }

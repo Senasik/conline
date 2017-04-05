@@ -11,26 +11,34 @@
             </div>
         </div>
         <div class="col-sm-7 cpanel">
-            <div class="cpanel-title">
-                <h4>推荐课程</h4>
-                <a class="right" ui-sref="app.course.list"><h6 >查看更多...</h6></a>
-            </div>
-            <div class="cpanel-ul">
-                <div ng-repeat="course in recommendcourses" class="cpanel-li">
-                    <a ui-sref="app.section.list({courseid: course.courseid})"><h6>{{course.title}}</h6></a>
-                    <a class="right" ui-sref="app.user.info.teacher({userid: course.creator.userid})"><h6>{{course.creator.username}}</h6></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-5 cpanel">
-            <div class="cpanel-title">
+        <div class="cpanel-title">
                 <h4>公告</h4>
                 <a class="right" ui-sref="app.notic"><h6 >查看更多...</h6></a>
             </div>
             <div class="cpanel-ul">
-                <div ng-repeat="notic in notics" class="cpanel-li"></div>
+                <div ng-repeat="notic in noticlist" class="cpanel-li">
+                    <a ui-sref="app.notic.detail({noticid: notic.noticid})"><h6>{{notic.title}}</h6></a>
+                    <div class="right"><h6>{{notic.creattime | date: 'yyyy-MM-dd hh:mm'}}</h6></div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 cpanel">
+            <div class="cpanel-title">
+                <h4>推荐课程</h4>
+                <a class="right" ui-sref="app.course.list"><h6 >查看更多...</h6></a>
+            </div>
+            <div>
+                <div ng-repeat="course in recommendcourses" class="col-sm-2 col-xs-6">
+
+                    <a ui-sref="app.section({courseid: course.courseid})">
+                        <img ng-src="{{course.cover}}" class="img-responsive">
+                        <h6 >{{course.title}}</h6>
+                    </a>
+                    <a  ui-sref="app.user.info.teacher({userid: course.creator.userid})"><h6>{{course.creator.username}}</h6></a>
+                </div>
             </div>
         </div>
     </div>
@@ -45,4 +53,5 @@
             </div>
         </div>
     </div>
+
 </div>

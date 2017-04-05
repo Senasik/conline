@@ -38,6 +38,17 @@ def creatCourse(request):
         return pack(msg=e)
 
 
+# 获取推荐课程
+@csrf_exempt
+def getcoursedetail(request):
+    try:
+        courseid = eval(request.body)['courseid']
+        course = list(Course.objects.all().filter(courseid=courseid))[0]
+        return pack(data=coursemodel(course))
+    except Exception as e:
+        return pack(msg=e)
+
+
 # 获取课程列表
 @csrf_exempt
 def getCourseList(request):
@@ -52,16 +63,13 @@ def getCourseList(request):
         courseList = list(Course.objects.all().filter(creator=userid))
         model = []
         for course in courseList:
-            model.append({
-                'courseid': course.courseid,
-                'title': course.title
-            })
+            model.append(coursemodel(course))
         return pack(data=model)
     except Exception as e:
         return pack(msg=e)
 
 
-# 编辑课程
+# 删除课程
 @csrf_exempt
 def deleteCourse(request):
     try:
@@ -105,16 +113,21 @@ def getrecommendsources(request):
         recommendcourses = list(RecommendCourse.objects.all())
         for course in recommendcourses:
             course = list(Course.objects.filter(courseid=course.courseid))[0]
-            creator = list(User.objects.filter(userid=course.creator))[0]
-            model.append({
-                'courseid': course.courseid,
-                'title': course.title,
-                'creator': {
-                    'userid': creator.userid,
-                    'username': creator.username
-                }
-            })
+            model.append(coursemodel(course))
         return pack(data=model)
 
     except Exception as e:
         return pack(msg=e)
+
+
+def coursemodel(course):
+    creator = list(User.objects.filter(userid=course.creator))[0]
+    model = {'courseid': course.courseid,
+                'title': course.title,
+                'cover': course.cover,
+                'creator': {
+                    'userid': creator.userid,
+                    'username': creator.username
+                }
+    }
+    return model

@@ -8,6 +8,7 @@
 			'ngAnimate',
 			'ngCookies',
 			'ngStorage',
+			'ngTouch',
 			'ui.bootstrap',
 			'toaster',
 			'ui.grid',

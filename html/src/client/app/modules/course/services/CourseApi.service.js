@@ -22,7 +22,7 @@
         //获取课程列表,用token
         getcourselist: function(data){
           var url = 'getcourselist';
-          return self._http(url)
+          return self._http(url, data)
         },
 
         //创建课程, 用token
@@ -47,6 +47,12 @@
         getrecommendsources: function(){
           var url = 'getrecommendsources';
           return self._http(url)
+        },
+
+        //获取课程详情{courseid}
+        getcoursedetail: function(data){
+          var url = 'getcoursedetail';
+          return self._http(url, data)
         }
 
        

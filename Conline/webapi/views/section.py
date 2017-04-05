@@ -32,6 +32,7 @@ def getSectionList(request):
                     'title': section.title,
                     'creator': section.creator,
                     'type': section.type,
+                    'creattime': section.creattime
                 })
         return pack(data=model)
     except Exception as e:
@@ -54,7 +55,8 @@ def getSectionDetail(request):
             'type': section.type,
             'content': section.content,
             'fileurl': section.fileurl,
-            'father': section.father
+            'father': section.father,
+            'creattime': section.creattime
         }
         return pack(data=model)
     except Exception as e:

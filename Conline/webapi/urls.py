@@ -6,7 +6,6 @@ urlpatterns = [
     # 用户
     url(r'login$', views.login),
     url(r'signup$', views.signup),
-    url(r'userinfo$', views.userinfo),
     url(r'getuserdetail$', views.getuserdetail),
     url(r'alertpwd$', views.alertpwd),
     # 课程
@@ -15,6 +14,7 @@ urlpatterns = [
     url(r'getcourselist$', course.getCourseList),
     url(r'editcourse$', course.editCourse),
     url(r'getrecommendsources$', course.getrecommendsources),
+    url(r'getcoursedetail$', course.getcoursedetail),
     # 章节
     url(r'creatsection$', section.creatSection),
     url(r'getsectionlist$', section.getSectionList),

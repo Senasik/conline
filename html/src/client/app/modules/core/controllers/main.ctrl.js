@@ -2,7 +2,7 @@
     'use strict';
     angular
         .module('com.module.core')
-        .controller('MainCtrl', function($rootScope, $scope, $sessionStorage, $state, $location, $uibModal, AppAuth, userModel) {
+        .controller('MainCtrl', function($rootScope, $scope, $sessionStorage, $state, $location, $timeout, $uibModal, AppAuth, userModel) {
             $scope.$state = $state;
             $scope.AppAuth = AppAuth;
 
@@ -23,8 +23,8 @@
             $rootScope.$on('$stateChangeStart',
                 function(event, toState, toParams, fromState, fromParams) {
                     //状态改变时，收掉collapse
-                    if (window.innerWidth < 768 && $('#collapsebody').height() > 1)
-                        $('#collapsebutton').click();
+                    if (window.innerWidth < 768 && $('#collapsebody').height() > 100)
+                       $('#collapsebutton').click();
                     
                     //如果是跳转到登录，保存上一个状态
                     if(toState.name == 'app.user.login'){

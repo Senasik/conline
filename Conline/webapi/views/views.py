@@ -61,32 +61,32 @@ def signup(request):
         return pack(msg=e)
 
 
-# 获取用户信息
-@csrf_exempt
-def userinfo(request):
-    try:
-        body = eval(request.body)
-        user = tokenActive(request.COOKIES)
-        if user == -2:
-            return pack(code=-2)
-        elif user == -3 or body['userid'] != '':
-            # 如果token有效且用户的userid为空，那么表示取得是自己的信息
-            # token为空则肯定是根据userid查询别人的信息
-            user = list(User.objects.all().filter(userid=body.userid))
-            # 如果没查到数据，返回空
-            if len(user) == 0:
-                return pack(data={})
-            else:
-                user = user[0]
-        model = {
-            'userid': user.userid,
-            'username': user.username,
-            'type': user.type,
-        }
-        return pack(data=model)
-
-    except Exception as e:
-        return pack(msg=e)
+# # 获取用户信息
+# @csrf_exempt
+# def userinfo(request):
+#     try:
+#         body = eval(request.body)
+#         user = tokenActive(request.COOKIES)
+#         if user == -2:
+#             return pack(code=-2)
+#         elif user == -3 or body['userid'] != '':
+#             # 如果token有效且用户的userid为空，那么表示取得是自己的信息
+#             # token为空则肯定是根据userid查询别人的信息
+#             user = list(User.objects.all().filter(userid=body.userid))
+#             # 如果没查到数据，返回空
+#             if len(user) == 0:
+#                 return pack(data={})
+#             else:
+#                 user = user[0]
+#         model = {
+#             'userid': user.userid,
+#             'username': user.username,
+#             'type': user.type,
+#         }
+#         return pack(data=model)
+#
+#     except Exception as e:
+#         return pack(msg=e)
 
 
 # 获取用户详细信息
@@ -102,7 +102,7 @@ def getuserdetail(request):
         elif user == -3 or 'userid' in body:
             # 如果token有效且用户的userid为空，那么表示取得是自己的信息
             # token为空则肯定是根据userid查询别人的信息
-            user = list(User.objects.all().filter(userid=body.userid))
+            user = list(User.objects.all().filter(userid=body['userid']))
             # 如果没查到数据，返回空
             if len(user) == 0:
                 return pack(data={})

@@ -1,3 +1,19 @@
-<div ng-repeat="section in sectionlist">
-	<a  ui-sref="app.section.detail({sectionid: section.sectionid})">{{section.title}}</a>
+
+<div class="row" style="position: relative;">
+    <div class="col-sm-12" style="background-image: url({{course.cover}})">
+        <h2 style="display: inline-block;">{{course.title}}</h2>
+    </div>
+        <div class="cpanel" touch-pannel ng-class="{'col-sm-2': sectioncb.isdetail,'col-sm-8': !sectioncb.isdetail}">
+            <div class="cpanel-title">
+                <h4>章节列表</h4></div>
+            <div class="cpanel-ul">
+                <div ng-repeat="section in sectionlist" class="cpanel-li">
+                    <a ui-sref="app.section.detail({sectionid: section.sectionid})"><h6>{{section.title}}</h6></a>
+                    <div class="right">
+                        <h6>{{section.creattime | date: 'yyyy-MM-dd hh:mm'}}</h6></div>
+                </div>
+            </div>
+        </div>
 </div>
+
+<div ui-view></div>

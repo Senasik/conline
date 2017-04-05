@@ -25,12 +25,12 @@
                 })
                 .state('app.user.info', {
                     abstrate: true,
-                    url: '/info',
-                    template: '<div ui-view></div>',
+                    url: '/info/:userid',
+                    template: '<div ui-view="header"></div><div ui-view="detail"></div>',
                     controller: 'InfoController',
                     resolve: {
-                        thisuser: function(UserApi, UserMap){
-                            return UserApi.login().then(function(res) {
+                        thisuser: function($stateParams, UserApi, UserMap){
+                            return UserApi.getuserdetail({userid: $stateParams.userid}).then(function(res) {
                                 var data = res.data;
                                 return UserMap.userDetailModel(data);
                             }, function() {
@@ -40,14 +40,32 @@
                     }
                 })
                 .state('app.user.info.teacher', {
-                    url: '/teacher/:userid',
-                    templateUrl: 'modules/user/views/teacherinfo.html',
-                    controller: 'TeacherInfoController'
+                    url: '/teacher',
+                    views: {
+                        header: {
+                            templateUrl: 'modules/user/views/elements/infoheader.html',
+                            controller: 'InfoHeaderController'
+                        },
+                        detail: {
+                            templateUrl: 'modules/user/views/teacherinfo.html',
+                            controller: 'TeacherInfoController'
+                        }
+                    }
+                    
                 })
-                .state('app.user.inso.student', {
-                    url: '/student/:userid',
-                    templateUrl: 'modules/user/views/stuinfo.html',
-                    controller: 'StuInfoController'
+                .state('app.user.info.student', {
+                    url: '/student',
+                    views: {
+                        header: {
+                            templateUrl: 'modules/user/views/elements/infoheader.html',
+                            controller: 'InfoHeaderController'
+                        },
+                        detail: {
+                            templateUrl: 'modules/user/views/stuinfo.html',
+                            controller: 'StuInfoController'
+                        }
+                    }
+                    
                 });
 
         });

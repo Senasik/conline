@@ -72,6 +72,8 @@
                     if (node.father) { model.father = node.father; }
                     //课后题
                     if (node.homeworkids) { model.homeworkids = node.homeworkids; }
+                    //创建时间
+                    if (node.creattime) { model.creattime = node.creattime; }
 
                     return model;
                 }

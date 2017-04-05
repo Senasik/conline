@@ -23,6 +23,7 @@ class Course(models.Model):
     creattime = models.CharField(max_length=45)
     creator = models.CharField(max_length=45)
     tag = models.CharField(blank=True, null=True, max_length=100)
+    cover = models.CharField(blank=True, null=True, max_length=100)
 
 
 # 推荐课程表
