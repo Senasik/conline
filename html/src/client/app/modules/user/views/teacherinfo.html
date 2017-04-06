@@ -1,21 +1,23 @@
 <div class="container-fluid">
-    
     <div>
         <h3 ng-click="getCourselist();"><a>所有课程</a></h3>
         <ul uib-collapse="courseCollapsed" style="padding-top: 15px">
+            <li ng-if="nocourse">暂无课程</li>
             <li ng-repeat="course in courselist" ng-init="course.sectionCollapsed = true">
                 <a ng-click="getSectionlist(course);"><h4 style="display: inline-block;">{{course.title}}</h4></a>
-                <a ng-click="editCourse(course)" ng-if="isme">&nbsp;编辑名称</a>
+                <a ng-click="editCourse(course)" ng-if="isme">&nbsp;编辑</a>
                 <a ng-click="deleteCourse(course)" ng-if="isme">--</a>
-                
                 <ul uib-collapse="course.sectionCollapsed" style="padding-top: 15px">
-                	<li ng-repeat="section in course.sectionlist" >
-                		<a ui-sref="app.section.detail({courseid: course.courseid, sectionid:section.sectionid})"><h5 style="display: inline-block;">{{section.title}}</h5></a>
-                        <a ng-click="editSection(section)" ng-if="isme">&nbsp;编辑名称</a>
-                         <a ng-click="deleteSection(section, course)" ng-if="isme">--</a>
-                	</li>
+                    <li ng-if="course.nosection">该课程暂无内容</li>
+                    <li ng-repeat="section in course.sectionlist">
+                        <a ui-sref="app.section.detail({courseid: course.courseid, sectionid:section.sectionid})"><h5 style="display: inline-block;">{{section.title}}</h5></a>
+                        <a ng-click="editSection(section)" ng-if="isme">&nbsp;编辑</a>
+                        <a ng-click="deleteSection(section, course)" ng-if="isme">--</a>
+                    </li>
+                    <li><a ui-sref="app.course.create">创建章节</a></li>
                 </ul>
             </li>
+            <li><a ui-sref="app.course.create">创建新课程</a></li>
         </ul>
     </div>
 </div>

@@ -18,8 +18,7 @@
             $cookiesProvider.defaults.domain = 'conline.com';
             $cookiesProvider.defaults.expires = new Date('3000/01/01');
 
-            //$stateProvider默认设置
-            $stateProvider
+            
 
 
 
@@ -31,6 +30,8 @@
             // });
 
             $rootScope.apiUrl = 'http://c.conline.com:8000/webapi/';
+            $rootScope.imgBase = 'http://c.conline.com:8000/static/covers/'
+            $rootScope.videoBase = 'http://c.conline.com:8000/static/sectionfile/'
 
             i18nService.setCurrentLang('zh-cn');
         });

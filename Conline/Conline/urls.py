@@ -14,8 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
+from django.conf.urls.static import static
 from django.contrib import admin
 from myhtml import views as myhtml
+from Conline import settings
 from webapi import views as webapi
 
 
@@ -25,7 +27,7 @@ urlpatterns = [
     url(r'^webapi/', include('webapi.urls')),
     url(r'^$', myhtml.index),
 
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 

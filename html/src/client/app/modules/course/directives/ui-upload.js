@@ -35,11 +35,7 @@
                     //上传文件表单
                     $scope.creatsection = {};
                     //初始化uploader
-                    function initUploader() {
-
-                       
-
-
+                    function initUploader(reselect) {
                         var uploader = $scope.uploader = new FileUploader({
                             url: $rootScope.apiUrl + 'creatsection',
                             formData: [{ courseid: $scope.creatsection.courseid, title: $scope.creatsection.title, type: $scope.creatsection.type - 0, token: $scope.token }],
@@ -47,7 +43,8 @@
                         });
 
                         //假如存在，表明是已经选择好的（因为formDate只能初始化的时候设置）
-                        if($scope.item){
+                        //reselect为true则表示是重新选择文件
+                        if($scope.item && !reselect){
                             uploader.addToQueue($scope.item._file)
                             $scope.item = uploader.queue[0];
                         }
@@ -59,8 +56,6 @@
                                 return true;
                             }
                         });
-                        // CALLBACKS
-
                         //添加到队列后更新scope里的item
                         uploader.onAfterAddingFile = function(fileItem){
                                                         // if (fileItem.file.type != "image/jpeg" && fileItem.file.type != "image/png" && fileItem.file.type != "image/gif") {
@@ -90,6 +85,8 @@
                                 return;
                             }
                             toaster.pop('error', '提示', '上传失败，原因：' + response.msg);
+                            $scope.isSuccess = false;
+                            $scope.isError = true;
                         };
 
                         // 上传失败触发
@@ -123,7 +120,15 @@
                         //正在上传中直接返回
                        if($scope.item && ($scope.item.isUploading || $scope.item.isUploaded))return;
 
-                        $("#sectionfile" + $scope.num + ' input').click();
+                       //准备好之后再点击则重新上传
+                       if($scope.item){
+                        initUploader(true);
+                        $timeout(function(){
+                            $("#sectionfile" + $scope.num + ' input').click();
+                        },10)
+                        return;
+                       }
+                       $("#sectionfile" + $scope.num + ' input').click();
                     };
                     //开始上传
                     $scope.start = function() {

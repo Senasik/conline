@@ -13,10 +13,10 @@
                         angular.forEach(data.data, function(value, index) {
                             sectionModel.push(self._convertNodeToUIDetailModel(value));
                         })
-                        return sectionModel;
+                    
                     }
 
-                    return null;
+                    return sectionModel;
                 },
 
                 //章节详细信息

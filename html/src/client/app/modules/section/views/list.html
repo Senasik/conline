@@ -1,6 +1,6 @@
 
 <div class="row" style="position: relative;">
-    <div class="col-sm-12" style="background-image: url({{course.cover}})">
+    <div class="col-sm-12 main-shadow" style="background-image: url({{course.cover}});background-size: cover;padding-left: 30px">
         <h2 style="display: inline-block;">{{course.title}}</h2>
     </div>
         <div class="cpanel" touch-pannel ng-class="{'col-sm-2': sectioncb.isdetail,'col-sm-8': !sectioncb.isdetail}">
@@ -9,11 +9,14 @@
             <div class="cpanel-ul">
                 <div ng-repeat="section in sectionlist" class="cpanel-li">
                     <a ui-sref="app.section.detail({sectionid: section.sectionid})"><h6>{{section.title}}</h6></a>
-                    <div class="right">
+                    <div class="right" ng-if="!sectioncb.isdetail">
                         <h6>{{section.creattime | date: 'yyyy-MM-dd hh:mm'}}</h6></div>
                 </div>
             </div>
         </div>
+    <div ui-view class="col-sm-8 col-sm-offset-1 "></div>
 </div>
 
-<div ui-view></div>
+
+
+

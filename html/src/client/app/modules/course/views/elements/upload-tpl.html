@@ -26,12 +26,11 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="col-sm-6 ui-upload" id="sectionfile{{num}}" style="position: relative;width: 210px">
-            <label  ng-click="upload()">{{filename}}</label>
-            
-            <a ng-hide="item.isUploading || item.isUploaded" ng-click="start()">开始上传</a>
+        <div class="col-sm-6 ui-upload" id="sectionfile{{num}}" style="position: relative;width: 210px;">
+            <div><a  ng-click="upload()">{{filename}}</a> </div>
+            <a ng-hide="item.isUploading || item.isUploaded || filename == '点击选择文件'" ng-click="start()">开始上传</a>
             <div class="loading-mask" ng-show="item.isUploading">
-                <uib-progressbar class="progress-striped active" ng-show="item.isUploading" ng-init="progress = 0;" animate="true" value="progress" type="{{progresstype}}"><b>{{progress}}%</b></uib-progressbar>
+                <uib-progressbar class="progress-striped active" ng-show="item.isUploading" ng-init="progress = 0;" value="progress" type="{{progresstype}}"><b>{{progress}}%</b></uib-progressbar>
                 <span ng-if="item.isUploading" ng-click="cancel()">取消上传</span>
             </div>
             <div ng-if="item.isSuccess">文件上传成功</div>

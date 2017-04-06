@@ -5,7 +5,16 @@
         .controller('HomeworkDetailCtrl', function($scope, $state, $cookies, $uibModal, toaster, SectionApi, homeworklsit) {
  			$scope.homeworklist = homeworklsit;
  			if(!homeworklsit){
- 				$scope.homework = [{title: '加载中...'}]
+ 				toaster.pop({
+                    type: "warning",
+                    title: '提示',
+                    body: '未获取到数据，即将跳转到主页',
+                    timeout: 1000,
+                    onHideCallback: function() {
+                        $state.go('app.home');
+                    }
+                });
+                return;
  			}
  			//提交答案
  			$scope.submit = function(){
@@ -16,6 +25,7 @@
  					return;
  				})
  			}
+
 
         });
 })();

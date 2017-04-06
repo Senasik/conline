@@ -1,11 +1,9 @@
-<div class="container-fluid">
-	
-	<div class="row">
-		<div>{{section.title}}</div>
-	<div class="sectiondetail"><p>{{section.content}}</p></div>
-	<div class="col-sm-3">
-		<button ui-sref="app.homework.detail({sectionid: section.sectionid})" class="col-sm-2 form-control" > 开始做题</button>
-	</div>
-	</div>
-	
+<div class="col-sm-12 contantpanel">
+    <h3>{{section.title}}</h3>
+    <div class="sectiondetail">
+        <p>{{section.content}}</p>
+    </div>
+    <div class="col-sm-3">
+        <button ui-sref="app.homework.detail({sectionid: section.sectionid})" class="col-sm-2 form-control btn btn-info"> 开始做题</button>
+    </div>
 </div>

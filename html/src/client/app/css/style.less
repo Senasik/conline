@@ -25,17 +25,29 @@ body{
 	font-family: "Microsoft Yahei";
 }
 
+li{
+    list-style: none;
+}
+a{
+    &:hover{
+        color: @maincolor;
+    }
+}
+
 header {
     @headermargin: 3px;
-    background: black;
-    box-shadow: 0 1px @headermargin;
-    margin-bottom: @headermargin;
-    a {
-        color: white;
-        &:hover {
-            color: #aaa;
-        }
-    }
+    background: #fff;
+    .main-shadow;
+    margin-bottom: @headermargin+2;
+
+}
+
+.contantpanel{
+    background: #fff;
+    margin-top: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    border-radius: 3px;
+    padding-top: 5px;
 }
 
 .cpanel {
@@ -68,7 +80,6 @@ header {
 		.cpanel-li {
 			border-bottom: 1px solid @maincolor;
 			padding: 5px 15px;
-            transition: all @transition_duration;
             &:hover{
                 box-shadow: 0 3px 10px rgba(0, 0, 0, 0.09);
                 background-color: #f7f7f7;
@@ -86,11 +97,35 @@ header {
 }
 
 
+.crecommend{
+    margin-top: 5px;
+    &>div{
+        border-radius: 3px;  
+    }
+    .img {
+        width: 100%;
+        height: 0;
+        padding-bottom: 56.25%;
+        transition: background-size 0.5s, background-position 0.5s;
+        border-radius: 3px 3px 0 0;
+        background-size: 100% 100%;
+        background-repeat:no-repeat;
+        &:hover{
+            background-position: 37% 55%;
+            background-size: 120% 120%;
+        }
+
+    }
+    @media screen and(min-width: 760px) {
+        &.col-sm-2{
+        width: 20%;
+    }
+    }
+    
+}
+
 /*公告样式*/
 
-.cnotic{
-    transition: all 1s;
-}
 
 
 
@@ -106,11 +141,12 @@ header {
     div[touch-pannel].col-sm-2{
         animation: touchpannelanimation 1s;
         transition: left 0.5s;
-        position: absolute;
+        position: fixed;
         z-index: 10;
         left: -80%;
+        top: 51px;
         width: 80%;
-        background-color: #000;
+        padding-left: 0;
     }
 }
 

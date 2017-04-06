@@ -10,7 +10,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-7 cpanel">
+        <div class="col-sm-5 col-sm-offset-2 cpanel">
         <div class="cpanel-title">
                 <h4>公告</h4>
                 <a class="right" ui-sref="app.notic"><h6 >查看更多...</h6></a>
@@ -27,19 +27,23 @@
     <div class="row">
         <div class="col-sm-12 cpanel">
             <div class="cpanel-title">
-                <h4>推荐课程</h4>
+                <h4>课程</h4>
                 <a class="right" ui-sref="app.course.list"><h6 >查看更多...</h6></a>
             </div>
-            <div>
-                <div ng-repeat="course in recommendcourses" class="col-sm-2 col-xs-6">
+            <div ng-repeat="course in recommendcourses" class="col-sm-2 col-xs-6 crecommend" >
+                <div  class="main-shadow" style="background: #fff">
 
                     <a ui-sref="app.section({courseid: course.courseid})">
-                        <img ng-src="{{course.cover}}" class="img-responsive">
-                        <h6 >{{course.title}}</h6>
+                        <div style="background-image: url('{{course.cover}}')" class="main-shadow img"></div>
                     </a>
-                    <a  ui-sref="app.user.info.teacher({userid: course.creator.userid})"><h6>{{course.creator.username}}</h6></a>
+                    <div style="padding:5px">
+                        <a  ui-sref="app.section({courseid: course.courseid})"><h6 >{{course.title}}</h6></a>
+                    <a class="right" ui-sref="app.user.info.teacher({userid: course.creator.userid})"><h6>{{course.creator.username}}</h6></a>
+                    </div >
+                    
                 </div>
             </div>
+                
         </div>
     </div>
     <div class="row">

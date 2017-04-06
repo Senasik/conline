@@ -3,7 +3,7 @@
 
     angular
         .module('com.module.course')
-        .factory('CourseMap', function() {
+        .factory('CourseMap', function($rootScope) {
             var self = {
 
                 //课程列表
@@ -60,7 +60,7 @@
                     //创建者
                     if(node.creator) {model.creator = node.creator;}
                     //封面图
-                    if(node.cover) {model.cover = node.cover;}
+                    if(node.cover) {model.cover = $rootScope.imgBase+node.cover;}
                     else{model.cover = 'images/bg.jpg'}
 
                     return model;

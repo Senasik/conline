@@ -5,6 +5,7 @@ import os
 # 工具函数导入
 from webapi.tools import random_str, pack, tokenActive
 import time
+from Conline.settings import STATIC_URL, BASE_DIR
 
 # model导入
 from webapi.models import Course, User, Section, RecommendCourse
@@ -101,6 +102,36 @@ def editCourse(request):
         course.title = body['title']
         course.save()
         return pack()
+    except Exception as e:
+        return pack(msg=e)
+
+
+# 添加课程封面
+@csrf_exempt
+def addCourseCover(request):
+    try:
+        body = request.POST.dict()
+        user = tokenActive({'token': body['token']})
+        if not isinstance(user, User):
+            return pack(code=user)
+        course = list(Course.objects.filter(courseid=body['courseid']))[0]
+        # 获取上传的文件，如果没有文件，则默认为None
+        file = request.FILES.get("file", None)
+        if not file:
+            pack(msg="no files for upload!")
+        # 获取扩展名
+        filetype = '.' + str(file).split('.')[1]
+        # 保存fileurl
+        course.cover = random_str() + filetype
+        # 打开特定的文件进行二进制的写操作
+        destination = open(BASE_DIR + '\\static\\' + '\\covers\\' + course.cover, 'wb+')
+        # 分块写入文件
+        for chunk in file.chunks():
+            destination.write(chunk)
+        destination.close()
+        course.save()
+        return pack(data={'cover': course.cover})
+
     except Exception as e:
         return pack(msg=e)
 

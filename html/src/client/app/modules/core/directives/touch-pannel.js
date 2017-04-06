@@ -12,7 +12,7 @@ angular.module('com.module.core').directive('touchPannel', function($swipe) {
                     startY = coords.y;
                 },
                 'move': function(coords) {
-
+                    if(window.innerWidth > 760)return;
                      if(coords.x - startX > 10){
                     elm.css({left: 0})
                     

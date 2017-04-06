@@ -2,19 +2,19 @@
         <div ng-repeat="homework in homeworklist">
             <div ng-switch on="homework.type" class="row" ng-class="{error: !homework.result && homework.result != undefined,success: homework.result}" class="row">
                 <div ng-switch-when="0" >
-                    <div><h3>{{homework.title}}</h2></div>
+                    <div><h4>{{homework.title}}</h2></div>
                     <div class="col-sm-3" ng-repeat="option in homework.option" ng-click="homework.testpaper = option" ng-class="{selectedoption: homework.testpaper == option}">
                     <a ><h5>{{option}}</h5></a></div>
                 </div>
                 <div ng-switch-when="1" >
-                    <div>{{homework.title}}</div>
+                    <div><h4>{{homework.title}}</h4></div>
                     <div class="col-sm-3">
                         <input ng-model="homework.testpaper" class="form-control"></input>
                     </div>
                     
                 </div>
                 <div ng-switch-when="2" >
-                    <div>{{homework.title}}</div>
+                    <div><h4>{{homework.title}}</h4></div>
                     <textarea ui-codemirror="{lineNumbers: true, matchBrackets: true, theme:'midnight',lineWrapping: true,mode: 'text/html'}" cols="10" rows="20"></textarea>
                 </div>
             </div>
