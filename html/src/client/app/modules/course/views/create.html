@@ -1,9 +1,9 @@
-<div class="container-fluid">
+
 	<div ng-repeat="item in uploadlist" ng-init="item.index = uploadlist.indexOf(item)">
 	    <ui-upload  token="{{token}}" courselist="courselist" startupload="item.startupload" num="{{item.index}}" creatcourse="creatcourse()"/> 
 	</div>
-	<div class="col-sm-4">
+	<div class="col-sm-2">
     <button class="form-control" ng-click="addUpload()"> 新增一个章节</button>
 		
 	</div>
-</div>
+

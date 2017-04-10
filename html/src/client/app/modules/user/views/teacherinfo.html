@@ -14,10 +14,10 @@
                         <a ng-click="editSection(section)" ng-if="isme">&nbsp;编辑</a>
                         <a ng-click="deleteSection(section, course)" ng-if="isme">--</a>
                     </li>
-                    <li><a ui-sref="app.course.create">创建章节</a></li>
+                    <li ng-if="isme"><a ui-sref="app.course.create">创建章节</a></li>
                 </ul>
             </li>
-            <li><a ui-sref="app.course.create">创建新课程</a></li>
+            <li ng-if="isme"><a ui-sref="app.course.create">创建新课程</a></li>
         </ul>
     </div>
 </div>

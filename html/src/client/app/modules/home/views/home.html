@@ -31,17 +31,7 @@
                 <a class="right" ui-sref="app.course.list"><h6 >查看更多...</h6></a>
             </div>
             <div ng-repeat="course in recommendcourses" class="col-sm-2 col-xs-6 crecommend" >
-                <div  class="main-shadow" style="background: #fff">
-
-                    <a ui-sref="app.section({courseid: course.courseid})">
-                        <div style="background-image: url('{{course.cover}}')" class="main-shadow img"></div>
-                    </a>
-                    <div style="padding:5px">
-                        <a  ui-sref="app.section({courseid: course.courseid})"><h6 >{{course.title}}</h6></a>
-                    <a class="right" ui-sref="app.user.info.teacher({userid: course.creator.userid})"><h6>{{course.creator.username}}</h6></a>
-                    </div >
-                    
-                </div>
+                <div ng-include="'modules/home/views/elements/course-tpl.html'"></div>
             </div>
                 
         </div>

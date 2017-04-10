@@ -16,6 +16,8 @@ urlpatterns = [
     url(r'getrecommendsources$', course.getrecommendsources),
     url(r'getcoursedetail$', course.getcoursedetail),
     url(r'addcoursecover$', course.addCourseCover),
+    url(r'searchcourse$', course.searchCourse),
+
     # 章节
     url(r'creatsection$', section.creatSection),
     url(r'getsectionlist$', section.getSectionList),

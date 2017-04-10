@@ -1,20 +1,20 @@
 <form class="form-horizontal form-validation" name="creatsectionform">
     <div class="form-group">
-        <label for="coursename" class="control-label col-sm-2">课程名</label>
-        <div class="col-sm-5">
+        <label for="coursename" class="control-label col-sm-1 col-xs-4">课程名</label>
+        <div class="col-sm-2 col-xs-8">
             <select id="coursename" class="form-control" ng-change="creatsection.courseid = creatsection.course.courseid" ng-model="creatsection.course" ng-init="creatsection.course=courselist[0];creatsection.courseid = creatsection.course.courseid" ng-options="item.title for item in courselist"></select>
         </div>
-        <div class="col-sm-2"><a ng-click="creatcourse()">添加课程</a></div>
+        <div class="col-sm-1"><a ng-click="creatcourse()">添加课程</a></div>
     </div>
     <div class="form-group">
-        <label for="sectionname" class="control-label col-sm-2">章节名</label>
-        <div class="col-sm-5">
+        <label for="sectionname" class="control-label col-sm-1 col-xs-4">章节名</label>
+        <div class="col-sm-2 col-xs-8">
             <input type="text" class="form-control" name="sectionname" ng-model="creatsection.title" placeholder="请输入章节名" required>
         </div>
     </div>
     <div class="form-group">
-        <label for="sectiontype" class="control-label col-sm-2">类型</label>
-        <div class="col-sm-5" style="padding-top: 7px">
+        <label for="sectiontype" class="control-label col-sm-1 col-xs-4">类型</label>
+        <div class="col-sm-2 col-xs-8" style="padding-top: 7px">
             <label class="i-checks">
                 <input type="radio" ng-init="creatsection.type = 0" ng-checked="true" ng-model="creatsection.type" value="0">
                 <i></i> 文章

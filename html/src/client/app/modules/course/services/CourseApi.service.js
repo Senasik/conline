@@ -53,8 +53,13 @@
         getcoursedetail: function(data){
           var url = 'getcoursedetail';
           return self._http(url, data)
-        }
+        },
 
+        //查询课程{keyword}
+        searchcourse: function(data){
+          var url = 'searchcourse';
+          return self._http(url, data)
+        }
        
       };
       return self;

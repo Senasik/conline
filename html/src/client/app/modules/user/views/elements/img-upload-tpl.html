@@ -1,11 +1,11 @@
-<div class="col-sm-6 img-upload" style="position: relative;width: 210px">
+<div class="col-sm-6 img-upload" style="position: relative;width: 334px">
     <div class="inline bg-white wrapper-sm b-a">
         <div class="bg-light">
-            <img ng-src="{{cover}}" width="160px" height="160px">
+            <img ng-src="{{cover}}" width="284px" height="160px">
         </div>
     </div>
     <!-- <input type="file" id="still" nv-file-select uploader="uploader" ng-hide="true"> -->
-    <div ng-click="upload()" class="loading-mask" ng-show="item.isUploading || hover" style="display: inline-block;width: 182px;position: absolute;height: 100%;background: rgba(0, 0, 0, 0.3);left: 15px;top: 0">
+    <div ng-click="upload()" class="loading-mask" ng-show="item.isUploading || hover" style="display: inline-block;width: 304px;position: absolute;height: 100%;background: rgba(0, 0, 0, 0.3);left: 15px;top: 0">
         <uib-progressbar class="progress-striped active" ng-show="item.isUploading" style="width: 100%;position: absolute;top: 45%" ng-init="progress = 0;" animate="true" value="progress" type="{{type}}"><b>{{progress}}%</b></uib-progressbar>
         <div ng-show="!item.isUploading" style="display: inline-block;position: absolute;top: 45%;width:100%;text-align: center; color: #fff">点击上传图片<br><small>大小限5MB</small></div>
     </div>

@@ -124,7 +124,7 @@ def addCourseCover(request):
         # 保存fileurl
         course.cover = random_str() + filetype
         # 打开特定的文件进行二进制的写操作
-        destination = open(BASE_DIR + '\\static\\' + '\\covers\\' + course.cover, 'wb+')
+        destination = open(BASE_DIR + os.sep + 'static' + os.sep + 'covers' + os.sep + course.cover, 'wb+')
         # 分块写入文件
         for chunk in file.chunks():
             destination.write(chunk)
@@ -145,6 +145,32 @@ def getrecommendsources(request):
         for course in recommendcourses:
             course = list(Course.objects.filter(courseid=course.courseid))[0]
             model.append(coursemodel(course))
+        return pack(data=model)
+
+    except Exception as e:
+        return pack(msg=e)
+
+
+# 查询课程
+@csrf_exempt
+def searchCourse(request):
+    try:
+        model = []
+        body = eval(request.body)
+        # keyword为课程名的情况
+        courselist = list(Course.objects.filter(title__contains=body['keyword']))
+        # keyword为老师名的情况
+        teacherlist = list(User.objects.filter(username__contains=body['keyword']))
+        if len(teacherlist) > 0:
+            for teacher in teacherlist:
+                newcourselist = list(Course.objects.filter(creator=teacher.userid))
+                # 不同的课程才加入
+                for course in newcourselist:
+                    if course not in courselist:
+                        courselist.append(course)
+        if len(courselist) > 0:
+            for course in courselist:
+                model.append(coursemodel(course))
         return pack(data=model)
 
     except Exception as e:

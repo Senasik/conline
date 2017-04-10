@@ -2,8 +2,8 @@
     'use strict';
     angular
         .module('com.module.user')
-        .controller('InfoController', ['$scope', '$state', 'CourseApi', 'SectionApi', 'userModel','CourseMap', 'SectionMap', 'thisuser', function($scope, $state, CourseApi, SectionApi, userModel, CourseMap, SectionMap, thisuser) {
-        	$scope.user = thisuser;
+        .controller('InfoController', ['$scope', '$state', 'CourseApi', 'SectionApi', 'userModel', 'CourseMap', 'SectionMap', 'thisuser', function($scope, $state, CourseApi, SectionApi, userModel, CourseMap, SectionMap, thisuser) {
+            $scope.user = thisuser;
             if (!thisuser) {
                 toaster.pop({
                     type: "warning",
@@ -17,7 +17,13 @@
                 return;
             }
             //是否是自己
-            $scope.isme = thisuser.userid == userModel.userid ? true : false;
+            //如果模型为空表示未登录
+            if (userModel == null) {
+                $scope.isme == false;
+            } else {
+                $scope.isme = thisuser.userid == userModel.userid ? true : false;
+
+            }
             //md5加密需要jquery
             $scope.$ = window.$;
 
