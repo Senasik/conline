@@ -64,3 +64,12 @@ class Notic(models.Model):
     title = models.CharField(max_length=45)
     creattime = models.CharField(max_length=45)
     content = models.TextField()
+
+
+# 收藏课程表
+class CollectCourse(models.Model):
+    courseid = models.CharField(max_length=45)
+    userid = models.CharField(max_length=45)
+
+    class Meta:
+        unique_together = ("courseid", "userid")

@@ -2,8 +2,9 @@
     'use strict';
     angular
         .module('com.module.user')
-        .controller('StuinfotController', ['$scope', '$state', function($scope, $state) {
-            
+        .controller('StuInfoController', ['$scope', '$state', 'thisuser', 'collectcourselist', function($scope, $state, thisuser, collectcourselist) {
+            //收藏课程列表
+            $scope.collectcourselist = collectcourselist;
 
         }]);
 

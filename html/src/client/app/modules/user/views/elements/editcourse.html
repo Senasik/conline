@@ -1,12 +1,12 @@
 <form class="form-horizontal form-validation">
 	<div class="form-group">
-		<label class="col-sm-2 control-label">新名称</label>
-		<div class="col-sm-4">
+		<label class="col-sm-2 col-xs-3 control-label">新名称</label>
+		<div class="col-sm-4 col-xs-6">
 			<input class="form-control" required ng-model="$ctrl.context.name">
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-2 control-label">上传图片</label>
+		<label class="col-sm-2 col-xs-3 control-label">上传图片</label>
 		<img-upload token="{{$ctrl.content.token}}" courseid="{{$ctrl.content.courseid}}" cover="{{$ctrl.content.cover}}"/>
 	</div>
 </form>

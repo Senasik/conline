@@ -100,7 +100,7 @@
                         }
                         $timeout(function() {
                              var inputNode = '<input type="file" id="uploadFile{{num}}" nv-file-select uploader="uploader" style="display: none">';
-                            $('#sectionfile' + $scope.num + ' input').remove();
+                            $('#sectionfile' + $scope.num + ' input[type=file]').remove();
                             $('#sectionfile' + $scope.num).append($compile(inputNode)($scope));
                         }, 1)
                         return uploader;
@@ -124,14 +124,16 @@
                        if($scope.item){
                         initUploader(true);
                         $timeout(function(){
-                            $("#sectionfile" + $scope.num + ' input').click();
+                            $("#sectionfile" + $scope.num + ' input[type=file]').click();
                         },10)
                         return;
                        }
-                       $("#sectionfile" + $scope.num + ' input').click();
+                       $("#sectionfile" + $scope.num + ' input[type=file]').click();
                     };
                     //开始上传
-                    $scope.start = function() {
+                    $scope.start = function(form) {
+                        //验证是否填写完毕
+                        if(form.$invalid)return;
                        initUploader().uploadAll();
                     }
 

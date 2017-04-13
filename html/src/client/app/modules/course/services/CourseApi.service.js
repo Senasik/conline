@@ -59,6 +59,18 @@
         searchcourse: function(data){
           var url = 'searchcourse';
           return self._http(url, data)
+        },
+
+        //收藏课程{courseid, operate:0 取消收藏, 1 收藏}
+        collectcourse: function(data){
+          var url = 'collectcourse';
+          return self._http(url, data)
+        },
+
+        //查询收藏课程{userid或者用cookie}
+        getcollectcoursebyuser: function(data){
+          var url = 'getcollectcoursebyuser';
+          return self._http(url, data)
         }
        
       };

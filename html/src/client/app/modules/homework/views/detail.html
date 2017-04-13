@@ -1,27 +1,31 @@
-<div class="container-fluid" id="homeworkdetail">
-        <div ng-repeat="homework in homeworklist">
-            <div ng-switch on="homework.type" class="row" ng-class="{error: !homework.result && homework.result != undefined,success: homework.result}" class="row">
-                <div ng-switch-when="0" >
-                    <div><h4>{{homework.title}}</h2></div>
-                    <div class="col-sm-3" ng-repeat="option in homework.option" ng-click="homework.testpaper = option" ng-class="{selectedoption: homework.testpaper == option}">
-                    <a ><h5>{{option}}</h5></a></div>
+<div class="contantpanel col-xs-12" id="homeworkdetail">
+    <div ng-repeat="homework in homeworklist" class="col-xs-12">
+        <div ng-switch on="homework.type">
+            <div ng-switch-when="0">
+                <h4>{{homework.title}}</h4>
+
+                <div class="col-sm-3 col-xs-6" ng-repeat="option in homework.option" ng-click="homework.testpaper = option" ng-class="{selectedoption: homework.testpaper == option}">
+                    <a><button class="form-control">{{option}}</button></a>
                 </div>
-                <div ng-switch-when="1" >
-                    <div><h4>{{homework.title}}</h4></div>
-                    <div class="col-sm-3">
-                        <input ng-model="homework.testpaper" class="form-control"></input>
-                    </div>
-                    
+            </div>
+            <div ng-switch-when="1">
+                <h4>{{homework.title}}</h4>
+                <div class="col-sm-3">
+                    <input ng-model="homework.testpaper" class="form-control"></input>
                 </div>
-                <div ng-switch-when="2" >
-                    <div><h4>{{homework.title}}</h4></div>
+            </div>
+            <div ng-switch-when="2">
+                <h4>{{homework.title}}</h4>
+                <div class="col-sm-6">
                     <textarea ui-codemirror="{lineNumbers: true, matchBrackets: true, theme:'midnight',lineWrapping: true,mode: 'text/html'}" cols="10" rows="20"></textarea>
                 </div>
             </div>
+            <div style="color:red;line-height: 32px" class="col-sm-6" ng-if="!homework.result && homework.result != undefined"> 改题错误,正确答案：{{homework.answer}}</div>
+            <div style="color:green;line-height: 32px" class="col-sm-2" ng-if="homework.result">正确</div>
+            <div style="clear: both"></div>
         </div>
-		<div class="row">
-			<div class="col-sm-2">
-				<button class="form-control" ng-click="submit()">提交</button>
-			</div>
-		</div>
+    </div>
+    <div class="col-sm-2 col-xs-12" style="margin: 10px 0;">
+        <button class="form-control btn btn-info" ng-click="submit()">提交</button>
+    </div>
 </div>

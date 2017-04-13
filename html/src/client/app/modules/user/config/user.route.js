@@ -29,12 +29,20 @@
                     template: '<div ui-view="header"></div><div ui-view="detail"></div>',
                     controller: 'InfoController',
                     resolve: {
-                        thisuser: function($stateParams, UserApi, UserMap){
-                            return UserApi.getuserdetail({userid: $stateParams.userid}).then(function(res) {
+                        thisuser: function($stateParams, UserApi, UserMap) {
+                            return UserApi.getuserdetail({ userid: $stateParams.userid }).then(function(res) {
                                 var data = res.data;
                                 return UserMap.userDetailModel(data);
                             }, function() {
                                 return null;
+                            })
+                        },
+                        collectcourselist: function(CourseApi, CourseMap) {
+                            return CourseApi.getcollectcoursebyuser().then(function(res) {
+                                var data = res.data;
+                                return CourseMap.courseListModel(data)
+                            }, function() {
+                                return [];
                             })
                         }
                     }
@@ -51,7 +59,7 @@
                             controller: 'TeacherInfoController'
                         }
                     }
-                    
+
                 })
                 .state('app.user.info.student', {
                     url: '/student',
@@ -63,9 +71,10 @@
                         detail: {
                             templateUrl: 'modules/user/views/stuinfo.html',
                             controller: 'StuInfoController'
+
                         }
                     }
-                    
+
                 });
 
         });

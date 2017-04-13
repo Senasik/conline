@@ -8,7 +8,16 @@
                     abstract: true,
                     url: '/course',
                     template: '<div ui-view></div>',
-                    controller: 'CourseCtrl'
+                    controller: 'CourseCtrl',
+                    resolve: {
+                        courselist: function(CourseApi, CourseMap) {
+                            return CourseApi.getcourselist().then(function(res) {
+                                return CourseMap.courseListModel(res.data);
+                            }, function() {
+                                return null;
+                            })
+                        }
+                    }
                     
                 })
                 .state('app.course.default', {

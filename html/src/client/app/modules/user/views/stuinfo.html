@@ -1,4 +1,7 @@
-<div class="container-fluid">
-
-    
+<div class="cpanel col-sm-12">
+	<div class="cpanel-title"><h4>收藏课程</h4></div>
+	<div ng-if="collectcourselist.length > 0" ng-repeat="course in collectcourselist" class="col-sm-2 col-xs-6 crecommend">
+		<div ng-include="'modules/home/views/elements/course-tpl.html'"></div>
+	</div>
+	<div ng-if="collectcourselist.length == 0"><h5>还没有收藏课程...</h5></div>
 </div>

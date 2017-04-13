@@ -59,6 +59,8 @@
                     if(node.type || node.type == 0) {model.type = node.type;}
                     //创建者
                     if(node.creator) {model.creator = node.creator;}
+                    //是否收藏
+                    if(node.collected) {model.collected = node.collected;}
                     //封面图
                     if(node.cover) {model.cover = $rootScope.imgBase+node.cover;}
                     else{model.cover = 'images/bg.jpg'}

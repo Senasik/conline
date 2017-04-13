@@ -1,59 +1,63 @@
-<form class="form-horizontal form-validation" name="creathomeworkform" ng-submit="creatHormwrok()">
-    <div class="form-group">
-        <label class="col-sm-2 control-label" for="creathomeworkname">题目</label>
-        <div class="col-sm-5">
-            <input type="text" id="creathomeworkname" ng-model="creathomework.title" class="form-control" required autocomplete="off">
+<div class="contantpanel">
+    <form class="form-horizontal form-validation" name="creathomeworkform" ng-submit="creatHormwrok()" style="padding:15px 0;">
+        <div class="form-group">
+            <label class="col-sm-1 col-xs-3 control-label" for="creathomeworkname">题目</label>
+            <div class="col-sm-4 col-xs-6">
+                <input type="text" id="creathomeworkname" ng-model="creathomework.title" class="form-control" required autocomplete="off">
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-    <label class="col-sm-2 control-label">所属章节</label>
-    <div class="col-sm-4">
-    	<select class="form-control" ng-options="section.title for section in sectionlist"  ng-model="creathomework.section" ng-init="creathomework.section = sectionlist[0]" ng-change="creathomework.father = creathomework.section.sectionid"></select>
-    </div>
-    	
-    </div>
-    <div class="form-group">
-        <label class="control-label col-sm-2">类型</label>
-        <div class="col-sm-5" style="padding-top: 7px">
-            <label class="i-checks">
-                <input type="radio" ng-init="creathomework.type = 0" ng-checked="true" ng-model="creathomework.type" value="0">
-                <i></i> 单选
-            </label>
-            <label class="i-checks">
-                <input type="radio" ng-model="creathomework.type" value="1">
-                <i></i> 填空
-            </label>
-            <label class="i-checks">
-                <input type="radio" ng-model="creathomework.type" value="2">
-                <i></i> 编程
-            </label>
+        <div class="form-group">
+            <label class="col-sm-1 col-xs-3 control-label">所属章节</label>
+            <div class="col-sm-4 col-xs-6">
+                <select class="form-control" ng-options="course.title for course in courselist" ng-model="creathomework.course" ng-init="creathomework.course = courselist[0];getsection(creathomework.course)" ng-change="getsection(creathomework.course)"></select>
+            </div>
+            <div class="col-sm-4 col-xs-6 col-sm-offset-0 col-xs-offset-3">
+                <select class="form-control" ng-options="section.title for section in sectionlist" ng-model="creathomework.section" ng-change="creathomework.father = creathomework.section.sectionid"></select>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="creathomeworkanswer" class="col-sm-2 control-label">答案</label>
-        <div class="col-sm-5">
-            <input ng-if="creathomework.type == 0" type="text" name="creathomeworkanswer" class="form-control" ng-model="creathomework.answer" required ui-validate="{onaji: 'creathomework.option.indexOf($value) != -1'} " ui-validate-watch=" 'creathomework.checkanswer' ">
-            <input ng-if="creathomework.type != 0" type="text" name="creathomeworkanswer" class="form-control" ng-model="creathomework.answer" >
+        <div class="form-group">
+            <label class="control-label col-sm-1 col-xs-3">类型</label>
+            <div class="col-sm-4 col-xs-6" style="padding-top: 7px">
+                <label class="i-checks">
+                    <input type="radio" ng-init="creathomework.type = 0" ng-checked="true" ng-model="creathomework.type" value="0">
+                    <i></i> 单选
+                </label>
+                <label class="i-checks">
+                    <input type="radio" ng-model="creathomework.type" value="1">
+                    <i></i> 填空
+                </label>
+                <label class="i-checks">
+                    <input type="radio" ng-model="creathomework.type" value="2">
+                    <i></i> 编程
+                </label>
+            </div>
         </div>
-        <div ng-if="creathomeworkform.creathomeworkanswer.$error.onaji">出错</div>
-    </div>
-    <div class="form-group" ng-if="creathomework.type == 0" ng-init="creathomework.option = [undefined, undefined]">
-        <label for="creathomeworkoption" class="col-sm-2 control-label">选项</label>
-        <div class="col-sm-2" ng-repeat="item in creathomework.option track by $index">
-            <input autocomplete="off" type="text" id="creathomeworkoption" class="form-control" ng-model="creathomework.option[creathomework.option.indexOf(item)]" ng-change="creathomework.checkanswer = item" required>
+        <div class="form-group">
+            <label for="creathomeworkanswer" class="col-sm-1 col-xs-3 control-label">答案</label>
+            <div class="col-sm-4 col-xs-6">
+                <input ng-if="creathomework.type == 0" type="text" name="creathomeworkanswer" class="form-control" ng-model="creathomework.answer" required ui-validate="{onaji: 'creathomework.option.indexOf($value) != -1'} " ui-validate-watch=" 'creathomework.checkanswer' ">
+                <input ng-if="creathomework.type != 0" type="text" name="creathomeworkanswer" class="form-control" ng-model="creathomework.answer">
+            </div>
+            <div ng-if="creathomeworkform.creathomeworkanswer.$error.onaji">出错</div>
         </div>
-    </div>
-    <div class="form-group" ng-if="creathomework.type == 0">
-        <div class="col-sm-offset-2 col-sm-2">
-            <input type="button" class="form-control" ng-click="creathomework.option.push(undefined)" value="添加选项"></input>
+        <div class="form-group" ng-if="creathomework.type == 0" ng-init="creathomework.option = [undefined, undefined]">
+            <label for="creathomeworkoption" class="col-sm-1 col-xs-3 control-label">选项</label>
+            <div class="col-sm-1 col-xs-3" ng-repeat="item in creathomework.option track by $index">
+                <input autocomplete="off" type="text" id="creathomeworkoption" class="form-control" ng-model="creathomework.option[creathomework.option.indexOf(item)]" ng-change="creathomework.checkanswer = item" required>
+            </div>
         </div>
-        <div class="col-sm-2">
-            <input type="button" class="form-control" ng-click="creathomework.option.length>2?creathomework.option.pop():true" value="删除选项"></input>
+        <div class="form-group" ng-if="creathomework.type == 0">
+            <div class="col-sm-offset-2 col-sm-1 col-xs-3 col-xs-offset-3 col-sm-offset-1">
+                <input type="button" class="form-control btn btn-info" ng-click="creathomework.option.push(undefined)" value="添加选项"></input>
+            </div>
+            <div class="col-sm-1 col-xs-3">
+                <input type="button" class="form-control btn btn-danger" ng-click="creathomework.option.length>2?creathomework.option.pop():true" value="删除选项"></input>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-2">
-            <input type="submit" class="form-control" value="创建题目">
+        <div class="form-group">
+            <div class="col-sm-1 col-xs-3 col-xs-offset-3 col-sm-offset-1">
+                <input type="submit" class="form-control btn btn-info" value="创建题目">
+            </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>

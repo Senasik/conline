@@ -8,7 +8,7 @@
                 .state('app.homework', {
                     abstract: true,
                     url: '/homework',
-                    template: '<div ui-view></div>',
+                    template: '<div ui-view class="col-sm-12"></div>',
                     controller: 'HomeworkCtrl'
                 })
                 .state('app.homework.default', {
@@ -21,13 +21,13 @@
                     templateUrl: 'modules/homework/views/create.html',
                     controller: 'HomeworkCreateCtrl',
                     resolve: {
-                        sectionlist: function(SectionApi, SectionMap){
-                            return SectionApi.getsectionlist().then(function(res){
-                                var data = res.data;
-                                return SectionMap.sectionListModel(data)
-                            }, function(){
-                                return null;
-                            })
+                        courselist: function(CourseApi, CourseMap) {
+                            return CourseApi.getcourselist().then(function(res) {
+                                return CourseMap.courseListModel(res.data);
+                                
+                            }, function() {
+                                return [];
+                            });
                         }
                     }
                 })

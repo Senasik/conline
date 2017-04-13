@@ -1,20 +1,20 @@
-<form class="form-horizontal form-validation" name="creatsectionform">
+<form class="form-horizontal form-validation" name="creatsectionform" style="padding:15px 0;">
     <div class="form-group">
-        <label for="coursename" class="control-label col-sm-1 col-xs-4">课程名</label>
-        <div class="col-sm-2 col-xs-8">
+        <label for="coursename" class="control-label col-sm-2 col-xs-4">课程名</label>
+        <div class="col-sm-5 col-xs-8">
             <select id="coursename" class="form-control" ng-change="creatsection.courseid = creatsection.course.courseid" ng-model="creatsection.course" ng-init="creatsection.course=courselist[0];creatsection.courseid = creatsection.course.courseid" ng-options="item.title for item in courselist"></select>
         </div>
-        <div class="col-sm-1"><a ng-click="creatcourse()">添加课程</a></div>
+        <div class="col-sm-3"><input type="button" class="form-control btn btn-info" ng-click="creatcourse()" value="添加课程"></div>
     </div>
     <div class="form-group">
-        <label for="sectionname" class="control-label col-sm-1 col-xs-4">章节名</label>
-        <div class="col-sm-2 col-xs-8">
+        <label for="sectionname" class="control-label col-sm-2 col-xs-4">章节名</label>
+        <div class="col-sm-5 col-xs-8">
             <input type="text" class="form-control" name="sectionname" ng-model="creatsection.title" placeholder="请输入章节名" required>
         </div>
     </div>
     <div class="form-group">
-        <label for="sectiontype" class="control-label col-sm-1 col-xs-4">类型</label>
-        <div class="col-sm-2 col-xs-8" style="padding-top: 7px">
+        <label for="sectiontype" class="control-label col-sm-2 col-xs-4">类型</label>
+        <div class="col-sm-5 col-xs-8" style="padding-top: 7px">
             <label class="i-checks">
                 <input type="radio" ng-init="creatsection.type = 0" ng-checked="true" ng-model="creatsection.type" value="0">
                 <i></i> 文章
@@ -25,16 +25,21 @@
             </label>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-sm-6 ui-upload" id="sectionfile{{num}}" style="position: relative;width: 210px;">
-            <div><a  ng-click="upload()">{{filename}}</a> </div>
-            <a ng-hide="item.isUploading || item.isUploaded || filename == '点击选择文件'" ng-click="start()">开始上传</a>
-            <div class="loading-mask" ng-show="item.isUploading">
-                <uib-progressbar class="progress-striped active" ng-show="item.isUploading" ng-init="progress = 0;" value="progress" type="{{progresstype}}"><b>{{progress}}%</b></uib-progressbar>
-                <span ng-if="item.isUploading" ng-click="cancel()">取消上传</span>
+    <div class="form-group" ui-upload" id="sectionfile{{num}}" style="position: relative;">
+            <div class="col-sm-4 conerow" style="height: 20px;">
+                <a  ng-click="upload()">{{filename}}</a>
             </div>
-            <div ng-if="item.isSuccess">文件上传成功</div>
-            <div ng-if="item.isError">文件上传失败</div>
-        </div>
+            <div class="col-sm-offset-3 col-sm-3" ng-if="!item.isUploading && !item.isUploaded && filename != '点击选择文件'">
+                <input type="submit" class="form-control btn btn-info"  ng-click="start(creatsectionform)" value="开始上传">
+                
+            </div>
+            <div class="col-sm-offset-3 col-sm-3" ng-if="item.isUploading">
+                <input type="submit" class="form-control btn btn-danger"  ng-click="cancel()" value="取消上传">
+            </div>
+            <div class="loading-mask col-sm-7 copacity  " ng-show="item.isUploading" style="clear: both;margin-top: 15px;">
+                <uib-progressbar class="progress-striped active" ng-show="item.isUploading" ng-init="progress = 0;" value="progress" type="{{progresstype}}"><b>{{progress}}%</b></uib-progressbar>
+            </div>
+            <div class="col-sm-offset-3 col-sm-3" ng-if="item.isSuccess">文件上传成功</div>
+            <div class="col-sm-offset-3 col-sm-3" ng-if="item.isError">文件上传失败</div>
     </div>
 </form>

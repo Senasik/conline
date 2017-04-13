@@ -34,6 +34,33 @@ a{
     }
 }
 
+
+.form-horizontal .form-group{
+    margin-left: 0;
+    margin-right: 0;
+
+}
+/*ngview动画*/
+@keyframes enteranimation{
+    from     { transform:translateX(-50px); opacity: 0;}
+    to         { transform: translateX(0); opacity: 1}
+}
+
+.ng-enter{
+    animation: enteranimation 0.5s;
+}
+
+.modal.ng-enter, .modal-backdrop{
+    animation: none .5s;
+}
+
+/*只显示一行文字的样式*/
+.conerow{
+    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 header {
     @headermargin: 3px;
     background: #fff;
