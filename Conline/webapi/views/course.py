@@ -126,7 +126,7 @@ def addCourseCover(request):
         if not file:
             pack(msg="no files for upload!")
         # 获取扩展名
-        filetype = '.' + str(file).split('.')[1]
+        filetype = '.' + str(file).split('.')[-1]
         # 保存fileurl
         course.cover = random_str() + filetype
         # 打开特定的文件进行二进制的写操作

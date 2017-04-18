@@ -1,6 +1,6 @@
 # coding=utf-8
 from django.conf.urls import url
-from webapi.views import section, views, course, homework, notic
+from webapi.views import section, views, course, homework, notic, resource
 
 urlpatterns = [
     # 用户
@@ -34,4 +34,7 @@ urlpatterns = [
     url(r'creatnotic$', notic.creatnotic),
     url(r'getnoticlist$', notic.getnoticlist),
     url(r'getnoticdetail$', notic.getnoticdetail),
+    # 资源
+    url(r'creatresource$', resource.creatResource),
+    url(r'searchresource$', resource.searchResource),
 ]

@@ -6,7 +6,7 @@
         .factory('ResourceMap', function() {
             var self = {
 
-                //题目列表
+                //资源列表
                 resourceListModel: function(data) {
                     var resourceModel = [];
                     if (data.code && data.code == 1 && data.data instanceof Array && data.data.length > 0) {
@@ -19,13 +19,13 @@
                     return null;
                 },
 
-                //题目详细信息
+                //资源详细信息
                 resourceDetailModel: function(data) {
                     var resourceModel = {
                         'resourceid': '',
                         'title': '加载中...',
                         'creator': '',
-                        'url': ''
+                        'fileurl': ''
                     };
                     if (data.code && data.code == 1 && data.data) {
                         resourceModel = self._convertNodeToUIDetailModel(data.data, resourceModel);
@@ -58,6 +58,12 @@
                     if (node.title) { model.title = node.title; }
                     //创建者
                     if (node.creator) { model.creator = node.creator; }
+                    //创建时间
+                    if (node.creattime) { model.creattime = node.creattime; }
+                    //简介
+                    if (node.introduction) { model.introduction = node.introduction; }
+                    //路径
+                    if (node.fileurl) { model.fileurl = node.fileurl; }
 
                     return model;
                 }

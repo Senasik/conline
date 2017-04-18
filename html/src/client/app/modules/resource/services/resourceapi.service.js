@@ -23,9 +23,14 @@
           var url = 'getresourcedetail';
           return self._http(url, data);
         },
-        //获取资源列表{size,index}
-        getresourcelist: function(data){
-          var url = 'getresourcelist';
+        //获取资源列表{keyword}
+        searchresource: function(data){
+          var url = 'searchresource';
+          return self._http(url, data);
+        },
+        //创建资源
+        creatresource: function(data){
+          var url = 'creatresource';
           return self._http(url, data);
         }
       };

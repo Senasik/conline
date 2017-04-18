@@ -1,0 +1,24 @@
+<form class="form-horizontal" ng-submit="searchresource()">
+    <div class="form-group">
+        <label class="col-xs-3 control-label col-sm-offset-1" for="resourcesearch">查询</label>
+        <div class="col-xs-6 col-sm-3">
+            <input type="text" id="resourcesearch" style="border-radius: 5px;" class="form-control" placeholder="请输入资源名称" ng-model="resourcekeyword" autocomplete="off" required>
+        </div>
+        <div class="col-xs-3 col-sm-1">
+            <input type="submit" style="margin: 0 -15px;" class="form-control btn btn-info" value="查询">
+        </div>
+    </div>
+</form>
+<div class="cpanel">
+<div class="cpanel-ul">
+	<div ng-repeat="resource in resourcelist" class="cpanel-li">
+        <a ng-click="download(resource)""><h5>{{resource.title}}</h5></a>
+        <div class="right">
+            <h5>{{resource.creattime | date: 'yyyy-MM-dd HH:mm'}}</h5></div>
+    </div>
+</div>
+    
+</div>
+<div ng-if="resourcelist.length == 0">
+    <h6>请查询内容</h6>
+</div>

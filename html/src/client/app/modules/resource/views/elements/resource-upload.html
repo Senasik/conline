@@ -1,0 +1,33 @@
+
+<form class="form-horizontal form-validation" name="creatresourcename" style="padding:15px 0;">
+    <div class="form-group">
+        <label for="resourcename" class="control-label col-sm-2 col-xs-4">资源名称</label>
+        <div class="col-sm-5 col-xs-8">
+        <input type="text" class="form-control" id="resourcename" ng-model="creatresource.title" placeholder="请输入资源名" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="resourceintro" class="control-label col-sm-2 col-xs-4">资源简介</label>
+        <div class="col-sm-5 col-xs-8">
+        <input type="text" class="form-control" id="resourceintro" ng-model="creatresource.introduction" placeholder="请输入资源简介">
+        </div>
+    </div>
+
+        <div class="form-group" ui-upload" id="resourcefile{{num}}" style="position: relative;">
+            <div class="col-sm-4 conerow" style="height: 20px;">
+                <a  ng-click="upload()">{{filename}}</a>
+            </div>
+            <div class="col-sm-offset-3 col-sm-3" ng-if="!item.isUploading && !item.isUploaded && filename != '点击选择文件'">
+                <input type="submit" class="form-control btn btn-info"  ng-click="start(creatresourcename)" value="开始上传">
+                
+            </div>
+            <div class="col-sm-offset-3 col-sm-3" ng-if="item.isUploading">
+                <input type="submit" class="form-control btn btn-danger"  ng-click="cancel()" value="取消上传">
+            </div>
+            <div class="loading-mask col-sm-7 copacity  " ng-show="item.isUploading" style="clear: both;margin-top: 15px;">
+                <uib-progressbar class="progress-striped active" ng-show="item.isUploading" ng-init="progress = 0;" value="progress" type="{{progresstype}}"><b>{{progress}}%</b></uib-progressbar>
+            </div>
+            <div class="col-sm-offset-3 col-sm-3" ng-if="item.isSuccess">文件上传成功</div>
+            <div class="col-sm-offset-3 col-sm-3" ng-if="item.isError">文件上传失败</div>
+    </div>
+</form>

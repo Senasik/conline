@@ -66,6 +66,16 @@ class Notic(models.Model):
     content = models.TextField()
 
 
+# 资源表
+class Resource(models.Model):
+    resourceid = models.CharField(primary_key=True, max_length=45)
+    title = models.CharField(max_length=45)
+    creattime = models.CharField(max_length=45)
+    fileurl = models.TextField()
+    creator = models.CharField(max_length=45)
+    introduction = models.TextField(blank=True, null=True)
+
+
 # 收藏课程表
 class CollectCourse(models.Model):
     courseid = models.CharField(max_length=45)

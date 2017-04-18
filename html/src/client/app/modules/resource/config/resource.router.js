@@ -6,39 +6,30 @@
 
             $stateProvider
                 .state('app.resource', {
-                    abstract: true,
                     url: '/resource',
-                    template: '<div ui-view="list"></div><div ui-view="detail"></div>',
-                    controller: 'resourceCtrl'
+                    template: '<div ui-view></div>',
+                    controller: 'ResourceCtrl'
                 })
                 .state('app.resource.default', {
                     url: '',
-                    template: '',
-                    controller: 'resourceDefaultCtrl'
+                    templateUrl: '',
+                    controller: 'ResourceDefaultCtrl'
                 })
                 .state('app.resource.list', {
                     url: '/list',
-                    views: {
-                        'list': {
-                            templateUrl: 'modules/resource/views/list.html',
-                            controller: 'resourceListCtrl'
-                        }
-                    }
-                    
+                    templateUrl: 'modules/resource/views/list.html',
+                    controller: 'ResourceListCtrl'
+                })
+                .state('app.resource.create', {
+                    url: '/create',
+                    templateUrl: 'modules/resource/views/create.html',
+                    controller: 'ResourceCreatCtrl'
                 })
                 .state('app.resource.detail', {
                     url: '/:resourceid',
-                    views: {
-                        'list': {
-                            templateUrl: 'modules/resource/views/list.html',
-                            controller: 'resourceListCtrl'
-                        },
-                        'detail': {
-                            templateUrl: 'modules/resource/views/detail.html',
-                            controller: 'resourceDetailCtrl'
-                        }
-                    }
-                    
+                    templateUrl: 'modules/resource/views/detail.html',
+                    controller: 'ResourceDetailCtrl'
+
                 })
         });
 

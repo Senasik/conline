@@ -2,44 +2,33 @@
     /*
     <ui-upload>
     token: 用户token
-    startupload: 是否开始上传的变量，由上层控制
     num：第几个upload
-    courselist: 课程列表
-    creatcourse: 创建课程函数，来自上层
-    endfun: 上传完毕后的执行函数
 
     */
     'use strict';
     angular
-        .module('com.module.course')
-        .directive('uiUpload', ['$state', function($state) {
+        .module('com.module.resource')
+        .directive('resourceUpload', ['$state', function($state) {
             return {
                 restrict: 'E',
                 replace: true,
                 scope: {
                     token: '@',
-                    startupload: '=',
                     num: '@',
-                    courselist: '=',
-                    creatcourse: '&',
-                    endfun: '&',
-                    type: '@'
                 },
-                templateUrl: 'modules/course/views/elements/upload-tpl.html',
+                templateUrl: 'modules/resource/views/elements/resource-upload.html',
                 controller: function($scope, $rootScope, FileUploader, toaster, $compile, $timeout) {
-                    //初始化选项
-
                     //进度条样式
                     $scope.progresstype = 'info';
                     //文件名
                     $scope.filename = '点击选择文件';
                     //上传文件表单
-                    $scope.creatsection = {};
+                    $scope.creatresource = {};
                     //初始化uploader
                     function initUploader(reselect) {
                         var uploader = $scope.uploader = new FileUploader({
-                            url: $rootScope.apiUrl + 'creatsection',
-                            formData: [{ courseid: $scope.creatsection.courseid, title: $scope.creatsection.title, type: $scope.creatsection.type - 0, token: $scope.token }],
+                            url: $rootScope.apiUrl + 'creatresource',
+                            formData: [{ title: $scope.creatresource.title, token: $scope.token, introduction: $scope.creatresource.introduction }],
                             queueLimit: 1
                         });
 
@@ -101,8 +90,8 @@
                         }
                         $timeout(function() {
                              var inputNode = '<input type="file" id="uploadFile{{num}}" nv-file-select uploader="uploader" style="display: none">';
-                            $('#sectionfile' + $scope.num + ' input[type=file]').remove();
-                            $('#sectionfile' + $scope.num).append($compile(inputNode)($scope));
+                            $('#resourcefile' + $scope.num + ' input[type=file]').remove();
+                            $('#resourcefile' + $scope.num).append($compile(inputNode)($scope));
                         }, 1)
                         return uploader;
 
@@ -125,11 +114,11 @@
                        if($scope.item){
                         initUploader(true);
                         $timeout(function(){
-                            $("#sectionfile" + $scope.num + ' input[type=file]').click();
+                            $("#resourcefile" + $scope.num + ' input[type=file]').click();
                         },10)
                         return;
                        }
-                       $("#sectionfile" + $scope.num + ' input[type=file]').click();
+                       $("#resourcefile" + $scope.num + ' input[type=file]').click();
                     };
                     //开始上传
                     $scope.start = function(form) {
