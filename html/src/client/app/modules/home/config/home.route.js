@@ -23,7 +23,7 @@
                                 var data = res.data;
                                 return NoticMap.noticListModel(data);
                             }, function() {
-                                return null;
+                                return [];
                             })
                         }
                     }

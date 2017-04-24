@@ -16,7 +16,7 @@
                         return noticModel;
                     }
 
-                    return null;
+                    return [];
                 },
 
                 //公告详细信息

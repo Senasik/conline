@@ -62,8 +62,8 @@
                     //是否收藏
                     if(node.collected) {model.collected = node.collected;}
                     //封面图
-                    if(node.cover) {model.cover = $rootScope.imgBase+node.cover;}
-                    else{model.cover = 'images/bg.jpg'}
+                    if(node.cover) {model.cover = $rootScope.coverBase+node.cover+'?width=160&height=90';}
+                    else{model.cover = $rootScope.noImg}
 
                     return model;
                 }

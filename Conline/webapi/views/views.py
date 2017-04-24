@@ -3,6 +3,10 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from webapi.tools import pack
 # 工具函数导入
 from webapi.tools import random_str, pack, tokenActive
+import os
+from PIL import Image
+from Conline.settings import STATIC_ROOT
+from django.http import FileResponse, HttpResponse
 # model导入
 from webapi.models import User, Course
 # 日志导入
@@ -59,34 +63,6 @@ def signup(request):
         return pack(data={'token': token})
     except Exception as e:
         return pack(msg=e)
-
-
-# # 获取用户信息
-# @csrf_exempt
-# def userinfo(request):
-#     try:
-#         body = eval(request.body)
-#         user = tokenActive(request.COOKIES)
-#         if user == -2:
-#             return pack(code=-2)
-#         elif user == -3 or body['userid'] != '':
-#             # 如果token有效且用户的userid为空，那么表示取得是自己的信息
-#             # token为空则肯定是根据userid查询别人的信息
-#             user = list(User.objects.all().filter(userid=body.userid))
-#             # 如果没查到数据，返回空
-#             if len(user) == 0:
-#                 return pack(data={})
-#             else:
-#                 user = user[0]
-#         model = {
-#             'userid': user.userid,
-#             'username': user.username,
-#             'type': user.type,
-#         }
-#         return pack(data=model)
-#
-#     except Exception as e:
-#         return pack(msg=e)
 
 
 # 获取用户详细信息
@@ -152,5 +128,34 @@ def alertpwd(request):
         return pack(msg=e)
 
 
-
+# 获取图片
+def getImg(request):
+    try:
+        fileurl = STATIC_ROOT + os.sep + 'covers' + os.sep + request.path.split('/')[-1]
+        # 获取图片的相关信息
+        img = Image.open(fileurl)
+        format = img.format
+        # 如果有参数，则表示是要重新制定大小
+        if 'width' in request.GET and 'height' in request.GET:
+            width = int(request.GET.get('width'))
+            height = int(request.GET.get('height'))
+            # 根据类型resize大小
+            new = img.resize((width, height), Image.ANTIALIAS)
+            # 保存新图片
+            newfile = STATIC_ROOT + os.sep + 'covers' + os.sep + random_str() + '.' + format
+            new.save(newfile, format)
+        else:
+            newfile = fileurl
+        with open(newfile, "rb") as f:
+            response = HttpResponse(f.read(), content_type='image/' + format)
+            f.close()
+        # 如果是新文件，那么删除新文件
+        if 'width' in request.GET and 'height' in request.GET:
+            os.remove(newfile)
+        return response
+    except Exception as e:
+        red = Image.new('RGBA', (100, 100), (255, 0, 0, 0))
+        response = HttpResponse(content_type='image/' + format)
+        red.save(response, format)
+        return response
 

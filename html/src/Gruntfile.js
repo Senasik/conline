@@ -3,6 +3,7 @@
 module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
   require('time-grunt')(grunt);
+  
 
   var appConfig = {
     app: require('./bower.json').appPath || 'client/app',
@@ -100,7 +101,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          '<%= yeoman.dist %>/index.html': '<%= yeoman.app %>/index.tpl.html'
+          '<%= yeoman.dist %>/index.html': '<%= yeoman.app %>/index2.tpl.html'
         }
       },
       server2: {
@@ -261,7 +262,7 @@ module.exports = function(grunt) {
             '.htaccess',
             'modules/**/{,*/}*.html',
             'images/{,*/}*.*',
-            //'css/{,*/}*.*',
+            //'css/{,*/}*.css',
             'fonts/{,*/}*.*'
           ]
         }, {
@@ -272,7 +273,7 @@ module.exports = function(grunt) {
         }, {
           expand: true,
           cwd: '<%= yeoman.app %>/css',
-          dest: '<%= yeoman.dist %>/css',
+          dest: '<%= yeoman.dist %>/styles',
           src: ['generated/*']
         }, {
           expand: true,
@@ -388,10 +389,10 @@ module.exports = function(grunt) {
     less: {
       development: {
         options: {
-          paths: ['<%= yeoman.app %>/css']
+          paths: ['<%= yeoman.app %>/css/']
         },
         files: {
-          '<%= yeoman.app %>/css/less.css': '<%= yeoman.app %>/css/(\S*)\.less'
+          '<%= yeoman.app %>/css/less.css': '<%= yeoman.app %>/css/style.less'
         }
       }
     }
@@ -408,8 +409,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    'less:development',
     'test',
+    'less:development',
     'includeSource:dist',
     'wiredep:dist',
     'useminPrepare',

@@ -6,6 +6,12 @@ from django.db import models
 # Create your models here.
 
 
+# 用户管理
+class UserManager(models.Manager):
+    def teacher(self):
+        return self.filter(type=1)
+
+
 # 用户表
 class User(models.Model):
     userid = models.CharField(primary_key=True, max_length=45)
@@ -14,6 +20,9 @@ class User(models.Model):
     # 用户类型: 0 学生，1 老师
     type = models.IntegerField(blank=True, null=True)
     token = models.CharField(unique=True, max_length=45, blank=True, null=True)
+
+    objects = models.Manager()
+    teacher = UserManager()
 
 
 # 课程表

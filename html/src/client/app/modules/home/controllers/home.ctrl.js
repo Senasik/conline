@@ -5,7 +5,7 @@
         .controller('HomeController', ['$scope', '$state', 'CourseApi', 'SectionApi', 'userModel','CourseMap', 'SectionMap', 'recommendcourses', 'noticlist', function($scope, $state, CourseApi, SectionApi, userModel, CourseMap, SectionMap, recommendcourses, noticlist) {
   	
   			//轮播图
-        	$scope.slides = [{image:'images/bg.jpg', title: 'slide1'},{image:'images/bg.jpg', title: 'slide2'}]
+        	$scope.slides = [{image:$scope.noImg, title: 'slide1'},{image:$scope.noImg, title: 'slide2'}]
 
 
         	//推荐课程

@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'signup$', views.signup),
     url(r'getuserdetail$', views.getuserdetail),
     url(r'alertpwd$', views.alertpwd),
+    url(r'getimg/', views.getImg),
     # 课程
     url(r'creatcourse$', course.creatCourse),
     url(r'deletecourse$', course.deleteCourse),

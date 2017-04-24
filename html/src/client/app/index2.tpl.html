@@ -32,7 +32,7 @@ app-aside-folded 导航是否合起来
 app-aside-dock 导航横版
 container:容器
 -->
-<div class="app" ng-class="{'app-header-fixed':app.settings.headerFixed, 'app-aside-fixed':app.settings.asideFixed, 'app-aside-folded':app.settings.asideFolded, 'app-aside-dock':app.settings.asideDock, 'container':app.settings.container}" ui-view>
+<div class="app"  ui-view>
 </div>
 
 <!--
@@ -47,8 +47,8 @@ container:容器
 
 <!-- build:js scripts/scripts.js -->
 <!-- JS -->
-<!-- include: "type": "js", "files": "js/app.*.js" -->
-<!-- include: "type": "js", "files": "js/pro.config.js" -->
+<!-- include: "type": "js", "files": "js/*.js" -->
+<!-- include: "type": "js", "files": "js/dev.config.js" -->
 <!-- MODULES -->
 <!-- include: "type": "js", "files": "modules/**/*.js" -->
 <!-- endbuild -->

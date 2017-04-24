@@ -91,7 +91,7 @@ def creatSection(request):
             # 保存fileurl
             section.fileurl = random_str() + filetype
             # 打开特定的文件进行二进制的写操作
-            destination = open(BASE_DIR + '\\static\\' + '\\sectionfile\\' + section.fileurl, 'wb+')
+            destination = open(BASE_DIR + os.sep + 'static' + os.sep + 'sectionfile' + os.sep + section.fileurl, 'wb+')
             # 分块写入文件
             for chunk in file.chunks():
                 destination.write(chunk)

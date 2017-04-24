@@ -25,12 +25,12 @@
   <link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.min.css" />
   <link rel="stylesheet" href="bower_components/smalot-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" />
   <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
+  <link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css" />
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css styles/main.css -->
   <link rel="stylesheet" href="css/animate.css" />
   <link rel="stylesheet" href="css/app.css" />
-  <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet/less" type="text/css" href="css/style.less" />
   
   <!-- endbuild -->
@@ -74,6 +74,8 @@ container:容器
 <script src="bower_components/oclazyload/dist/ocLazyLoad.js"></script>
 <script src="bower_components/angular-ui-select/dist/select.js"></script>
 <script src="bower_components/less/dist/less.js"></script>
+<script src="bower_components/codemirror/lib/codemirror.js"></script>
+<script src="bower_components/angular-ui-codemirror/ui-codemirror.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -92,6 +94,8 @@ container:容器
 <script src="modules/core/controllers/app.default.ctrl.js"></script>
 <script src="modules/core/controllers/main.ctrl.js"></script>
 <script src="modules/core/controllers/router.ctrl.js"></script>
+<script src="modules/core/directives/touch-pannel.js"></script>
+<script src="modules/core/directives/ui-validate.js"></script>
 <script src="modules/core/services/HttpInterceptor.js"></script>
 <script src="modules/core/services/appauth.service.js"></script>
 <script src="modules/core/services/commonApi.service.js"></script>
@@ -101,17 +105,58 @@ container:容器
 <script src="modules/course/controllers/create.ctrl.js"></script>
 <script src="modules/course/controllers/default.ctrl.js"></script>
 <script src="modules/course/controllers/list.ctrl.js"></script>
-<script src="modules/course/controllers/section.ctrl.js"></script>
 <script src="modules/course/directives/ui-upload.js"></script>
 <script src="modules/course/services/CourseApi.service.js"></script>
 <script src="modules/course/services/courseMap.service.js"></script>
 <script src="modules/home/app.home.js"></script>
 <script src="modules/home/config/home.route.js"></script>
+<script src="modules/home/controllers/home.ctrl.js"></script>
+<script src="modules/homework/app.homework.js"></script>
+<script src="modules/homework/config/homework.router.js"></script>
+<script src="modules/homework/controllers/create.ctrl.js"></script>
+<script src="modules/homework/controllers/default.ctrl.js"></script>
+<script src="modules/homework/controllers/detail.ctrl.js"></script>
+<script src="modules/homework/controllers/homework.ctrl.js"></script>
+<script src="modules/homework/services/homeworkMap.service.js"></script>
+<script src="modules/homework/services/homeworkapi.service.js"></script>
+<script src="modules/notic/app.notic.js"></script>
+<script src="modules/notic/config/notic.router.js"></script>
+<script src="modules/notic/controllers/default.ctrl.js"></script>
+<script src="modules/notic/controllers/detail.ctrl.js"></script>
+<script src="modules/notic/controllers/list.ctrl.js"></script>
+<script src="modules/notic/controllers/notic.ctrl.js"></script>
+<script src="modules/notic/services/noticMap.service.js"></script>
+<script src="modules/notic/services/noticapi.service.js"></script>
+<script src="modules/resource/app.resource.js"></script>
+<script src="modules/resource/config/resource.router.js"></script>
+<script src="modules/resource/controllers/create.ctrl.js"></script>
+<script src="modules/resource/controllers/default.ctrl.js"></script>
+<script src="modules/resource/controllers/detail.ctrl.js"></script>
+<script src="modules/resource/controllers/list.ctrl.js"></script>
+<script src="modules/resource/controllers/resource.ctrl.js"></script>
+<script src="modules/resource/directives/ui-upload.js"></script>
+<script src="modules/resource/services/resourceMap.service.js"></script>
+<script src="modules/resource/services/resourceapi.service.js"></script>
+<script src="modules/section/app.section.js"></script>
+<script src="modules/section/config/section.router.js"></script>
+<script src="modules/section/controllers/default.ctrl.js"></script>
+<script src="modules/section/controllers/detail.ctrl.js"></script>
+<script src="modules/section/controllers/list.ctrl.js"></script>
+<script src="modules/section/controllers/section.ctrl.js"></script>
+<script src="modules/section/services/sectionMap.service.js"></script>
+<script src="modules/section/services/sectionapi.service.js"></script>
 <script src="modules/user/app.user.js"></script>
 <script src="modules/user/config/user.route.js"></script>
+<script src="modules/user/controllers/info.ctrl.js"></script>
+<script src="modules/user/controllers/infoheader.ctrl.js"></script>
 <script src="modules/user/controllers/login.ctrl.js"></script>
 <script src="modules/user/controllers/signup.ctrl.js"></script>
+<script src="modules/user/controllers/studentinfo.ctrl.js"></script>
+<script src="modules/user/controllers/stuinfo.ctrl.js"></script>
+<script src="modules/user/controllers/teacherinfo.ctrl.js"></script>
 <script src="modules/user/controllers/userdefault.ctrl.js"></script>
+<script src="modules/user/directives/img-upload.js"></script>
+<script src="modules/user/services/userapi.service.js"></script>
 <script src="modules/user/services/usermap.service.js"></script>
 <!-- endbuild -->
 
