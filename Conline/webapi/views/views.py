@@ -135,25 +135,17 @@ def getImg(request):
         # 获取图片的相关信息
         img = Image.open(fileurl)
         format = img.format
+        new = img
         # 如果有参数，则表示是要重新制定大小
         if 'width' in request.GET and 'height' in request.GET:
             width = int(request.GET.get('width'))
             height = int(request.GET.get('height'))
             # 根据类型resize大小
             new = img.resize((width, height), Image.ANTIALIAS)
-            # 保存新图片
-            newfile = STATIC_ROOT + os.sep + 'covers' + os.sep + random_str() + '.' + format
-            new.save(newfile, format)
-        else:
-            newfile = fileurl
-        with open(newfile, "rb") as f:
-            response = HttpResponse(f.read(), content_type='image/' + format)
-            f.close()
-        # 如果是新文件，那么删除新文件
-        if 'width' in request.GET and 'height' in request.GET:
-            os.remove(newfile)
+        response = HttpResponse(content_type='image/' + format)
+        new.save(response, format)
         return response
-    except Exception as e:
+    except Exception:
         red = Image.new('RGBA', (100, 100), (255, 0, 0, 0))
         response = HttpResponse(content_type='image/' + format)
         red.save(response, format)
