@@ -32,6 +32,16 @@
         creatresource: function(data){
           var url = 'creatresource';
           return self._http(url, data);
+        },
+        //获取当前用户上传资源列表{cookie}
+        getresourcelist: function(){
+          var url = 'getresourcelist';
+          return self._http(url);
+        },
+        //删除资源{resourceid}
+        deleteresource: function(data){
+          var url = 'deleteresource';
+          return self._http(url, data);
         }
       };
       return self;

@@ -2,10 +2,13 @@
     'use strict';
     angular
         .module('com.module.home')
-        .controller('HomeController', ['$scope', '$state', 'CourseApi', 'SectionApi', 'userModel','CourseMap', 'SectionMap', 'recommendcourses', 'noticlist', function($scope, $state, CourseApi, SectionApi, userModel, CourseMap, SectionMap, recommendcourses, noticlist) {
+        .controller('HomeController', ['$scope', '$state', 'CourseApi', 'SectionApi', 'userModel','CourseMap', 'SectionMap', 'recommendcourses', 'noticlist', 'carousellist', function($scope, $state, CourseApi, SectionApi, userModel, CourseMap, SectionMap, recommendcourses, noticlist, carousellist) {
   	
   			//轮播图
-        	$scope.slides = [{image:$scope.noImg, title: 'slide1'},{image:$scope.noImg, title: 'slide2'}]
+        	$scope.slides = carousellist;
+            if(carousellist.length == 0){
+                $scope.slides = [{image:$scope.noImg, title: 'slide1'},{image:$scope.noImg, title: 'slide2'}]
+            }
 
 
         	//推荐课程

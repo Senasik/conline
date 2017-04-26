@@ -15,7 +15,7 @@
 
             //cookie默认设置
             $cookiesProvider.defaults.path = '/';
-            $cookiesProvider.defaults.domain = 'senasaikou.com';
+            $cookiesProvider.defaults.domain = 'conline.com';
             $cookiesProvider.defaults.expires = new Date('3000/01/01');
 
             
@@ -28,11 +28,11 @@
             //  if (toState.name.indexOf('.default') == -1 && toState.name.indexOf('app.') != -1)
             //      Navs.recordNode(toParams.appId, toState.name);
             // });
-            var host = 'http://www.senasaikou.com/';
-            $rootScope.noImg = host+'static/covers/noImg.jpg';
+            var host = 'http://c.conline.com:8000/';
             $rootScope.apiUrl = host+'webapi/';
             $rootScope.imgBase = host+'static/covers/';
             $rootScope.coverBase = $rootScope.apiUrl+'getimg/';
+            $rootScope.noImg = $rootScope.coverBase + 'noImg.jpg';
             $rootScope.videoBase = host+'static/sectionfile/';
             $rootScope.resourceBase = host+'static/resources/';
 

@@ -7,3 +7,7 @@
 (0.001) SELECT `myhtml_user`.`userid`, `myhtml_user`.`username`, `myhtml_user`.`usertype` FROM `myhtml_user` WHERE `myhtml_user`.`userid` LIKE BINARY '%123%'; args=(u'%123%',)
 (0.001) UPDATE `myhtml_user` SET `username` = '大师傅', `usertype` = 0 WHERE `myhtml_user`.`userid` = '1231'; args=('\xe5\xa4\xa7\xe5\xb8\x88\xe5\x82\x85', 0, u'1231')
 (0.001) UPDATE `myhtml_user` SET `username` = '大师傅', `usertype` = 1 WHERE `myhtml_user`.`userid` = '1235'; args=('\xe5\xa4\xa7\xe5\xb8\x88\xe5\x82\x85', 1, u'1235')
+2017-04-26 17:04:01User object
+2017-04-26 17:05:24User object
+2017-04-26 17:09:01teacher1login
+2017-04-26 17:19:33   teacher1    login

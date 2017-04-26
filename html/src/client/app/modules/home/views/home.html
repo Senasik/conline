@@ -1,9 +1,9 @@
 <div class="container-fluid nopadding">
     <div class="row">
-        <div class="col-sm-5 " style="height: 256px;">
+        <div class="col-sm-5 ccarousel" >
             <div uib-carousel active="0" interval="3000" no-wrap="true" class="main-shadow">
                 <div uib-slide ng-repeat="slide in slides " index="$index">
-                    <img ng-src="{{slide.image}}" style="margin:auto;">
+                    <img ng-src="{{slide.image}}?width=160&height=90" style="margin:auto;">
                     <div class="carousel-caption">
                         <p>{{slide.title}}</p>
                     </div>
@@ -37,14 +37,11 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-5 cpanel">
-            <div class="cpanel-title">
-                <h4>资源下载</h4>
-                <a class="right" ui-sref="app.resource.list"><h6 >查看更多...</h6></a>
+        <div class="col-sm-2 cpanel">
+            <div class="cpanel-title">                
+                <a ui-sref="app.resource.list"><h4>常用资源下载</h4></a>
             </div>
-            <div class="cpanel-ul">
-                <div ng-repeat="resource in resources" class="cpanel-li"></div>
-            </div>
+
         </div>
     </div>
 

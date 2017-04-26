@@ -37,7 +37,8 @@
                 convertresourceModel: function(data) {
                     var resourceModel = {};
                     resourceModel = {
-                        title: data.title
+                        title: data.title,
+                        resourceid: data.resourceid
                     };
                     //option默认赋值的话回传null
                     if(resourceModel.type == 0)resourceModel.option = data.option;

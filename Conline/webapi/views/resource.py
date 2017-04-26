@@ -60,6 +60,42 @@ def searchResource(request):
         return pack(msg=e)
 
 
+# 获取用户创建资源
+@csrf_exempt
+def getResourcelist(request):
+    try:
+        if request.body != '':
+            userid = eval(request.body)['userid']
+        else:
+            user = tokenActive(request.COOKIES)
+            if not isinstance(user, User):
+                return pack(code=user)
+            userid = user.userid
+        resourcelist = list(Resource.objects.filter(creator=userid))
+        # 保存查询结果的数组
+        model = []
+        for resource in resourcelist:
+            model.append(resourceModel(resource))
+        return pack(data=model)
+    except Exception as e:
+        return pack(msg=e)
+
+
+# 删除资源
+@csrf_exempt
+def deleteResource(request):
+    try:
+        body = eval(request.body)
+        user = tokenActive(cookie=request.COOKIES)
+        if not isinstance(user, User):
+            return pack(code=user)
+        resource = Resource.objects.filter(creator=user.userid).filter(resourceid=body['resourceid'])
+        resource.delete()
+        return pack()
+    except Exception as e:
+        return pack(msg=e)
+
+
 def resourceModel(resource):
     model = {
         'resourceid': resource.resourceid,

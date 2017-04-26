@@ -25,6 +25,14 @@
                             }, function() {
                                 return [];
                             })
+                        },
+                        carousellist: function(CourseMap, CourseApi) {
+                            return CourseApi.getcarousellist().then(function(res) {
+                                var data = res.data;
+                                return CourseMap.courseListModel(data);
+                            }, function() {
+                                return [];
+                            });
                         }
                     }
                 });

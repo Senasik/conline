@@ -2,11 +2,12 @@
     'use strict';
     angular
         .module('com.module.user')
-        .controller('TeacherInfoController', ['$scope', '$state', '$cookies', '$uibModal', 'toaster', 'CourseApi', 'SectionApi', 'userModel', 'thisuser', 'CourseMap', 'SectionMap', 'UserApi', 'UserMap', function($scope, $state, $cookies, $uibModal, toaster, CourseApi, SectionApi, userModel, thisuser, CourseMap, SectionMap, UserApi, UserMap) {
-            
+        .controller('TeacherInfoController', ['$rootScope', '$scope', '$state', '$cookies', '$uibModal', 'toaster', 'CourseApi', 'SectionApi', 'userModel', 'thisuser', 'CourseMap', 'SectionMap', 'UserApi', 'UserMap', 'ResourceApi', 'ResourceMap', function($rootScope, $scope, $state, $cookies, $uibModal, toaster, CourseApi, SectionApi, userModel, thisuser, CourseMap, SectionMap, UserApi, UserMap, ResourceApi, ResourceMap) {
+
             //课程Collapse控制变量
             $scope.courseCollapsed = true;
-            
+            $scope.resourceCollapsed = true;
+
 
 
             //获取所有课程
@@ -18,7 +19,7 @@
                 CourseApi.getcourselist({ userid: thisuser.userid }).then(function(res) {
                     $scope.courselist = CourseMap.courseListModel(res.data);
                     //如果结果长度为0，添加提示语
-                    if($scope.courselist.length == 0){
+                    if ($scope.courselist.length == 0) {
                         $scope.nocourse = true;
                     }
                 }, function() {
@@ -36,14 +37,14 @@
                 SectionApi.getsectionlist({ courseid: course.courseid }).then(function(res) {
                     course.sectionlist = SectionMap.sectionListModel(res.data);
                     //如果结果长度为0，添加提示语
-                    if(course.sectionlist.length == 0){
+                    if (course.sectionlist.length == 0) {
                         course.nosection = true;
                     }
                 }, function() {
 
                 });
             };
-            
+
             //删除course
             $scope.deleteCourse = function(course) {
                 $uibModal.open({
@@ -106,8 +107,8 @@
                         }
                     }
                 }).result.then(function(context) {
-                    if(!context || !context.name)return;
-                    CourseApi.editcourse(CourseMap.convertCourseModel({courseid:course.courseid, title: context.name })).then(function(res) {
+                    if (!context || !context.name) return;
+                    CourseApi.editcourse(CourseMap.convertCourseModel({ courseid: course.courseid, title: context.name })).then(function(res) {
                         var data = res.data;
                         if (data && data.code && data.code >= 0) {
                             toaster.pop('success', '提示', '编辑成功');
@@ -131,7 +132,7 @@
                         }
                     }
                 }).result.then(function(context) {
-                    SectionApi.editsection(SectionMap.convertsectionModel({sectionid:section.sectionid, title: context.name })).then(function(res) {
+                    SectionApi.editsection(SectionMap.convertsectionModel({ sectionid: section.sectionid, title: context.name })).then(function(res) {
                         var data = res.data;
                         if (data && data.code && data.code >= 0) {
                             toaster.pop('success', '提示', '编辑成功');
@@ -144,6 +145,52 @@
                     });
                 });
             };
+
+            //获取资源列表
+            $scope.getResourcelist = function() {
+                $scope.resourceCollapsed = !$scope.resourceCollapsed;
+                //如果是关闭collapse，直接返回
+                if ($scope.resourceCollapsed) return;
+                $scope.resourcelist = [{ title: '加载中...' }]
+                ResourceApi.getresourcelist({ userid: thisuser.userid }).then(function(res) {
+                    $scope.resourcelist = ResourceMap.resourceListModel(res.data);
+                    //如果结果长度为0，添加提示语
+                    if ($scope.resourcelist.length == 0) {
+                        $scope.noresource = true;
+                    }
+                }, function() {
+
+                })
+            }
+            //下载资源
+            $scope.download = function(resource){
+                window.open($rootScope.resourceBase+resource.fileurl)
+            }
+            //删除资源
+            $scope.deleteResource = function(resource){
+                $uibModal.open({
+                    component: 'confirmComponent',
+                    resolve: {
+                        content: {
+                            title: '是否删除',
+                            body: '确定删除此资源吗？'
+                        }
+                    }
+                }).result.then(function() {
+                    ResourceApi.deleteresource(ResourceMap.convertresourceModel({ resourceid: resource.resourceid })).then(function(res) {
+                        var data = res.data;
+                        if (data && data.code && data.code >= 0) {
+                            toaster.pop('success', '提示', '删除成功');
+                            $scope.resourcelist.splice($scope.resourcelist.indexOf(resource), 1);
+                            return;
+                        }
+                        toaster.pop('error', '提示', '删除失败：' + data.msg);
+                    }, function() {
+                        toaster.pop('error', '提示', '删除失败');
+                    });
+                });
+
+            }
 
         }]);
 

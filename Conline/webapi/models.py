@@ -1,9 +1,19 @@
 # coding=utf-8
 from __future__ import unicode_literals
-
 from django.db import models
-
+from random import Random
+import time
 # Create your models here.
+
+
+def random_str(randomlength=30):
+    str = ''
+    chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789'
+    length = len(chars) - 1
+    random = Random()
+    for i in range(randomlength):
+        str+=chars[random.randint(0, length)]
+    return str
 
 
 # 用户管理
@@ -14,30 +24,41 @@ class UserManager(models.Manager):
 
 # 用户表
 class User(models.Model):
-    userid = models.CharField(primary_key=True, max_length=45)
-    username = models.CharField(unique=True, max_length=45)
+    userid = models.CharField(primary_key=True, max_length=45, default=random_str())
+    username = models.CharField(unique=True, max_length=45, verbose_name='用户名')
     password = models.CharField(max_length=45)
     # 用户类型: 0 学生，1 老师
     type = models.IntegerField(blank=True, null=True)
     token = models.CharField(unique=True, max_length=45, blank=True, null=True)
-
     objects = models.Manager()
     teacher = UserManager()
+
+    class Meta:
+        verbose_name = '用户'
+        verbose_name_plural = '用户'
 
 
 # 课程表
 class Course(models.Model):
     courseid = models.CharField(primary_key=True, max_length=45)
-    title = models.CharField(max_length=45)
+    title = models.CharField(max_length=45,  verbose_name='课程名')
     creattime = models.CharField(max_length=45)
     creator = models.CharField(max_length=45)
     tag = models.CharField(blank=True, null=True, max_length=100)
     cover = models.CharField(blank=True, null=True, max_length=100)
 
+    class Meta:
+        verbose_name = '课程'
+        verbose_name_plural = '课程'
+
 
 # 推荐课程表
 class RecommendCourse(models.Model):
-    courseid = models.CharField(primary_key=True, max_length=45)
+    courseid = models.CharField(primary_key=True, max_length=45, verbose_name='课程id')
+
+    class Meta:
+        verbose_name = '首页课程'
+        verbose_name_plural = '首页课程'
 
 
 # 章节表，依赖于课程表
@@ -52,6 +73,10 @@ class Section(models.Model):
     fileurl = models.CharField(blank=True, null=True, max_length=1000)
     father = models.CharField(max_length=45)
     homeworkids = models.TextField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = '章节'
+        verbose_name_plural = '章节'
 
 
 # 课后题表
@@ -69,10 +94,14 @@ class Homework(models.Model):
 
 # 公告表
 class Notic(models.Model):
-    noticid = models.CharField(primary_key=True, max_length=45)
-    title = models.CharField(max_length=45)
-    creattime = models.CharField(max_length=45)
-    content = models.TextField()
+    noticid = models.CharField(primary_key=True, max_length=45, default=random_str())
+    title = models.CharField(max_length=45, verbose_name='公告名')
+    creattime = models.CharField(max_length=45, default=int(1000*time.time()))
+    content = models.TextField(verbose_name='公告内容')
+
+    class Meta:
+        verbose_name = '公告'
+        verbose_name_plural = '公告'
 
 
 # 资源表
@@ -92,3 +121,12 @@ class CollectCourse(models.Model):
 
     class Meta:
         unique_together = ("courseid", "userid")
+
+
+# 轮播图表
+class Carousel(models.Model):
+    courseid = models.CharField(max_length=45)
+
+    class Meta:
+        verbose_name = '轮播图'
+        verbose_name_plural = '轮播图'

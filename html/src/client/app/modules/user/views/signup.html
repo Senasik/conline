@@ -1,25 +1,25 @@
-<div class="col-sm-8">
+<div class="col-sm-8 contantpanel col-sm-offset-2" style="padding: 15px;margin-top: 10%">
     <form class="form-horizontal form-validation" name="signupform" ng-submit="usersignup()">
         <div class="form-group">
-            <label for="username" class="control-label col-sm-2 col-xs-3">用户名</label>
+            <label for="username" class="control-label col-sm-3 col-xs-4 col-sm-offset-2">用户名</label>
             <div class="col-sm-3 col-xs-8">
                 <input type="text" autocomplete="off" class="form-control" id="username" ng-model="signupuser.username" required ng-pattern="/^[0-9a-zA-Z\u4e00-\u9fa5]{4,9}$/" required>
             </div>
         </div>
         <div class="form-group">
-            <label for="password" class="control-label col-sm-2 col-xs-3">密码</label>
+            <label for="password" class="control-label col-sm-3 col-xs-4 col-sm-offset-2">密码</label>
             <div class="col-sm-3 col-xs-8">
                 <input type="text" autocomplete="off" onfocus="this.type='password';" class="form-control" id="password" ng-model="signupuser.password"  ng-pattern="/^[0-9a-zA-Z]{6,16}$/" required>
             </div>
         </div>
         <div class="form-group">
-            <label for="checkpassword" class="control-label col-sm-2 col-xs-3">确认密码</label>
+            <label for="checkpassword" class="control-label col-sm-3 col-xs-4 col-sm-offset-2">确认密码</label>
             <div class="col-sm-3 col-xs-8">
                 <input type="text" autocomplete="off" onfocus="this.type='password';" class="form-control" id="checkpassword" ng-model="signupuser.checkpwd" ui-validate="'$value == signupuser.password'" ui-validate-watch="'signupuser.password'" required>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2 col-xs-3">用户类型</label>
+            <label class="control-label col-sm-3 col-xs-4 col-sm-offset-2">用户类型</label>
             <div class="col-sm-4 col-xs-8"  style="padding-top: 7px">
                 <label class="i-checks">
                     <input type="radio" ng-init="signupuser.type = 0" ng-checked="true" ng-model="signupuser.type" value="0">
@@ -31,6 +31,11 @@
                 </label>
             </div>
         </div>
-        <input type="submit" ng-disabled="signupform.$invalid" class="form-control btn btn-info" value="注册">
+        <div class="form-group">
+            <div class="col-sm-4 col-sm-offset-4">
+                <input type="submit" ng-disabled="signupform.$invalid" class="form-control btn btn-info" value="注册">
+                
+            </div>
+        </div>
     </form>
 </div>

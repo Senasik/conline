@@ -78,8 +78,17 @@ header {
 }
 }
 
-
-
+/*轮播图样式*/
+.ccarousel{
+    height: 256px;
+    & div:not(.carousel-caption){
+        height: inherit;
+    }
+    img {
+        height: inherit;
+        width: inherit;
+    }
+}
 .contantpanel{
     background: #fff;
     margin-top: 5px;
@@ -115,14 +124,14 @@ header {
 		background-color: #fff;
 		margin-top: 4px;
 		.main-shadow;
-		.cpanel-li {
+		.cpanel-li, li {
 			border-bottom: 1px solid @maincolor;
 			padding: 5px 15px;
             &:hover{
                 box-shadow: 0 3px 10px rgba(0, 0, 0, 0.09);
                 background-color: #f7f7f7;
             }
-			h6 {
+			h6,h5,h4 {
 				height: @height;
         		line-height: @height;
 
@@ -162,16 +171,9 @@ header {
     
 }
 
-/*公告样式*/
-
-
-
-
+/*手机下菜单touch样式*/
 @media screen and(max-width: 760px) {
-    .nopadding {
-        padding: 0 !important;
-        margin: 0 !important;
-    }
+    
 @keyframes touchpannelanimation {
     0%{left: 0}
     100%{left: -80%;}
@@ -185,7 +187,24 @@ header {
         top: 51px;
         width: 80%;
         padding-left: 0;
+        &.touchpannelout{
+            left: -80%;
+        }
+        &.touchpannelin{
+            left: 0;
+        }
     }
+}
+
+
+
+
+@media screen and(max-width: 760px) {
+    .nopadding {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
 }
 
 

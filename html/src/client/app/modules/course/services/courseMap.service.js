@@ -3,7 +3,7 @@
 
     angular
         .module('com.module.course')
-        .factory('CourseMap', function($rootScope) {
+        .factory('CourseMap', function($rootScope, ImgResize) {
             var self = {
 
                 //课程列表
@@ -62,8 +62,9 @@
                     //是否收藏
                     if(node.collected) {model.collected = node.collected;}
                     //封面图
-                    if(node.cover) {model.cover = $rootScope.coverBase+node.cover+'?width=160&height=90';}
+                    if(node.cover) {model.cover = $rootScope.coverBase+node.cover;}
                     else{model.cover = $rootScope.noImg}
+                    model.cover = ImgResize.sixteentonine(model.cover);
 
                     return model;
                 }

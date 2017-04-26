@@ -2,15 +2,14 @@
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from webapi.tools import pack
 # 工具函数导入
-from webapi.tools import random_str, pack, tokenActive
+from webapi.tools import random_str, pack, tokenActive, log
 import os
 from PIL import Image
 from Conline.settings import STATIC_ROOT
 from django.http import FileResponse, HttpResponse
+import time
 # model导入
 from webapi.models import User, Course
-# 日志导入
-from webapi.tools import Debuglog
 
 # Create your views here.
 
@@ -25,7 +24,7 @@ def login(request):
             body = eval(request.body)
         # 验证token
         user = tokenActive(request.COOKIES)
-        if not isinstance(user, User):
+        if not isinstance(user, User) and 'username' in body:
             # 用户名密码验证
             user = list(User.objects.all().filter(username=body['username']))
             if len(user) == 0 or user[0].password != body['password']:
@@ -33,6 +32,8 @@ def login(request):
             user = user[0]
             user.token = random_str()
             user.save()
+        elif not isinstance(user, User):
+            return pack(code=user)
         # 返回model
         model = {
             'userid': user.userid,

@@ -71,6 +71,12 @@
         getcollectcoursebyuser: function(data){
           var url = 'getcollectcoursebyuser';
           return self._http(url, data)
+        },
+
+        //获取轮播图
+        getcarousellist: function(){
+          var url = 'getcarousellist';
+          return self._http(url);
         }
        
       };

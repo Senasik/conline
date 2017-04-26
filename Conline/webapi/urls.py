@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'searchcourse$', course.searchCourse),
     url(r'collectcourse$', course.collectCourse),
     url(r'getcollectcoursebyuser$', course.getCollectCourseByUser),
+    url(r'getcarousellist$', course.getCarouselList),
     # 章节
     url(r'creatsection$', section.creatSection),
     url(r'getsectionlist$', section.getSectionList),
@@ -38,4 +39,6 @@ urlpatterns = [
     # 资源
     url(r'creatresource$', resource.creatResource),
     url(r'searchresource$', resource.searchResource),
+    url(r'getresourcelist$', resource.getResourcelist),
+    url(r'deleteresource$', resource.deleteResource),
 ]

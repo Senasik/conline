@@ -8,7 +8,7 @@ import time
 from Conline.settings import STATIC_URL, BASE_DIR
 
 # model导入
-from webapi.models import Course, User, Section, RecommendCourse, CollectCourse
+from webapi.models import Course, User, Section, RecommendCourse, CollectCourse, Carousel
 
 # 日志导入
 from webapi.tools import Debuglog
@@ -88,6 +88,8 @@ def deleteCourse(request):
             raise Exception('学生无法删除')
         course = Course.objects.all().filter(creator=user.userid).filter(courseid=body['courseid'])
         course.delete()
+        section = Section.objects.filter(father=list(course)[0].courseid)
+        section.delete()
 
         return pack()
     except Exception as e:
@@ -226,8 +228,18 @@ def getCollectCourseByUser(request):
         return pack(msg=e)
 
 
-
-
+# 获取轮播图
+@csrf_exempt
+def getCarouselList(request):
+    try:
+        courselist = list(Carousel.objects.all())
+        model = []
+        for course in courselist:
+            course = list(Course.objects.filter(courseid=course.courseid))[0]
+            model.append(coursemodel(course))
+        return pack(data=model)
+    except Exception as e:
+        return pack(msg=e)
 
 
 def coursemodel(course):

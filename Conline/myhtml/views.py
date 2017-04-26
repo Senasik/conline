@@ -6,7 +6,7 @@ from django.http import JsonResponse
 import logging
 import os
 
-from models import User
+from myhtml.models import User
 from Conline.settings import BASE_DIR
 
 # 日志文件

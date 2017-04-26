@@ -1,7 +1,7 @@
 # coding=utf-8
 from random import Random
 from django.http import JsonResponse
-
+import time
 from webapi.models import User
 
 import logging
@@ -9,8 +9,11 @@ import logging
 Debuglog = logging.getLogger('debug')
 
 
-# api包装,第一个参数是数据，第二个参数是异常信息
+def log(str):
+    Debuglog.log(10, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()) + '   ' + str)
 
+
+# api包装,第一个参数是数据，第二个参数是异常信息
 def pack(data={}, msg='success', code=1):
     msg = codeMsg(code, msg)
     model = {

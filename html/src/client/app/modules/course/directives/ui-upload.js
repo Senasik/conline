@@ -59,11 +59,11 @@
                         });
                         //添加到队列后更新scope里的item
                         uploader.onAfterAddingFile = function(fileItem){
-                                                        // if (fileItem.file.type != "image/jpeg" && fileItem.file.type != "image/png" && fileItem.file.type != "image/gif") {
-                            //     toaster.pop('error', '提示', '不支持的文件类型!');
-                            //     fileItem.remove();
-                            //     return;
-                            // }
+                            if (fileItem.file.type != "text/plain") {
+                                toaster.pop('error', '提示', '不支持的文件类型!');
+                                fileItem.remove();
+                                return;
+                            }
                             if (fileItem.file.size > 512000000) {
                                 toaster.pop('error', '提示', '选择的文件过大!');
                                 fileItem.remove();

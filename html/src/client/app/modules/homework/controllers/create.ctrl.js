@@ -18,6 +18,7 @@
                          $scope.sectionlist = [{ title: '暂未创建章节' }]
                     }
                     $scope.creathomework.section = $scope.sectionlist[0];
+                    $scope.creathomework.father = $scope.creathomework.section.sectionid
                 }, function() {
                     toaster.pop('error', '提示', '获取章节列表错误')
                 })
