@@ -1,6 +1,5 @@
-1.安装nodejs
-2.安装grunt
-3.安装bower
-4.执行npm install
-5.执行grunt build
-6.部署到iis，请求index页面就可以了
+1.瀹夎nodejs
+2.瀹夎grunt
+3.瀹夎bower
+4.鎵цnpm install
+5.鎵цgrunt build
