@@ -43,8 +43,8 @@ class Course(models.Model):
     courseid = models.CharField(primary_key=True, max_length=45)
     title = models.CharField(max_length=45,  verbose_name='课程名')
     creattime = models.CharField(max_length=45)
-    creator = models.CharField(max_length=45)
-    tag = models.CharField(blank=True, null=True, max_length=100)
+    creator = models.CharField(max_length=45, verbose_name='创建者')
+    tag = models.CharField(blank=True, null=True, max_length=100, verbose_name='所属分类')
     cover = models.CharField(blank=True, null=True, max_length=100)
 
     class Meta:
@@ -130,3 +130,33 @@ class Carousel(models.Model):
     class Meta:
         verbose_name = '轮播图'
         verbose_name_plural = '轮播图'
+
+
+# 分类表
+class Tag(models.Model):
+    tagid = models.CharField(max_length=45, primary_key=True)
+    title = models.CharField(max_length=45, verbose_name='分类名')
+    creattime = models.CharField(max_length=45)
+
+    class Meta:
+        verbose_name = '课程分类'
+        verbose_name_plural = '课程分类'
+
+
+# 待审核章节表
+class EditSection(models.Model):
+    sectionid = models.CharField(primary_key=True, max_length=45)
+    title = models.CharField(max_length=45, verbose_name='名称')
+    creattime = models.CharField(max_length=45)
+    creator = models.CharField(max_length=45, verbose_name='创建者')
+    # 课程内容类型： 0 文章；1 视频
+    type = models.IntegerField()
+    content = models.TextField(blank=True, null=True)
+    fileurl = models.CharField(blank=True, null=True, max_length=1000)
+    father = models.CharField(max_length=45, verbose_name='所属课程')
+    # 0 不过, 1过
+    operator = models.CharField(max_length=45, verbose_name='审核')
+
+    class Meta:
+        verbose_name = '待审核课程'
+        verbose_name_plural = '待审核课程'

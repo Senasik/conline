@@ -28,6 +28,18 @@
                             }, function() {
                                 return null;
                             })
+                        },
+                        //获取分类列表
+                        taglist: function(CourseApi){
+                            return CourseApi.gettaglist().then(function(res){
+                                var data = res.data;
+                                if(data && data.code && data.code > 0 && data.data){
+                                    return data.data;
+                                }
+                                return [];
+                            }, function(){
+                                return [];
+                            })
                         }
                     }
                 }).state('app.default', {

@@ -2,7 +2,7 @@
     'use strict';
     angular
         .module('com.module.course')
-        .controller('CourseCreateCtrl', function($scope, $cookies, $uibModal, toaster, CourseApi, CourseMap, courselist) {
+        .controller('CourseCreateCtrl', function($scope, $cookies, $uibModal, toaster, CourseApi, CourseMap, courselist, taglist) {
 
             $scope.uploadlist = [];
 
@@ -20,7 +20,8 @@
                     resolve: {
                         content: {
                             title: '创建课程',
-                            bodyUrl: 'modules/course/views/elements/creatcourse.html'
+                            bodyUrl: 'modules/course/views/elements/creatcourse.html',
+                            taglist: taglist
                         }
 
                     }

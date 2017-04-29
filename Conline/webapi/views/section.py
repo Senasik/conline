@@ -8,7 +8,7 @@ import chardet
 from Conline.settings import STATIC_URL, BASE_DIR
 import binascii
 # model导入
-from webapi.models import Section, User
+from webapi.models import Section, User, EditSection
 
 # 日志导入
 from webapi.tools import Debuglog
@@ -77,8 +77,8 @@ def creatSection(request):
         # 获取当前时间戳
         now = int(1000 * time.time())
         id = random_str()
-        section = Section(sectionid=id, creattime=now, creator=user.userid, type=body['type'], title=body['title'],
-                          father=body['courseid'])
+        section = EditSection(sectionid=id, creattime=now, creator=user.userid, type=body['type'], title=body['title'],
+                          father=body['courseid'], operator=0)
         # 获取上传的文件，如果没有文件，则默认为None
         file = request.FILES.get("file", None)
         if not file:

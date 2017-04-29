@@ -2,7 +2,13 @@
 	<div class="form-group">
 		<label class="col-sm-2 col-xs-3 control-label">新名称</label>
 		<div class="col-sm-4 col-xs-6">
-			<input class="form-control" required ng-model="$ctrl.context.name">
+			<input class="form-control" required ng-model="$ctrl.context.name" ng-init="$ctrl.context.name = $ctrl.content.course.title">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 col-xs-3 control-label">重新分配分类</label>
+		<div class="col-sm-4 col-xs-6">
+			<select ng-model="$ctrl.tag" ng-init="$ctrl.tag = $ctrl.content.tag;$ctrl.context.tag = $ctrl.content.tag.tagid" ng-change="$ctrl.context.tag = $ctrl.tag.tagid" ng-options="tag.title for tag in $ctrl.content.taglist" class="form-control"></select>
 		</div>
 	</div>
 	<div class="form-group">

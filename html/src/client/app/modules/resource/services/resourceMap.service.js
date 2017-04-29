@@ -16,7 +16,7 @@
                         return resourceModel;
                     }
 
-                    return null;
+                    return [];
                 },
 
                 //资源详细信息

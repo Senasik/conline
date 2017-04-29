@@ -77,7 +77,19 @@
         getcarousellist: function(){
           var url = 'getcarousellist';
           return self._http(url);
-        }
+        },
+
+        //获取分类
+        gettaglist: function(){
+          var url = 'gettaglist';
+          return self._http(url);
+        },
+
+        //根据分类获取课程{tag, size, index}
+        getcourselistbytag: function(data){
+          var url = 'getcourselistbytag';
+          return self._http(url, data);
+        },
        
       };
       return self;

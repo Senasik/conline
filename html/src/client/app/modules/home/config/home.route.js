@@ -33,7 +33,18 @@
                             }, function() {
                                 return [];
                             });
+                        },
+                        //分类显示的课程
+                        tagcourselist: function(CourseMap, CourseApi){
+                            return CourseApi.getcourselistbytag().then(function(res){
+                                var data = res.data;
+                                return CourseMap.courseModelByTag(data);
+                            }, function(){
+                                return [];
+                            })
                         }
+
+
                     }
                 });
         });

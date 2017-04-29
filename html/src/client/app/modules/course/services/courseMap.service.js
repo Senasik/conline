@@ -24,12 +24,28 @@
                         title: '加载中...',
                         courseid: '',
                         cover: '',
-                        creator: ''
+                        creator: '',
+                        tag: ''
                     };
                      if (data.code && data.code == 1 && data.data){
                         courseModel = self._convertNodeToUIDetailModel(data.data, courseModel);
                      }
                      return courseModel;
+                },
+
+                //按类所分课程信息
+                courseModelByTag: function(data){
+                    var tagcourseModel = [];
+                    if (data.code && data.code == 1 && data.data instanceof Array && data.data.length > 0){
+                        angular.forEach(data.data, function(courselist, index){
+                            var courseModel = [];
+                            angular.forEach(courselist, function(value, index){
+                                courseModel.push(self._convertNodeToUIDetailModel(value));
+                            });
+                            tagcourseModel.push(courseModel);
+                        })
+                    }
+                    return tagcourseModel;
                 },
 
                 //ui转后端
@@ -39,7 +55,8 @@
                         title: data.title,
                         type: data.type,
                         courseid: data.courseid,
-                        cover: data.cover
+                        cover: data.cover,
+                        tag: data.tag
                     };
                     return courseModel;
                 },
@@ -61,6 +78,8 @@
                     if(node.creator) {model.creator = node.creator;}
                     //是否收藏
                     if(node.collected) {model.collected = node.collected;}
+                    //是否收藏
+                    if(node.tag) {model.tag = node.tag;}
                     //封面图
                     if(node.cover) {model.cover = $rootScope.coverBase+node.cover;}
                     else{model.cover = $rootScope.noImg}

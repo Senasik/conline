@@ -1,9 +1,14 @@
 <form class="form-horizontal ">
-	<div class="form-group">
-		<label for="creatcoursename" class="control-label col-sm-2">课程名</label>
-		<div class=" col-sm-5">
-		<input type="text" class="form-control" id="creatcoursename" ng-model="$ctrl.context.title">
-			
-		</div>
-	</div>
+    <div class="form-group">
+        <label for="creatcoursename" class="control-label col-sm-2">课程名</label>
+        <div class=" col-sm-5">
+            <input type="text" class="form-control" id="creatcoursename" ng-model="$ctrl.context.title">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="creatcourselabel" class="control-label col-sm-2">分类</label>
+        <div class=" col-sm-5">
+            <select id="creatcourselabel" ng-model="$ctrl.tag" ng-init="$ctrl.tag = $ctrl.content.taglist[0];$ctrl.context.tagid = $ctrl.content.taglist[0].tagid" ng-change="$ctrl.context.tag = $ctrl.tag.tagid" ng-options="tag.title for tag in $ctrl.content.taglist" class="form-control"></select>
+        </div>
+    </div>
 </form>

@@ -34,7 +34,6 @@
                     url: '/create',
                     templateUrl: 'modules/course/views/create.html',
                     controller: 'CourseCreateCtrl'
-                    
                 })
         });
 

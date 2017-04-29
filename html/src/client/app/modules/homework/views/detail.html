@@ -20,7 +20,7 @@
                     <textarea ui-codemirror="{lineNumbers: true, matchBrackets: true, theme:'midnight',lineWrapping: true,mode: 'text/html'}" cols="10" rows="20"></textarea>
                 </div>
             </div>
-            <div style="color:red;line-height: 32px" class="col-sm-6" ng-if="!homework.result && homework.result != undefined"> 改题错误,正确答案：{{homework.answer}}</div>
+            <div style="color:red;line-height: 32px" class="col-sm-6" ng-if="!homework.result && homework.result != undefined"> 该题错误,正确答案：{{homework.answer}}</div>
             <div style="color:green;line-height: 32px" class="col-sm-2" ng-if="homework.result">正确</div>
             <div style="clear: both"></div>
         </div>

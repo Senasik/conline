@@ -21,6 +21,8 @@ urlpatterns = [
     url(r'collectcourse$', course.collectCourse),
     url(r'getcollectcoursebyuser$', course.getCollectCourseByUser),
     url(r'getcarousellist$', course.getCarouselList),
+    url(r'gettaglist$', course.getTaglist),
+    url(r'getcourselistbytag$', course.getCourselistByTag),
     # 章节
     url(r'creatsection$', section.creatSection),
     url(r'getsectionlist$', section.getSectionList),

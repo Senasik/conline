@@ -2,7 +2,7 @@
     'use strict';
     angular
         .module('com.module.user')
-        .controller('TeacherInfoController', ['$rootScope', '$scope', '$state', '$cookies', '$uibModal', 'toaster', 'CourseApi', 'SectionApi', 'userModel', 'thisuser', 'CourseMap', 'SectionMap', 'UserApi', 'UserMap', 'ResourceApi', 'ResourceMap', function($rootScope, $scope, $state, $cookies, $uibModal, toaster, CourseApi, SectionApi, userModel, thisuser, CourseMap, SectionMap, UserApi, UserMap, ResourceApi, ResourceMap) {
+        .controller('TeacherInfoController', ['$rootScope', '$scope', '$state', '$cookies', '$uibModal', 'toaster', 'CourseApi', 'SectionApi', 'userModel', 'thisuser', 'CourseMap', 'SectionMap', 'UserApi', 'UserMap', 'ResourceApi', 'ResourceMap', 'taglist', function($rootScope, $scope, $state, $cookies, $uibModal, toaster, CourseApi, SectionApi, userModel, thisuser, CourseMap, SectionMap, UserApi, UserMap, ResourceApi, ResourceMap, taglist) {
 
             //课程Collapse控制变量
             $scope.courseCollapsed = true;
@@ -95,6 +95,12 @@
             };
             //修改course
             $scope.editCourse = function(course) {
+                //根据课程的tagid获取到tag
+                var tag = {}
+                angular.forEach(taglist, function(val){
+                    if (val.tagid == course.tag)
+                        tag = val;
+                })
                 $uibModal.open({
                     component: 'confirmComponent',
                     resolve: {
@@ -102,13 +108,15 @@
                             title: '修改名称',
                             bodyUrl: 'modules/user/views/elements/editcourse.html',
                             token: $cookies.get('token'),
-                            courseid: course.courseid,
-                            cover: course.cover
+                            course: course,
+                            cover: course.cover,
+                            tag: tag,
+                            taglist: taglist
                         }
                     }
                 }).result.then(function(context) {
-                    if (!context || !context.name) return;
-                    CourseApi.editcourse(CourseMap.convertCourseModel({ courseid: course.courseid, title: context.name })).then(function(res) {
+                    if (!context) return;
+                    CourseApi.editcourse(CourseMap.convertCourseModel({ courseid: course.courseid, title: context.name, tag: context.tag })).then(function(res) {
                         var data = res.data;
                         if (data && data.code && data.code >= 0) {
                             toaster.pop('success', '提示', '编辑成功');
