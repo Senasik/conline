@@ -136,7 +136,7 @@ class Carousel(models.Model):
 class Tag(models.Model):
     tagid = models.CharField(max_length=45, primary_key=True)
     title = models.CharField(max_length=45, verbose_name='分类名')
-    creattime = models.CharField(max_length=45)
+    creattime = models.BigIntegerField()
 
     class Meta:
         verbose_name = '课程分类'
@@ -147,7 +147,7 @@ class Tag(models.Model):
 class EditSection(models.Model):
     sectionid = models.CharField(primary_key=True, max_length=45)
     title = models.CharField(max_length=45, verbose_name='名称')
-    creattime = models.CharField(max_length=45)
+    creattime = models.BigIntegerField()
     creator = models.CharField(max_length=45, verbose_name='创建者')
     # 课程内容类型： 0 文章；1 视频
     type = models.IntegerField()
@@ -160,3 +160,15 @@ class EditSection(models.Model):
     class Meta:
         verbose_name = '待审核课程'
         verbose_name_plural = '待审核课程'
+
+
+# 用户记录表
+class Record(models.Model):
+    userid = models.CharField(max_length=45, verbose_name='用户id')
+    courseid = models.CharField(max_length=45, verbose_name='课程id')
+    sectionid = models.CharField(blank=True, null=True, max_length=45, verbose_name='章节id')
+    time = models.BigIntegerField()
+
+    class Meta:
+        verbose_name = '用户记录'
+        verbose_name_plural = '用户记录'

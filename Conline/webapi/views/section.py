@@ -8,7 +8,7 @@ import chardet
 from Conline.settings import STATIC_URL, BASE_DIR
 import binascii
 # model导入
-from webapi.models import Section, User, EditSection
+from webapi.models import Section, User, EditSection, Record
 
 # 日志导入
 from webapi.tools import Debuglog
@@ -25,6 +25,10 @@ def getSectionList(request):
         else:
             body = eval(request.body)
             sectionlist = list(Section.objects.all().filter(father=body['courseid']))
+            # 记录用户查看课程的记录
+            if isinstance(user, User):
+                record = Record(userid=user.userid, courseid=body['courseid'], time=int(1000 * time.time()))
+                record.save()
         if len(sectionlist) > 0:
             for section in sectionlist:
                 model.append({

@@ -73,6 +73,12 @@
           return self._http(url, data)
         },
 
+        //获取历史浏览记录{size, index}
+        gethistorycourse: function(data){
+          var url = 'gethistorycourse';
+          return self._http(url, data)
+        },
+
         //获取轮播图
         getcarousellist: function(){
           var url = 'getcarousellist';

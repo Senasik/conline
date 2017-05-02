@@ -8,7 +8,7 @@ import time
 from Conline.settings import STATIC_URL, BASE_DIR
 
 # model导入
-from webapi.models import Course, User, Section, RecommendCourse, CollectCourse, Carousel, Tag
+from webapi.models import Course, User, Section, RecommendCourse, CollectCourse, Carousel, Tag, Record
 
 # 日志导入
 from webapi.tools import Debuglog
@@ -184,7 +184,33 @@ def addCourseCover(request):
 def getrecommendsources(request):
     try:
         model = []
-        recommendcourses = list(RecommendCourse.objects.all())
+        recommendcourses = []
+        # 首先查看记录表里面有没有用户的内容
+        user = tokenActive(request.COOKIES)
+        if isinstance(user, User):
+            recordlist = list(Record.objects.filter(userid=user.userid, time__gte=int(1000 * time.time())-604800000))
+            if len(recordlist) == 0:
+                recommendcourses = list(RecommendCourse.objects.all())
+            else:
+                taglist = {}
+                # 记录总共有多少记录的变量
+                allnum = 0
+                # 循环record,记录tag比例
+                for record in recordlist:
+                    tag = list(Course.objects.filter(courseid=record.courseid))[0].tag
+                    # 判断是否已经记录这个分类
+                    if tag in taglist:
+                        taglist[tag] += 1
+                    else:
+                        taglist[tag] = 1
+                    allnum += 1
+                # 把次数变为以5为基础的
+                for tag in taglist:
+                    num = int(round(float(taglist[tag])/allnum * 5))
+                    # 获取相应tag的数量
+                    recommendcourses.extend(list(Course.objects.filter(tag=tag))[0:num])
+        else:
+            recommendcourses = list(RecommendCourse.objects.all())
         for course in recommendcourses:
             course = list(Course.objects.filter(courseid=course.courseid))[0]
             model.append(coursemodel(course))
@@ -258,6 +284,33 @@ def getCollectCourseByUser(request):
         for collectcourse in collectcourselist:
             course = list(Course.objects.filter(courseid=collectcourse.courseid))[0]
             courselist.append(coursemodel(course))
+        return pack(data=courselist)
+    except Exception as e:
+        return pack(msg=e)
+
+
+# 查询历史浏览课程
+@csrf_exempt
+def getHistoryCourse(request):
+    try:
+        body = eval(request.body)
+        if 'userid' in body:
+            userid = body['userid']
+        else:
+            global user
+            user = tokenActive(request.COOKIES)
+            if not isinstance(user, User):
+                return pack(code=user)
+            userid = user.userid
+        historylist = list(Record.objects.filter(userid=userid, time__gte=int(1000 * time.time())-604800000).order_by('-time'))
+        # 根据获取的courseid获取courselist
+        courselist = []
+        courseidlist = []
+        for historycourse in historylist:
+            course = list(Course.objects.filter(courseid=historycourse.courseid))[0]
+            if course.courseid not in courseidlist:
+                courselist.append(coursemodel(course))
+                courseidlist.append(course.courseid)
         return pack(data=courselist)
     except Exception as e:
         return pack(msg=e)

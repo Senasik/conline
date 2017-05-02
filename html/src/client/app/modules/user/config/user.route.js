@@ -44,6 +44,14 @@
                             }, function() {
                                 return [];
                             })
+                        },
+                        historycourse: function(CourseApi, CourseMap){
+                            return CourseApi.gethistorycourse({size: 10, index: 1}).then(function(res) {
+                                var data = res.data;
+                                return CourseMap.courseListModel(data)
+                            }, function() {
+                                return [];
+                            })
                         }
                     }
                 })

@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'searchcourse$', course.searchCourse),
     url(r'collectcourse$', course.collectCourse),
     url(r'getcollectcoursebyuser$', course.getCollectCourseByUser),
+    url(r'gethistorycourse$', course.getHistoryCourse),
     url(r'getcarousellist$', course.getCarouselList),
     url(r'gettaglist$', course.getTaglist),
     url(r'getcourselistbytag$', course.getCourselistByTag),
