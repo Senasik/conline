@@ -32,7 +32,7 @@
                 </label>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-if="creathomework.type != 2">
             <label for="creathomeworkanswer" class="col-sm-1 col-xs-3 control-label">答案</label>
             <div class="col-sm-4 col-xs-6">
                 <input ng-if="creathomework.type == 0" type="text" name="creathomeworkanswer" class="form-control" ng-model="creathomework.answer" required ui-validate="{onaji: 'creathomework.option.indexOf($value) != -1'} " ui-validate-watch=" 'creathomework.checkanswer' ">
@@ -52,6 +52,27 @@
             </div>
             <div class="col-sm-1 col-xs-3">
                 <input type="button" class="form-control btn btn-danger" ng-click="creathomework.option.length>2?creathomework.option.pop():true" value="删除选项"></input>
+            </div>
+        </div>
+        <div class="form-group" ng-if="creathomework.type == 2" ng-init="creathomework.input = [undefined, undefined]">
+            <label for="creathomeworktest" class="col-sm-1 col-xs-3 control-label">输入</label>
+            <div class="col-sm-1 col-xs-3" ng-repeat="item in creathomework.input track by $index">
+                <input autocomplete="off" type="text" id="creathomeworktest" class="form-control" ng-model="creathomework.input[creathomework.input.indexOf(item)]" required>
+            </div>
+            
+        </div>
+        <div class="form-group" ng-if="creathomework.type == 2" ng-init="creathomework.output = [undefined, undefined]">
+            <label for="creathomeworktestoutput" class="col-sm-1 col-xs-3 control-label">输出</label>
+            <div class="col-sm-1 col-xs-3" ng-repeat="item in creathomework.output track by $index">
+                <input autocomplete="off" type="text" id="creathomeworktestoutput" class="form-control" ng-model="creathomework.output[creathomework.output.indexOf(item)]" required>
+            </div>
+        </div>
+        <div class="form-group" ng-if="creathomework.type == 2">
+            <div class="col-sm-2 col-xs-3 col-xs-offset-3 col-sm-offset-1">
+                <input type="button" class="form-control btn btn-info" ng-click="creathomework.input.push(undefined);creathomework.output.push(undefined)" value="添加测试用例"></input>
+            </div>
+            <div class="col-sm-2 col-xs-3">
+                <input type="button" class="form-control btn btn-danger" ng-click="creathomework.input.length>1?creathomework.input.pop():true;creathomework.output.length>1?creathomework.output.pop():true" value="删除测试用例"></input>
             </div>
         </div>
         <div class="form-group">

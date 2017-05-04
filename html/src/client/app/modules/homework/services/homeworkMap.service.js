@@ -44,8 +44,12 @@
                         answer: data.answer,
                         father: data.father
                     };
-                    //option默认赋值的话回传null
+                    //option默认赋值的话回传null,input,output同理
                     if(homeworkModel.type == 0)homeworkModel.option = data.option;
+                    if(homeworkModel.type == 2){
+                        homeworkModel.input = data.input;
+                        homeworkModel.output = data.output;                        
+                    }
 
                     return homeworkModel;
                 },

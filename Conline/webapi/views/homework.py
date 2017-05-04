@@ -4,12 +4,15 @@ import os
 # 工具函数导入
 from webapi.tools import random_str, pack, tokenActive
 import time
+import subprocess
+import chardet
+from Conline.settings import BASE_DIR
 
 # model导入
 from webapi.models import Homework, User
 
 # 日志导入
-from webapi.tools import Debuglog
+from webapi.tools import log
 
 
 # 创建题目
@@ -22,9 +25,14 @@ def creatHomework(request):
             pack(code=user)
         id = random_str()
         now = int(1000 * time.time())
-        user = Homework(homeworkid=id, title=body['title'], creator=user.userid, type=body['type'], answer=body['answer'], creattime=now, father=body['father'])
-        if body['type'] == 0:
+        user = Homework(homeworkid=id, title=body['title'], creator=user.userid, type=body['type'], creattime=now, father=body['father'])
+        if body['type'] != '2':
+            user.answer = body['answer']
+        if body['type'] == '0':
             user.option = body['option']
+        if body['type'] == '2':
+            user.input = body['input']
+            user.output = body['output']
         user.save()
         return pack(data={'homeworkid': id})
     except Exception as e:
@@ -72,6 +80,57 @@ def getHomeworkBySection(request):
             model.append(homeworkModel(homework))
         return pack(data=model)
     except Exception as e:
+        return pack(msg=e)
+
+
+# 程序题运行
+@csrf_exempt
+def codeRun(request):
+    try:
+        body = eval(request.body)
+        code = body['code']
+        id = body['homeworkid']
+        sfile = BASE_DIR + '/static/c/' + random_str() + '.c'
+        with open(sfile, 'w') as cfile:
+            cfile.write(code)
+            cfile.close()
+        dist = BASE_DIR + '/static/c/' + random_str()
+        # 编译程序
+        gcc = subprocess.Popen(['gcc', sfile, '-o', dist], stderr=subprocess.PIPE)
+        gcc.wait()
+        if gcc.stderr.read() != '':
+	    log('error: '+gcc.stderr.read())
+            raise Exception('编译出错')
+        log('source ' + sfile + '\n' + dist)
+        homework = list(Homework.objects.filter(homeworkid=id))[0]
+        inputlist = eval(homework.input)
+        outputlist = eval(homework.output)
+        # 记录正确与否的list
+        resultlist = []
+        # 循环执行
+        for input in inputlist:
+            p = subprocess.Popen(dist, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            p.stdin.write(input + '\n')
+            p.wait()
+            # 如果出错，那么记录错误
+            result = p.stdout.read()
+            if result != '':
+                # 获取编码
+               # encoding = chardet.detect(result)['encoding']
+                # 转码
+               # result = result.decode(encoding).encode('utf-8')
+                if p.stderr.read() != '':
+                    raise Exception('type error')
+                # 正确的话，记录正确
+                elif result == outputlist[inputlist.index(input)]:
+                    resultlist.append(True)
+                else:
+                    resultlist.append(False)
+        os.remove(sfile)
+        os.remove(dist)
+        return pack(data=resultlist)
+    except Exception as e:
+        os.remove(sfile)
         return pack(msg=e)
 
 

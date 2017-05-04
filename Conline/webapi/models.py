@@ -42,7 +42,7 @@ class User(models.Model):
 class Course(models.Model):
     courseid = models.CharField(primary_key=True, max_length=45)
     title = models.CharField(max_length=45,  verbose_name='课程名')
-    creattime = models.CharField(max_length=45)
+    creattime = models.BigIntegerField()
     creator = models.CharField(max_length=45, verbose_name='创建者')
     tag = models.CharField(blank=True, null=True, max_length=100, verbose_name='所属分类')
     cover = models.CharField(blank=True, null=True, max_length=100)
@@ -65,7 +65,7 @@ class RecommendCourse(models.Model):
 class Section(models.Model):
     sectionid = models.CharField(primary_key=True, max_length=45)
     title = models.CharField(max_length=45)
-    creattime = models.CharField(max_length=45)
+    creattime = models.BigIntegerField()
     creator = models.CharField(max_length=45)
     # 课程内容类型： 0 文章；1 视频
     type = models.IntegerField()
@@ -89,14 +89,16 @@ class Homework(models.Model):
     type = models.IntegerField()
     answer = models.TextField()
     option = models.TextField(blank=True, null=True)
-    creattime = models.CharField(max_length=45)
+    input = models.TextField(blank=True, null=True)
+    output = models.TextField(blank=True, null=True)
+    creattime = models.BigIntegerField()
 
 
 # 公告表
 class Notic(models.Model):
     noticid = models.CharField(primary_key=True, max_length=45, default=random_str())
     title = models.CharField(max_length=45, verbose_name='公告名')
-    creattime = models.CharField(max_length=45, default=int(1000*time.time()))
+    creattime = models.BigIntegerField(default=int(1000*time.time()))
     content = models.TextField(verbose_name='公告内容')
 
     class Meta:
@@ -108,7 +110,7 @@ class Notic(models.Model):
 class Resource(models.Model):
     resourceid = models.CharField(primary_key=True, max_length=45)
     title = models.CharField(max_length=45)
-    creattime = models.CharField(max_length=45)
+    creattime = models.BigIntegerField()
     fileurl = models.TextField()
     creator = models.CharField(max_length=45)
     introduction = models.TextField(blank=True, null=True)

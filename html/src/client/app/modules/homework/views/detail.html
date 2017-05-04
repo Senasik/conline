@@ -11,17 +11,18 @@
             <div ng-switch-when="1">
                 <h4>{{homework.title}}</h4>
                 <div class="col-sm-3">
-                    <input ng-model="homework.testpaper" class="form-control"></input>
+                    <input ng-model="homework.testpaper" class="form-control" required></input>
                 </div>
             </div>
             <div ng-switch-when="2">
                 <h4>{{homework.title}}</h4>
                 <div class="col-sm-6">
-                    <textarea ui-codemirror="{lineNumbers: true, matchBrackets: true, theme:'midnight',lineWrapping: true,mode: 'text/html'}" cols="10" rows="20"></textarea>
+                    <textarea ng-model="homework.testpaper" ui-codemirror="{lineNumbers: true, matchBrackets: true, theme:'midnight',lineWrapping: true,mode: 'text/html'}" cols="10" rows="20" required></textarea>
                 </div>
             </div>
             <div style="color:red;line-height: 32px" class="col-sm-6" ng-if="!homework.result && homework.result != undefined"> 该题错误,正确答案：{{homework.answer}}</div>
             <div style="color:green;line-height: 32px" class="col-sm-2" ng-if="homework.result">正确</div>
+            <div style="color:blue;line-height: 32px" class="col-sm-6" ng-if="homework.length > 0">共执行了{{homework.length}}个测试用例，有{{homework.success}}个测试通过</div>
             <div style="clear: both"></div>
         </div>
     </div>

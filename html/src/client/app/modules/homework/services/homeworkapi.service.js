@@ -38,6 +38,11 @@
         creathomework: function(data){
           var url = 'creathomework';
           return self._http(url, data);
+        },
+        //编程题上传
+        coderun: function(data){
+          var url = 'coderun';
+          return self._http(url, data);
         }
       };
       return self;

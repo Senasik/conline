@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'creathomework$', homework.creatHomework),
     url(r'gethomeworkbyuser$', homework.getHomeworkByUser),
     url(r'gethomeworkbysection$', homework.getHomeworkBySection),
+    url(r'coderun$', homework.codeRun),
     # 公告
     url(r'creatnotic$', notic.creatnotic),
     url(r'getnoticlist$', notic.getnoticlist),
