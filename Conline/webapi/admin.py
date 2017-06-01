@@ -146,6 +146,8 @@ class EditSectionAdmin(admin.ModelAdmin):
         if obj.operator == 1:
             section = Section(sectionid=obj.sectionid, title=obj.title, creattime=obj.creattime, type=obj.type, content=obj.content, fileurl=obj.fileurl, father=obj.father)
             section.save()
+            edit = EditSection.objects.filter(sectionid=obj.sectionid)
+            edit.delete()
         super(EditSectionAdmin, self).save_model(request, obj, form, change)
 
     get_time.short_description = '创建时间'

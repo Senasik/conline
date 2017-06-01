@@ -99,7 +99,7 @@ def codeRun(request):
         gcc = subprocess.Popen(['gcc', sfile, '-o', dist], stderr=subprocess.PIPE)
         gcc.wait()
         if gcc.stderr.read() != '':
-	    log('error: '+gcc.stderr.read())
+            log('error: '+gcc.stderr.read())
             raise Exception('编译出错')
         log('source ' + sfile + '\n' + dist)
         homework = list(Homework.objects.filter(homeworkid=id))[0]

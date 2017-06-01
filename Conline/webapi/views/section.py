@@ -2,9 +2,10 @@
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 import os
 # 工具函数导入
-from webapi.tools import random_str, pack, tokenActive
+from webapi.tools import random_str, pack, tokenActive, log
 import time
 import chardet
+import subprocess
 from Conline.settings import STATIC_URL, BASE_DIR
 import binascii
 # model导入
@@ -13,6 +14,8 @@ from webapi.models import Section, User, EditSection, Record
 # 日志导入
 from webapi.tools import Debuglog
 
+# 定义section文件地址
+sectionfiledir = BASE_DIR + os.sep + 'static' + os.sep + 'sectionfile' + os.sep
 
 # 获取章节列表
 @csrf_exempt
@@ -90,21 +93,28 @@ def creatSection(request):
 
         # 文字文件和视频文件分别处理
         if body['type'] == '1':
-            # 获取扩展名
-            filetype = '.' + str(file).split('.')[1]
-            # 保存fileurl
-            section.fileurl = random_str() + filetype
-            # 打开特定的文件进行二进制的写操作
-            destination = open(BASE_DIR + os.sep + 'static' + os.sep + 'sectionfile' + os.sep + section.fileurl, 'wb+')
-            # 分块写入文件
-            for chunk in file.chunks():
-                destination.write(chunk)
-            destination.close()
+            creatSectionFile(file=file, section=section)
         elif body['type'] == '0':
-            filecontent = file.read()
-            # 获取编码方式
-            encodetype = chardet.detect(filecontent)['encoding']
-            section.content = filecontent.decode(encodetype)
+            filetype = '.' + str(file).split('.')[1]
+            # 如果是txt那么存到数据库
+            if filetype == 'txt':
+                filecontent = file.read()
+                # 获取编码方式
+                encodetype = chardet.detect(filecontent)['encoding']
+                section.content = filecontent.decode(encodetype)
+            # 如果是pdf那么创建文件
+            elif filetype == 'pdf':
+                creatSectionFile(file=file, section=section)
+            # 如果是doc那么先转pdf再保存文件
+            elif filetype == 'doc':
+                creatSectionFile(file=file, section=section)
+                desfile = random_str() + '.pdf'
+                write = subprocess.Popen(['python3 /home/ubuntu/DocumentConverter.py ' + sectionfiledir + section.fileurl + ' ' + sectionfiledir + desfile], stderr=subprocess.PIPE)
+                write.wait()
+                if write.stderr.read() != '':
+                    log('error: ' + write.stderr.read())
+                    raise Exception('上传出错')
+                section.fileurl = desfile
         section.save()
 
         return pack()
@@ -146,6 +156,20 @@ def editSection(request):
         return pack()
     except Exception as e:
         return pack(msg=e)
+
+
+# 写入章节文件
+def creatSectionFile(file=None, section=Section()):
+    # 获取扩展名
+    filetype = '.' + str(file).split('.')[1]
+    # 保存fileurl
+    section.fileurl = random_str() + filetype
+    # 打开特定的文件进行二进制的写操作
+    destination = open(sectionfiledir + section.fileurl, 'wb+')
+    # 分块写入文件
+    for chunk in file.chunks():
+        destination.write(chunk)
+    destination.close()
 
 
 def moban(request):

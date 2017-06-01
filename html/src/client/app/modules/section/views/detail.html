@@ -2,7 +2,12 @@
 	<div class="col-sm-12 contantpanel">
     <h3>{{section.title}}</h3>
     <div class="sectiondetail">
-        <p>{{section.content}}</p>
+    	<div ng-if="section.fileurl == ''"> 
+        	<p>{{section.content}}</p>
+    	</div>
+        <div ng-if="section.fileurl != ''">
+        	<embed width="800" height="600" src="{{section.fileurl}}"> </embed> 
+        </div>
     </div>
     <div class="col-sm-3">
         <button ui-sref="app.homework.detail({sectionid: section.sectionid})" class="col-sm-2 form-control btn btn-info"> 开始做题</button>

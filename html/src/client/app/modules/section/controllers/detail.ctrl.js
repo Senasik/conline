@@ -6,5 +6,6 @@
  			$scope.section = sectionModel;
  			//通知list已经进入详情
         	$scope.sectioncb.isdetail = true;
+        	//
         });
 })();
