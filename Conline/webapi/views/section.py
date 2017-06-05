@@ -1,5 +1,7 @@
 # coding=utf-8
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from django.http import HttpResponse
+from django.template import loader, Context
 import os
 # 工具函数导入
 from webapi.tools import random_str, pack, tokenActive, log
@@ -97,24 +99,28 @@ def creatSection(request):
         elif body['type'] == '0':
             filetype = '.' + str(file).split('.')[1]
             # 如果是txt那么存到数据库
-            if filetype == 'txt':
+            if filetype == '.txt':
                 filecontent = file.read()
                 # 获取编码方式
                 encodetype = chardet.detect(filecontent)['encoding']
                 section.content = filecontent.decode(encodetype)
             # 如果是pdf那么创建文件
-            elif filetype == 'pdf':
+            elif filetype == '.pdf':
                 creatSectionFile(file=file, section=section)
             # 如果是doc那么先转pdf再保存文件
-            elif filetype == 'doc':
+            elif filetype == '.doc':
                 creatSectionFile(file=file, section=section)
                 desfile = random_str() + '.pdf'
-                write = subprocess.Popen(['python3 /home/ubuntu/DocumentConverter.py ' + sectionfiledir + section.fileurl + ' ' + sectionfiledir + desfile], stderr=subprocess.PIPE)
+                log('des: ' + desfile)
+                log('sre' + section.fileurl)
+                write = subprocess.Popen(['python3', '/home/ubuntu/DocumentConverter.py', sectionfiledir + section.fileurl, sectionfiledir + desfile], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
                 write.wait()
                 if write.stderr.read() != '':
                     log('error: ' + write.stderr.read())
                     raise Exception('上传出错')
                 section.fileurl = desfile
+            else:
+                raise Exception('文件类型错误')
         section.save()
 
         return pack()

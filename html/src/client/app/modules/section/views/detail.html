@@ -5,8 +5,7 @@
     	<div ng-if="section.fileurl == ''"> 
         	<p>{{section.content}}</p>
     	</div>
-        <div ng-if="section.fileurl != ''">
-        	<embed width="800" height="600" src="{{section.fileurl}}"> </embed> 
+        <div ng-if="section.fileurl != ''" id="sectionfile">
         </div>
     </div>
     <div class="col-sm-3">

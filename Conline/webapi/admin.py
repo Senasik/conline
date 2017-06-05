@@ -2,7 +2,7 @@
 from django.contrib import admin
 from webapi.models import User, Course, RecommendCourse, Carousel, Notic, Tag, EditSection, Section
 from django import forms
-from webapi.tools import random_str
+from webapi.tools import random_str, log
 import time
 # Register your models here.
 
@@ -119,8 +119,8 @@ class EditSectionForm(forms.ModelForm):
 class EditSectionAdmin(admin.ModelAdmin):
     form = EditSectionForm
     list_display = (['title', 'get_time', 'get_creator', 'get_tag'])
-    readonly_fields = (['title', 'get_time', 'get_creator', 'get_tag', 'content'])
-    fields = (['get_creator', 'get_tag', 'operator', 'content'])
+    readonly_fields = (['title', 'get_time', 'get_creator', 'get_tag', 'content', 'get_fileurl'])
+    fields = (['get_creator', 'get_tag', 'operator', 'content', 'get_fileurl'])
     search_fields = (['get_tag'])
     list_filter = (['operator'])
 
@@ -142,16 +142,20 @@ class EditSectionAdmin(admin.ModelAdmin):
         else:
             return '通过'
 
+    def get_fileurl(self, obj):
+        section = list(EditSection.objects.filter(sectionid=obj.sectionid))[0]
+        return section.fileurl
+
     def save_model(self, request, obj, form, change):
-        if obj.operator == 1:
+        if obj.operator == '1':
             section = Section(sectionid=obj.sectionid, title=obj.title, creattime=obj.creattime, type=obj.type, content=obj.content, fileurl=obj.fileurl, father=obj.father)
             section.save()
-            edit = EditSection.objects.filter(sectionid=obj.sectionid)
-            edit.delete()
-        super(EditSectionAdmin, self).save_model(request, obj, form, change)
+            edit = EditSection.objects.filter(sectionid=obj.sectionid).delete()
+        # super(EditSectionAdmin, self).save_model(request, obj, form, change)
 
     get_time.short_description = '创建时间'
     get_creator.short_description = '创建者'
     get_tag.short_description = '所属分类'
     get_operator.short_description = '审核状态'
+    get_fileurl.short_description = '文件路径'
 admin.site.register(EditSection, EditSectionAdmin)
