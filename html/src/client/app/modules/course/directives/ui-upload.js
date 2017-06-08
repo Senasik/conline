@@ -59,12 +59,12 @@
                         });
                         //添加到队列后更新scope里的item
                         uploader.onAfterAddingFile = function(fileItem){
-                            if (fileItem.file.type != "text/plain" && fileItem.file.type != "application/vnd.openxmlformats-officedocument.wordprocessingml.document" && fileItem.file.type != "application/pdf" && fileItem.file.type != "application/msword") {
+                            if (fileItem.file.type != "text/plain" && fileItem.file.type != "application/vnd.openxmlformats-officedocument.wordprocessingml.document" && fileItem.file.type != "application/pdf" && fileItem.file.type != "application/msword" && fileItem.file.type != "video/mp4") {
                                 toaster.pop('error', '提示', '不支持的文件类型!');
                                 fileItem.remove();
                                 return;
                             }
-                            if (fileItem.file.size > 51200000) {
+                            if (fileItem.file.size > 512000000) {
                                 toaster.pop('error', '提示', '选择的文件过大!');
                                 fileItem.remove();
                                 return;

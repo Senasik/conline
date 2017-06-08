@@ -10,7 +10,7 @@
         	if($scope.section.fileurl != ''){
         	$scope.section.fileurl = $scope.videoBase+$scope.section.fileurl;
         	$timeout(function(){
-        	$('#sectionfile').append('<embed width="800" height="600" src="'+ $scope.section.fileurl +'"> </embed>')
+        	$('#sectionfile').append('<embed src="'+ $scope.section.fileurl +'"> </embed>')
 
         	}, 100)
         	}

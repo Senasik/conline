@@ -3,7 +3,7 @@
         <div class="col-sm-5 ccarousel" >
             <div uib-carousel active="0" interval="3000" no-wrap="true" class="main-shadow">
                 <div uib-slide ng-repeat="slide in slides " index="$index">
-                    <img ng-src="{{slide.image}}?width=160&height=90" style="margin:auto;">
+                    <img ng-src="{{slide.cover}}?width=160&height=90" style="margin:auto;">
                     <div class="carousel-caption">
                         <p>{{slide.title}}</p>
                     </div>
