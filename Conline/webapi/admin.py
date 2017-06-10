@@ -27,6 +27,9 @@ class UserAdmin(admin.ModelAdmin):
     search_fields = (['username'])  # 展示中搜索的域
     list_filter = (['type'])  # 侧边栏过滤
 
+    def has_add_permission(self, request):
+        return False
+
     # 类型过滤
     def get_type(self, obj):
         if obj.type == 0:
@@ -50,6 +53,9 @@ class CourseAdmin(admin.ModelAdmin):
     fields = (['title'])  # 可修改的部分
     list_display = (['courseid', 'title'])  # 展示的部分
     search_fields = (['courseid', 'title'])  # 展示中搜索的域
+
+    def has_add_permission(self, request):
+        return False
 
     def save_model(self, request, obj, form, change):
         super(CourseAdmin, self).save_model(request, obj, form, change)
@@ -124,6 +130,9 @@ class EditSectionAdmin(admin.ModelAdmin):
     search_fields = (['get_tag'])
     list_filter = (['operator'])
 
+    def has_add_permission(self, request):
+        return False
+
     def get_time(self, obj):
         return time.strftime("%Y/%m/%d %H:%M", time.localtime(int(obj.creattime)/1000))
 
@@ -148,7 +157,7 @@ class EditSectionAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if obj.operator == '1':
-            section = Section(sectionid=obj.sectionid, title=obj.title, creattime=obj.creattime, type=obj.type, content=obj.content, fileurl=obj.fileurl, father=obj.father)
+            section = Section(sectionid=obj.sectionid, title=obj.title, creattime=obj.creattime, type=obj.type, content=obj.content, fileurl=obj.fileurl, father=obj.father, creator=obj.creator)
             section.save()
             edit = EditSection.objects.filter(sectionid=obj.sectionid).delete()
         # super(EditSectionAdmin, self).save_model(request, obj, form, change)

@@ -3,7 +3,7 @@
     <h3>{{section.title}}</h3>
     <div class="sectiondetail">
     	<div ng-if="section.fileurl == ''"> 
-        	<p>{{section.content}}</p>
+        	<p id="sectioncontent">{{section.content}}</p>
     	</div>
         <div ng-if="section.fileurl != ''" id="sectionfile">
         </div>

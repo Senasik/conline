@@ -26,7 +26,6 @@ urlpatterns = [
     url(r'^test/', myhtml.test),
     url(r'^webapi/', include('webapi.urls')),
     url(r'^$', myhtml.index),
-
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 

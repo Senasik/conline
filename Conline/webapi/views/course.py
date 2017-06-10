@@ -6,9 +6,10 @@ import os
 from webapi.tools import random_str, pack, tokenActive
 import time
 from Conline.settings import STATIC_URL, BASE_DIR
+from webapi.views.section import sectionfiledir
 
 # model导入
-from webapi.models import Course, User, Section, RecommendCourse, CollectCourse, Carousel, Tag, Record
+from webapi.models import Course, User, Section, RecommendCourse, CollectCourse, Carousel, Tag, Record, EditSection
 
 # 日志导入
 from webapi.tools import Debuglog
@@ -117,9 +118,16 @@ def deleteCourse(request):
         if user.type == 0:
             raise Exception('学生无法删除')
         course = Course.objects.all().filter(creator=user.userid).filter(courseid=body['courseid'])
-        course.delete()
+        # 删除所有章节
         section = Section.objects.filter(father=list(course)[0].courseid)
+        for sec in list(section):
+            if sec.fileurl is not None:
+                os.remove(sectionfiledir+sec.fileurl)
         section.delete()
+        # 删除待审核章节
+        edit = EditSection.objects.filter(father=list(course)[0].courseid)
+        edit.delete()
+        course.delete()
 
         return pack()
     except Exception as e:
@@ -197,13 +205,17 @@ def getrecommendsources(request):
                 allnum = 0
                 # 循环record,记录tag比例
                 for record in recordlist:
-                    tag = list(Course.objects.filter(courseid=record.courseid))[0].tag
-                    # 判断是否已经记录这个分类
-                    if tag in taglist:
-                        taglist[tag] += 1
-                    else:
-                        taglist[tag] = 1
-                    allnum += 1
+                    try:
+                        tag = list(Course.objects.filter(courseid=record.courseid))[0].tag
+                        # 判断是否已经记录这个分类
+                        if tag in taglist:
+                            taglist[tag] += 1
+                        else:
+                            taglist[tag] = 1
+                        allnum += 1
+                    # 抛出此异常表示已经删除了课程
+                    except IndexError as e:
+                        pass
                 # 把次数变为以5为基础的
                 for tag in taglist:
                     num = int(round(float(taglist[tag])/allnum * 5))
@@ -212,8 +224,8 @@ def getrecommendsources(request):
         else:
             recommendcourses = list(RecommendCourse.objects.all())
         for course in recommendcourses:
-            course = list(Course.objects.filter(courseid=course.courseid))[0]
-            model.append(coursemodel(course))
+            course = list(Course.objects.filter(courseid=course.courseid))
+            model.append(coursemodel(course[0]))
         return pack(data=model)
 
     except Exception as e:

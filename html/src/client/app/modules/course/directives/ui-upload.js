@@ -59,7 +59,20 @@
                         });
                         //添加到队列后更新scope里的item
                         uploader.onAfterAddingFile = function(fileItem){
-                            if (fileItem.file.type != "text/plain" && fileItem.file.type != "application/vnd.openxmlformats-officedocument.wordprocessingml.document" && fileItem.file.type != "application/pdf" && fileItem.file.type != "application/msword" && fileItem.file.type != "video/mp4") {
+                            var supportType = [
+                                "text/plain",
+                                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                                "application/pdf",
+                                "application/msword",
+                                "video/mp4",
+                                "md"
+                            ];
+                            var type = fileItem.file.type;
+                            //如果格式无法分辨，就取最后一个.后面的
+                            if (type == ''){
+                                type = fileItem.file.name.split('.').pop();
+                            }
+                            if (supportType.indexOf(type) == -1) {
                                 toaster.pop('error', '提示', '不支持的文件类型!');
                                 fileItem.remove();
                                 return;

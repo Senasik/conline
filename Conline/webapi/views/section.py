@@ -29,7 +29,7 @@ def getSectionList(request):
             sectionlist = list(Section.objects.all().filter(creator=user.userid))
         else:
             body = eval(request.body)
-            sectionlist = list(Section.objects.all().filter(father=body['courseid']))
+            sectionlist = list(Section.objects.all().filter(father=body['courseid']).order_by('creattime'))
             # 记录用户查看课程的记录
             if isinstance(user, User):
                 record = Record(userid=user.userid, courseid=body['courseid'], time=int(1000 * time.time()))
@@ -99,7 +99,7 @@ def creatSection(request):
         elif body['type'] == '0':
             filetype = '.' + str(file).split('.')[1]
             # 如果是txt那么存到数据库
-            if filetype == '.txt':
+            if filetype == '.txt' or '.md':
                 filecontent = file.read()
                 # 获取编码方式
                 encodetype = chardet.detect(filecontent)['encoding']
@@ -139,6 +139,9 @@ def deletesection(request):
         if user.type == 0:
             raise Exception('学生无法删除')
         section = Section.objects.all().filter(creator=user.userid).filter(sectionid=body['sectionid'])
+        for sec in list(section):
+            if sec.fileurl is not None:
+                os.remove(sectionfiledir + sec.fileurl)
         section.delete()
         return pack()
 
@@ -156,7 +159,7 @@ def editSection(request):
             return pack(code=user)
         if user.type == 0:
             raise Exception('学生无法编辑')
-        section = list(Section.objects.all().filter(creator=user.userid).filter(sectionid=body['sectionid']))[0]
+        section = list(Section.objects.filter(creator=user.userid).filter(sectionid=body['sectionid']))[0]
         section.title = body['title']
         section.save()
         return pack()
