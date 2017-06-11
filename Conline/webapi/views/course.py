@@ -1,6 +1,7 @@
 # coding=utf-8
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+from django.template import loader
 import os
 # 工具函数导入
 from webapi.tools import random_str, pack, tokenActive
@@ -92,7 +93,7 @@ def getCourselistByTag(request):
             for course in courseList:
                 model.append(coursemodel(course))
         else:
-            taglist = list(Tag.objects.all().order_by('creattime'))[0:3]
+            taglist = list(Tag.objects.all().order_by('creattime'))
             # 获取tag之后循环获取相关课程
             for tag in taglist:
                 tagcourseList = list(Course.objects.all().filter(tag=tag.tagid).order_by('creattime'))[0:5]
@@ -120,9 +121,9 @@ def deleteCourse(request):
         course = Course.objects.all().filter(creator=user.userid).filter(courseid=body['courseid'])
         # 删除所有章节
         section = Section.objects.filter(father=list(course)[0].courseid)
-        for sec in list(section):
-            if sec.fileurl is not None:
-                os.remove(sectionfiledir+sec.fileurl)
+        # for sec in list(section):
+        #     if sec.fileurl is not None:
+        #         os.remove(sectionfiledir+sec.fileurl)
         section.delete()
         # 删除待审核章节
         edit = EditSection.objects.filter(father=list(course)[0].courseid)
@@ -158,6 +159,9 @@ def editCourse(request):
 def addCourseCover(request):
     try:
         body = request.POST.dict()
+        if 'courseid' not in body:
+            t = loader.get_template('imgupload.html')
+            return HttpResponse(t.render())
         user = tokenActive({'token': body['token']})
         if not isinstance(user, User):
             return pack(code=user)
@@ -167,9 +171,9 @@ def addCourseCover(request):
         if not file:
             pack(msg="no files for upload!")
         # 获取扩展名
-        filetype = '.' + str(file).split('.')[-1]
+        filetype = '.' + file.name.split('.')[-1]
         # 记录原来文件的地址，成功保存之后删除原来的
-        prefile = BASE_DIR + os.sep + 'static' + os.sep + 'covers' + os.sep + course.cover
+        # prefile = BASE_DIR + os.sep + 'static' + os.sep + 'covers' + os.sep + course.cover
         # 保存fileurl
         course.cover = random_str() + filetype
         # 打开特定的文件进行二进制的写操作
@@ -180,7 +184,7 @@ def addCourseCover(request):
         destination.close()
         course.save()
         # 删除原来的文件
-        os.remove(prefile)
+        # os.remove(prefile)
         return pack(data={'cover': course.cover})
 
     except Exception as e:
@@ -221,6 +225,11 @@ def getrecommendsources(request):
                     num = int(round(float(taglist[tag])/allnum * 5))
                     # 获取相应tag的数量
                     recommendcourses.extend(list(Course.objects.filter(tag=tag))[0:num])
+                while True:
+                    if len(recommendcourses) > 5:
+                        recommendcourses.pop()
+                    else:
+                        break
         else:
             recommendcourses = list(RecommendCourse.objects.all())
         for course in recommendcourses:

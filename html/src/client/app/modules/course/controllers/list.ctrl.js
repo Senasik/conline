@@ -2,10 +2,13 @@
 	'use strict';
 	angular
 		.module('com.module.course')
-		.controller('CourseListCtrl', function($scope, $state, toaster, CourseApi, CourseMap) {
+		.controller('CourseListCtrl', function($scope, $state, toaster, CourseApi, CourseMap, tagcourselist) {
 
 			$scope.courselist = [];
 			
+			if (tagcourselist != 'all' && tagcourselist != null){
+				$scope.courselist = tagcourselist;
+			}
 
 			//查询课程列表
 			$scope.searchcourse = function(){

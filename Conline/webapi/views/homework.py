@@ -26,11 +26,11 @@ def creatHomework(request):
         id = random_str()
         now = int(1000 * time.time())
         user = Homework(homeworkid=id, title=body['title'], creator=user.userid, type=body['type'], creattime=now, father=body['father'])
-        if body['type'] != '2':
+        if body['type'] != '2' and body['type'] != 2:
             user.answer = body['answer']
-        if body['type'] == '0':
+        if body['type'] == '0' or body['type'] == 0:
             user.option = body['option']
-        if body['type'] == '2':
+        if body['type'] == '2' or body['type'] == 2:
             user.input = body['input']
             user.output = body['output']
         user.save()

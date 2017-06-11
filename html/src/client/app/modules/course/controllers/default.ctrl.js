@@ -3,7 +3,7 @@
 	angular
 		.module('com.module.course')
 		.controller('CourseDefaultCtrl', function($state) {
-			$state.go('app.course.list')
+			$state.go('app.course.list({tagid: "all"})')
 			
 		});
 })();

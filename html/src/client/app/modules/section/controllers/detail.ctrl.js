@@ -8,27 +8,31 @@
         	$scope.sectioncb.isdetail = true;
         	//如果有fileurl，那么修改fileurl
         	if($scope.section.fileurl != ''){
-	        	var file = $scope.section.fileurl = $scope.videoBase+$scope.section.fileurl;
-	        	if (file.split('.').pop() == 'mp4'){
-	        		//如果是视频，那么使用flv.js
-		        	$timeout(function(){
-			        	if (flvjs.isSupported()) {
-			        		$('#sectionfile').append('<video id="sectionvideo"></video>')
-					        var videoElement = document.getElementById('sectionvideo');
-					        var flvPlayer = flvjs.createPlayer({
-					            type: 'mp4',
-					            url: file
-					        });
-					        flvPlayer.attachMediaElement(videoElement);
-					        flvPlayer.load();
-					        flvPlayer.play();
-				    	}
-		        	}, 100)
-	        	}else{
+        		if($scope.section.type == 1){
+	        		var file = $scope.section.fileurl = $scope.videoBase+$scope.section.fileurl;
+        		}else{
+        			var file = $scope.section.fileurl = $scope.pdfBase+$scope.section.fileurl;
+        		}
+	        // 	if (file.split('.').pop() == 'mp4'){
+	        // 		//如果是视频，那么使用flv.js
+		       //  	$timeout(function(){
+			      //   	if (flvjs.isSupported()) {
+			      //   		$('#sectionfile').append('<video id="sectionvideo"></video>')
+					    //     var videoElement = document.getElementById('sectionvideo');
+					    //     var flvPlayer = flvjs.createPlayer({
+					    //         type: 'mp4',
+					    //         url: file
+					    //     });
+					    //     flvPlayer.attachMediaElement(videoElement);
+					    //     flvPlayer.load();
+					    //     flvPlayer.play();
+				    	// }
+		       //  	}, 100)
+	        // 	}else{
 	        		$timeout(function(){
-		        	$('#sectionfile').append('<embed src="'+ $scope.section.fileurl +'"> </embed>')
-	        	}, 100)
-	        	}
+			        	$('#sectionfile').append('<embed src="'+ $scope.section.fileurl +'"> </embed>');
+		        	}, 100)
+	        	// }
 	        	
         	}else{
         		$timeout(function(){

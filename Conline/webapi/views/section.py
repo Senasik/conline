@@ -8,6 +8,8 @@ from webapi.tools import random_str, pack, tokenActive, log
 import time
 import chardet
 import subprocess
+import urllib2, qcloud_cos
+import requests
 from Conline.settings import STATIC_URL, BASE_DIR
 import binascii
 # model导入
@@ -77,6 +79,9 @@ def getSectionDetail(request):
 def creatSection(request):
     try:
         body = request.POST.dict()
+        if 'courseid' not in body:
+            t = loader.get_template('upload.html')
+            return HttpResponse(t.render())
         user = tokenActive({'token': body['token']})
         if not isinstance(user, User):
             return pack(code=user)
@@ -95,11 +100,24 @@ def creatSection(request):
 
         # 文字文件和视频文件分别处理
         if body['type'] == '1':
+            appid = 1252409052
+            secret_id = u'AKIDQkspaAxYEZItIV7K2axCF6yuhHIDfVr0'
+            secret_key = u'CG8nkZJtJXaS7au1vdJsGtOp4JQQFsRp'
+            region_info = u"tj"
+            cos_client = qcloud_cos.CosClient(appid, secret_id, secret_key, region=region_info)
             creatSectionFile(file=file, section=section)
+            request = qcloud_cos.UploadFileRequest(u'conlinestatic1', u'/sectionfile/'+section.fileurl, u''+sectionfiledir+section.fileurl)
+            res = cos_client.upload_file(request)
+            if res['code'] != 0:
+                raise Exception('上传失败')
+            request = qcloud_cos.UpdateFileRequest(u'conlinestatic1', u'/sectionfile/'+section.fileurl)
+            request.set_content_disposition(u'inline; filename=' + section.fileurl)
+            cos_client.update_file(request)
+            os.remove(sectionfiledir+section.fileurl)
         elif body['type'] == '0':
             filetype = '.' + str(file).split('.')[1]
-            # 如果是txt那么存到数据库
-            if filetype == '.txt' or '.md':
+            # 如果是txt或者md那么存到数据库
+            if filetype == '.txt' or filetype == '.md':
                 filecontent = file.read()
                 # 获取编码方式
                 encodetype = chardet.detect(filecontent)['encoding']
@@ -113,6 +131,8 @@ def creatSection(request):
                 desfile = random_str() + '.pdf'
                 log('des: ' + desfile)
                 log('sre' + section.fileurl)
+                office = subprocess.Popen(['sh', '/home/ubuntu/office.sh'])
+                office.wait()
                 write = subprocess.Popen(['python3', '/home/ubuntu/DocumentConverter.py', sectionfiledir + section.fileurl, sectionfiledir + desfile], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
                 write.wait()
                 if write.stderr.read() != '':
@@ -139,9 +159,9 @@ def deletesection(request):
         if user.type == 0:
             raise Exception('学生无法删除')
         section = Section.objects.all().filter(creator=user.userid).filter(sectionid=body['sectionid'])
-        for sec in list(section):
-            if sec.fileurl is not None:
-                os.remove(sectionfiledir + sec.fileurl)
+        # for sec in list(section):
+        #     if sec.fileurl is not None:
+        #         os.remove(sectionfiledir + sec.fileurl)
         section.delete()
         return pack()
 
@@ -179,6 +199,8 @@ def creatSectionFile(file=None, section=Section()):
     for chunk in file.chunks():
         destination.write(chunk)
     destination.close()
+
+
 
 
 def moban(request):

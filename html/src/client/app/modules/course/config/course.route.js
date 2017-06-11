@@ -26,9 +26,19 @@
                     controller: 'CourseDefaultCtrl'
                 })
                 .state('app.course.list', {
-                    url: '/list',
+                    url: '/list/:tagid',
                     templateUrl: 'modules/course/views/list.html',
-                    controller: 'CourseListCtrl'
+                    controller: 'CourseListCtrl',
+                    resolve: {
+                        tagcourselist: function($stateParams, CourseApi, CourseMap) {
+                            if ($stateParams.tagid == 'all')return 'all';
+                            return CourseApi.getcourselistbytag({tag: $stateParams.tagid, index: 1, size: 10}).then(function(res) {
+                                return CourseMap.courseListModel(res.data);
+                            }, function() {
+                                return null;
+                            })
+                        }
+                    }
                 })
                 .state('app.course.create', {
                     url: '/create',

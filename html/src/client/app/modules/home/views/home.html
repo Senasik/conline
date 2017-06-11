@@ -28,7 +28,7 @@
         <div class="col-sm-12 cpanel">
             <div class="cpanel-title">
                 <h4>推荐课程</h4>
-                <a class="right" ui-sref="app.course.list"><h6 >查看更多...</h6></a>
+                <a class="right" ui-sref="app.course.list({tagid: 'all'})"><h6 >查看更多...</h6></a>
             </div>
             <div ng-repeat="course in recommendcourses" class="col-sm-2 col-xs-6 crecommend" >
                 <div ng-include="'modules/home/views/elements/course-tpl.html'"></div>
@@ -40,7 +40,7 @@
         <div class="col-sm-12 cpanel">
             <div class="cpanel-title">
                 <h4>{{taglist[tagcourse[0].tag]}}</h4>
-                <a class="right" ui-sref="app.course.list"><h6 >查看更多...</h6></a>
+                <a class="right" ui-sref="app.course.list({tagid: tagcourse[0].tag})"><h6 >查看更多...</h6></a>
             </div>
             <div ng-repeat="course in tagcourse" class="col-sm-2 col-xs-6 crecommend" >
                 <div ng-include="'modules/home/views/elements/course-tpl.html'"></div>
